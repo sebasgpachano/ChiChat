@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="elevation_popups">20dp</dimen>
+    <dimen name="toolbar_margin_title_zero_buttons">8dp</dimen>
+    <dimen name="toolbar_margin_title_one_buttons">38dp</dimen>
+</resources>

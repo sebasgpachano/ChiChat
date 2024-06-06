@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ChitChat</string>
+    <string name="toolbar_description_back_button">Boton atras</string>
+    <string name="loading_text">Cargando...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
