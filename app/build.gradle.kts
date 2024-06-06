@@ -1,6 +1,10 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    kotlin("kapt")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.pluginNavigationSafeArgs)
+    alias(libs.plugins.pluginDaggerHilt)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -33,16 +37,29 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.commons.validator)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    //Android
+    implementation(libs.bundles.android)
+    //Navigation
+    implementation(libs.bundles.navigation)
+    //Lifecycle
+    implementation(libs.bundles.lifecycle)
+    //Hilt
+    implementation(libs.daggerHilt)
+    kapt(libs.daggerHiltCompiler)
+}
+
+kapt {
+    correctErrorTypes = true
 }
