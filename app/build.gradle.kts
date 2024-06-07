@@ -44,7 +44,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.commons.validator)
     implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -55,6 +54,8 @@ dependencies {
     implementation(libs.bundles.navigation)
     //Lifecycle
     implementation(libs.bundles.lifecycle)
+    //Retrofit
+    implementation(libs.bundles.retrofit)
     //Hilt
     implementation(libs.daggerHilt)
     kapt(libs.daggerHiltCompiler)

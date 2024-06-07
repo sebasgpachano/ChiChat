@@ -1,6 +1,5 @@
 [versions]
 agp = "8.4.1"
-commonsValidator = "1.7"
 kotlin = "1.9.23"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -30,8 +29,10 @@ lifecycle = "2.8.1"
 #Hilt
 hilt = "2.48.1"
 
+#Retrofit
+retrofit = "2.9.0"
+
 [libraries]
-commons-validator = { module = "commons-validator:commons-validator", version.ref = "commonsValidator" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -61,10 +62,15 @@ androidxLivecycleViewmodel = { group = "androidx.lifecycle", name = "lifecycle-v
 daggerHilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 daggerHiltCompiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 
+#Retrofit
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofitGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+
 [bundles]
 android = ["androidxCoreKtx", "androidxCoreSplash", "androidxAppcompat", "androidxConstraitLayout", "androidxSwipeRefresh", "androidMaterial", "androidPlayServicesMaps"]
 navigation = ["androidxNavigationFragment", "androidxNavigationUI", "androidxNavigationDynamicFragment", "androidxNavigationCompose"]
 lifecycle = ["androidxLivecycleLivedata", "androidxLivecycleRuntime", "androidxLivecycleViewmodel"]
+retrofit = ["retrofit", "retrofitGson"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
