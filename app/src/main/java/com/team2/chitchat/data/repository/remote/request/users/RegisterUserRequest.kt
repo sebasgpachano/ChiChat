@@ -1,4 +1,4 @@
-package com.team2.chitchat.data.repository.remote.request
+package com.team2.chitchat.data.repository.remote.request.users
 
 data class RegisterUserRequest(
     val login: String,
