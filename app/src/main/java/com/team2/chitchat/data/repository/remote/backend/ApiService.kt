@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("/users/register")
+    @POST("api/users/register")
     suspend fun postRegisterUser(
         @Body registerUserRequest: RegisterUserRequest
     ): Response<PostRegisterResponse>
