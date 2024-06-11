@@ -86,31 +86,15 @@ class RetrofitClient @Inject constructor(
     private fun needAddBearer(request: Request): Boolean {
         val buffer = okio.Buffer()
         request.body()?.writeTo(buffer)
-        val requestUrl = request.url().toString()
 
         return when {
-            requestUrl.endsWith("users/register", true) -> {
-                Log.d(TAG, "l> No needAddBearer endsWith(oauth/v2/token")
-                false
-            }
-
-            requestUrl.endsWith("oauth/v2/token/revoke", true) -> {
-                Log.d(TAG, "l> No needAddBearer endsWith(oauth/v2/token/revoke")
-                false
-            }
-
-            requestUrl.contains("R4PDFGenerator/Transferencia.do", true) -> {
-                Log.d(TAG, "l> No needAddBearer contains(R4PDFGenerator/Transferencia.do)")
-                false
-            }
-
             dataUserSession.token.isNotBlank() -> {
-                Log.d(TAG, "l> NeedAddBearer")
+                Log.d(TAG, "%> NeedAddBearer")
                 true
             }
 
             else -> {
-                Log.d(TAG, "l> No needAddBearer contemplated")
+                Log.d(TAG, "%> No needAddBearer contemplated")
                 false
             }
         }
