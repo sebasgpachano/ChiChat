@@ -2,7 +2,7 @@ package com.team2.chitchat.data.repository.remote.backend
 
 import android.util.Log
 import com.google.gson.GsonBuilder
-import com.team2.chitchat.BuildConfig
+import com.team2.chitchat.data.constants.GeneralConstants.Companion.BASE_URL
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.RETROFIT_TIMEOUT_IN_SECOND
 import com.team2.chitchat.data.sesion.DataUserSession
 import com.team2.chitchat.utils.TAG
@@ -76,7 +76,7 @@ class RetrofitClient @Inject constructor(
         val gson = GsonBuilder().setLenient().create()
 
         retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(httpClient.build())
             .callbackExecutor(Executors.newSingleThreadExecutor())
