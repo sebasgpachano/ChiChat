@@ -5,7 +5,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.team2.chitchat.R
 import com.team2.chitchat.databinding.ActivityMainBinding
 import com.team2.chitchat.ui.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun inflateBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
