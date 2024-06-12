@@ -30,16 +30,43 @@
 
     <TextView
         android:id="@+id/tvToolbarTitle"
+        style="@style/toolbarHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="114dp"
-        android:layout_marginEnd="114dp"
         android:maxLines="1"
         android:singleLine="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
+        app:layout_constraintEnd_toStartOf="@id/ibToolbarProfile"
+        app:layout_constraintStart_toEndOf="@id/ibToolbarBack"
+        app:layout_constraintTop_toTopOf="@id/tbToolbar"
         tools:text="Cabecera" />
+
+    <ImageButton
+        android:id="@+id/ibToolbarProfile"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="@null"
+        android:contentDescription="@string/toolbar_description_profile_button"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/baseline_person_24"
+        app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
+        app:layout_constraintEnd_toEndOf="@id/tbToolbar"
+        app:layout_constraintTop_toTopOf="@id/tbToolbar" />
+
+    <ImageButton
+        android:id="@+id/ibToolbarNotification"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="@null"
+        android:contentDescription="@string/toolbar_description_notification_button"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_toolbar_notification_off"
+        app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
+        app:layout_constraintEnd_toEndOf="@id/tbToolbar"
+        app:layout_constraintTop_toTopOf="@id/tbToolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,16 +50,28 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     fun showToolbar(
         showBack: Boolean = false,
+        showProfile: Boolean = false,
+        showNotification: Boolean = false,
         title: String = "",
     ) {
         baseActivity.showToolbar(
             showBack = showBack,
+            showNotification = showNotification,
+            showProfile = showProfile,
             title = title,
         )
     }
 
     fun updateShowToolbarBack(showBack: Boolean) {
         baseActivity.updateShowToolbarBack(showBack)
+    }
+
+    fun updateShowToolbarProfile(showProfile: Boolean) {
+        baseActivity.updateShowToolbarProfile(showProfile)
+    }
+
+    fun updateShowToolbarNotification(showNotification: Boolean) {
+        baseActivity.updateShowToolbarNotification(showNotification)
     }
 
     fun updateShowToolbarTitle(title: String) {
