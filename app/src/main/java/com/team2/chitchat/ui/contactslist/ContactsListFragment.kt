@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.users.GetUserModel
@@ -14,6 +15,7 @@ import com.team2.chitchat.databinding.FragmentContactsListBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.contactslist.adapter.ContactsListAdapater
 import com.team2.chitchat.utils.TAG
+import com.team2.chitchat.utils.toastLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -54,7 +56,10 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
         }
         lifecycleScope.launch {
             contactsListViewModel.errorFlow.collect { errorModel ->
-                Log.d(TAG, "%>ERROR: ${errorModel.message}")
+                if (errorModel.message == "No token provided") {
+                    requireContext().toastLong(getString(R.string.apy_error_session_expired))
+                    findNavController().navigate(ContactsListFragmentDirections.actionContactsListFragmentToLoginFragment())
+                }
             }
         }
         lifecycleScope.launch {

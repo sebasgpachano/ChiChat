@@ -1,12 +1,10 @@
 package com.team2.chitchat.ui.contactslist
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.GetContactsUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
-import com.team2.chitchat.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,14 +25,12 @@ class ContactsListViewModel @Inject constructor(private val getContactsUseCase: 
             getContactsUseCase().collect {
                 when (it) {
                     is BaseResponse.Error -> {
-                        Log.d(TAG, "%> Error: ${it.error.message}")
                         loadingMutableSharedFlow.emit(false)
                         errorMutableSharedFlow.emit(it.error)
                     }
 
                     is BaseResponse.Success -> {
                         loadingMutableSharedFlow.emit(false)
-                        Log.d(TAG, "%> Success ${it.data.size}")
                         contactsMutableSharedFlow.emit(it.data)
                     }
                 }
