@@ -8,5 +8,9 @@
     <string name="loading_text">Cargando...</string>
     <!-- Login fragment-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Contacts list fragment-->
+    <string name="list_contacts_title_toolbar">Contactos</string>
+    <string name="list_contacts_subtitle">Awesome to Chat With</string>
+    <string name="list_contacts_profile_img">Foto de perfil</string>
 
 </resources>

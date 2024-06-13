@@ -13,8 +13,27 @@
         <item name="android:lineSpacingExtra">2sp</item>
     </style>
 
+    <!--Texts Style-->
+    <style name="poppinsW500Medium18h24w500" parent="poppinsW500Medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
     <!--Toolbar-->
     <style name="toolbarHeader" parent="poppinsW500Medium20h24w500">
         <item name="android:ellipsize">end</item>
     </style>
+
+    <!--Subtitle-->
+    <style name="subtitleFramework" parent="poppinsW500Medium18h24w500">
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!--User image round-->
+    <style name="RoundImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>
