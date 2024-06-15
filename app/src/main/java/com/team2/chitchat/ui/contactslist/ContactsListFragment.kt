@@ -33,6 +33,9 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
         savedInstanceState: Bundle?
     ) {
         configRecyclerView()
+        binding?.ibUpdateList?.setOnClickListener {
+            contactsListViewModel.getContactsList()
+        }
     }
 
     private fun configRecyclerView() {
@@ -71,7 +74,9 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
 
     private fun updateList(contactsList: ArrayList<GetUserModel>) {
         Log.d(TAG, "%> Contacts list size: ${contactsList.size}")
-        contactsListAdapter.submitList(contactsList)
+        contactsListAdapter.submitList(contactsList) {
+            binding?.rvContacts?.scrollToPosition(0)
+        }
     }
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {

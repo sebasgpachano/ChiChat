@@ -14,8 +14,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/list_contacts_subtitle"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibUpdateList"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibUpdateList"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@string/list_contacts_update_list"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/baseline_update_24"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
