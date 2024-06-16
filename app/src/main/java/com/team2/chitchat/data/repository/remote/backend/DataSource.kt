@@ -1,6 +1,7 @@
 package com.team2.chitchat.data.repository.remote.backend
 
 import com.team2.chitchat.data.domain.model.chats.GetChatsModel
+import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostLoginModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
@@ -21,4 +22,7 @@ interface DataSource {
 
     //Chats
     fun getChats(): Flow<BaseResponse<ArrayList<GetChatsModel>>>
+
+    //Message
+    fun getMessage(): Flow<BaseResponse<ArrayList<GetMessagesModel>>>
 }

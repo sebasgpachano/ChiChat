@@ -1,10 +1,12 @@
 package com.team2.chitchat.data.repository.remote.backend
 
 import com.team2.chitchat.data.domain.model.chats.GetChatsModel
+import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostLoginModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
 import com.team2.chitchat.data.mapper.chats.GetChatsMapper
+import com.team2.chitchat.data.mapper.messages.GetMessagesMapper
 import com.team2.chitchat.data.mapper.users.GetContactsListMapper
 import com.team2.chitchat.data.mapper.users.PostLoginMapper
 import com.team2.chitchat.data.mapper.users.PostRegisterMapper
@@ -55,6 +57,16 @@ class RemoteDataSource @Inject constructor(private val callApiService: CallApiSe
         val apiResult = callApiService.callGetChats()
         if (apiResult is BaseResponse.Success) {
             emit(BaseResponse.Success(GetChatsMapper().fromResponse(apiResult.data)))
+        } else if (apiResult is BaseResponse.Error) {
+            emit(BaseResponse.Error(apiResult.error))
+        }
+    }
+
+    //Messages
+    override fun getMessage(): Flow<BaseResponse<ArrayList<GetMessagesModel>>> = flow {
+        val apiResult = callApiService.callGetMessages()
+        if (apiResult is BaseResponse.Success) {
+            emit(BaseResponse.Success(GetMessagesMapper().fromResponse(apiResult.data)))
         } else if (apiResult is BaseResponse.Error) {
             emit(BaseResponse.Error(apiResult.error))
         }
