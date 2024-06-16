@@ -2,6 +2,10 @@
 <resources>
 
     <!--FONTS-->
+    <style name="poppinsW400Regular">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
     <style name="poppinsW500Medium">
         <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
