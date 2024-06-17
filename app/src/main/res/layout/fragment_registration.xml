@@ -94,8 +94,9 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btRegister"
         style="@style/buttonStyle"
-        android:text="@string/register"
         android:layout_marginTop="10dp"
+        android:text="@string/register"
+        app:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etNick" />
