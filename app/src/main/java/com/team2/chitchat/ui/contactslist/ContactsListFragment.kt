@@ -33,9 +33,7 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
         savedInstanceState: Bundle?
     ) {
         configRecyclerView()
-        binding?.ibUpdateList?.setOnClickListener {
-            contactsListViewModel.getContactsList()
-        }
+        configSwipeRefreshLayout()
     }
 
     private fun configRecyclerView() {
@@ -43,6 +41,12 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = contactsListAdapter
+        }
+    }
+
+    private fun configSwipeRefreshLayout() {
+        binding?.srContacts?.setOnRefreshListener {
+            contactsListViewModel.getContactsList()
         }
     }
 
@@ -77,6 +81,7 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
         contactsListAdapter.submitList(contactsList) {
             binding?.rvContacts?.scrollToPosition(0)
         }
+        binding?.srContacts?.isRefreshing = false
     }
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
