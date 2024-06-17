@@ -13,7 +13,7 @@ import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.databinding.FragmentContactsListBinding
 import com.team2.chitchat.ui.base.BaseFragment
-import com.team2.chitchat.ui.contactslist.adapter.ContactsListAdapater
+import com.team2.chitchat.ui.contactslist.adapter.ContactsListAdapter
 import com.team2.chitchat.utils.TAG
 import com.team2.chitchat.utils.toastLong
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
     private val contactsListViewModel: ContactsListViewModel by viewModels()
-    private val contactsListAdapter = ContactsListAdapater()
+    private val contactsListAdapter = ContactsListAdapter()
     override fun inflateBinding() {
         binding = FragmentContactsListBinding.inflate(layoutInflater)
     }
