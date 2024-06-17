@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.team2.chitchat.ui.login.LoginFragment"
         android:label="ListUsersFragment"
-        tools:layout="@layout/fragment_login"></fragment>
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.team2.chitchat.ui.registration.RegistrationFragment"
