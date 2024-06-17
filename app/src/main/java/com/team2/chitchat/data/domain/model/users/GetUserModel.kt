@@ -5,13 +5,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GetUserModel(
-    val id: String = "",
     val login: String = "",
-    val password: String = "",
     val nick: String = "",
-    val platform: String = "",
     val avatar: String = "",
-    val uuid: String = "akdfsnkakf",
     val token: String = "",
     val online: Boolean = false,
     val created: String = "",
