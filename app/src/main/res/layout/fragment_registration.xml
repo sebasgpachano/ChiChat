@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:autofillHints="username"
         android:hint="@string/enter_user"
         android:inputType="text"
         android:focusedByDefault="true"
@@ -46,6 +47,7 @@
         android:layout_marginTop="5dp"
         android:hint="@string/enter_password"
         android:inputType="textPassword"
+        android:autofillHints="password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPassword" />
 
@@ -67,6 +69,7 @@
         android:layout_marginTop="5dp"
         android:hint="@string/repeat_pass"
         android:inputType="textPassword"
+        android:autofillHints="password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvRepeatPass" />
 
@@ -88,6 +91,7 @@
         android:layout_marginTop="5dp"
         android:hint="@string/enter_nick"
         android:inputType="text"
+        android:autofillHints="name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvNick" />
 
