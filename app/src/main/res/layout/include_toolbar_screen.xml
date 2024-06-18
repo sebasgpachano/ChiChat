@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -33,7 +35,6 @@
         style="@style/toolbarHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
         android:maxLines="1"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
@@ -53,7 +54,7 @@
         android:scaleType="centerInside"
         android:src="@drawable/baseline_person_24"
         app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
-        app:layout_constraintEnd_toStartOf="@id/ibToolbarNotification"
+        app:layout_constraintEnd_toStartOf="@+id/ibToolbarNotification"
         app:layout_constraintTop_toTopOf="@id/tbToolbar" />
 
     <ImageButton

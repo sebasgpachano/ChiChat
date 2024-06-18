@@ -9,6 +9,12 @@
     <style name="poppinsW500Medium">
         <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
+    <style name="poppinsW500Regular">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+    <style name="poppinsW500Bold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
 
     <!--Texts Style-->
     <style name="poppinsW500Medium20h24w500" parent="poppinsW500Medium">
@@ -24,11 +30,21 @@
         <item name="android:lineSpacingExtra">2sp</item>
     </style>
 
+    <style name="poppinsRegular16" parent="poppinsW500Regular">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="poppinsRegular14" parent="poppinsW500Regular">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="poppinsBold14" parent="poppinsW500Bold">
+        <item name="android:textSize">14sp</item>
+    </style>
+  
     <!--Toolbar-->
     <style name="toolbarHeader" parent="poppinsW500Medium20h24w500">
         <item name="android:ellipsize">end</item>
     </style>
-
+  
     <!--Subtitle-->
     <style name="subtitleFramework" parent="poppinsW500Medium18h24w500">
         <item name="android:ellipsize">end</item>
@@ -38,6 +54,18 @@
     <style name="RoundImage" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+  
+    <!--Custom  EditText -->
+    <style name="customEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:paddingVertical">8dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:background">@drawable/edittext_background</item>
+        <item name="android:textColorHint">@color/colorHint</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
 </resources>

@@ -10,6 +10,24 @@
     <color name="gray808080">#808080</color>
     <color name="azul31b1cd">#31b1cd</color>
 
+    <color name="colorHint">#7C7C7C</color>
+    <color name="grayLight">#BCBCBC</color>
+    <color name="black_opacity_20">#20000000</color>
+    <color name="greenEnabled">#12E100</color>
+
+    <color name="colorPrimaryLight">#000000</color>
+    <color name="colorPrimaryDarkLight">#303F9F</color>
+    <color name="colorAccentLight">#FF4081</color>
+    <color name="backgroundColorLight">#FFFFFF</color>
+    <color name="textColorLight">#000000</color>
+
     <!-- Color app -->
     <color name="color_app">@color/azul31b1cd</color>
+
+    <!-- Colores para el tema oscuro -->
+    <color name="colorPrimaryDark">#BB86FC</color>
+    <color name="colorPrimaryDarkDark">#3700B3</color>
+    <color name="colorAccentDark">#03DAC6</color>
+    <color name="backgroundColorDark">#121212</color>
+    <color name="textColorDark">#FFFFFF</color>
 </resources>
