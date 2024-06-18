@@ -1,6 +1,6 @@
 package com.team2.chitchat.ui.chatlist
 
-import android.util.Log
+import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
@@ -12,7 +12,6 @@ import com.team2.chitchat.data.usecase.GetChatsUseCase
 import com.team2.chitchat.data.usecase.GetContactsUseCase
 import com.team2.chitchat.data.usecase.GetMessagesUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
-import com.team2.chitchat.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,6 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
+    private val application: Application,
     private val dataUserSession: DataUserSession,
     private val getChatsUseCase: GetChatsUseCase,
     private val getUserUseCase: GetContactsUseCase,
@@ -54,12 +54,10 @@ class ChatListViewModel @Inject constructor(
         getMessagesUseCase().collect {
             listMessages = when (it) {
                 is BaseResponse.Error -> {
-                    Log.d(TAG, "%> Messages error: ${it.error.message}")
                     ArrayList()
                 }
 
                 is BaseResponse.Success -> {
-                    Log.d(TAG, "%> Messages response: ${it.data}")
                     it.data
                 }
             }
@@ -82,7 +80,13 @@ class ChatListViewModel @Inject constructor(
                         val listMessages: ArrayList<GetMessagesModel> = getMessages()
                         loadingMutableSharedFlow.emit(false)
                         val listChatsMapper =
-                            ListChatsMapper(dataUserSession, it.data, listUsers, listMessages)
+                            ListChatsMapper(
+                                dataUserSession,
+                                it.data,
+                                listUsers,
+                                listMessages,
+                                application
+                            )
                         chatsMutableSharedFlow.emit(listChatsMapper.getList())
                     }
                 }

@@ -34,6 +34,6 @@ interface ApiService {
     suspend fun getChats(): Response<ArrayList<GetChatsResponse>>
 
     //Message
-    @GET("api/messages")
+    @GET("api/messages/")
     suspend fun getMessages(): Response<ArrayList<GetMessagesResponse>>
 }
