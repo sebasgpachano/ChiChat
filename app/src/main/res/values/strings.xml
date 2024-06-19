@@ -15,10 +15,19 @@
     <string name="list_contacts_update_list">Actualizar la lista de contactos</string>
     <!-- Chat list fragment -->
     <string name="chat_list_title_toolbar">ChitChat</string>
-    <!-- Error apy -->
-    <string name="apy_error_session_expired">Su sesión ha expirado</string>
     <string name="chat_list_subtitle">Conversaciones</string>
     <string name="chat_list_user_state">Estado del usuario</string>
     <string name="chat_list_add_chat">Añadir persona para hablar</string>
-
+    <!-- Error apy -->
+    <string name="apy_error_session_expired">Su sesión ha expirado</string>
+    
+    <string name="textUser">Usuario</string>
+    <string name="hintUser">Ingresa tu usuario</string>
+    <string name="textPassword">Contraseña</string>
+    <string name="hintPassword">Ingresa tu contraseña</string>
+    <string name="textAccessBiometric">Acceso con biometria</string>
+    <string name="textLogin">Login</string>
+    <string name="imageLogoDescription">Logo ChitChat</string>
+    <string name="textRegisterLoginF">Regístrate</string>
+    <string name="textRegisterQuestionLoginF">¿No tienes cuenta?</string>
 </resources>

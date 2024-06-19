@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -46,7 +48,6 @@
         android:id="@+id/ibToolbarProfile"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
         android:background="@null"
         android:contentDescription="@string/toolbar_description_profile_button"
         android:padding="2dp"

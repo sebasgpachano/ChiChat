@@ -87,7 +87,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         title: String = "",
     ) {
         hideAllElementToolbar()
-        tbToolbar?.visible()
+        clToolbar?.visible()
         if (showBack) {
             ibToolbarBack?.visible()
         }
@@ -166,7 +166,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
     }
 
     fun hideToolbar() {
-        tbToolbar?.gone()
+        clToolbar?.gone()
     }
 
     private fun hideAllElementToolbar() {
