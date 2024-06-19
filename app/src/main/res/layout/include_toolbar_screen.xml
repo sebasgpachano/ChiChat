@@ -35,6 +35,7 @@
         style="@style/toolbarHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:maxLines="1"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
