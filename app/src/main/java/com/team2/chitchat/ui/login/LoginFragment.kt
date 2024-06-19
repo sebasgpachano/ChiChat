@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.team2.chitchat.R
 import com.team2.chitchat.databinding.FragmentLoginBinding
 import com.team2.chitchat.ui.base.BaseFragment
+import kotlinx.coroutines.launch
 
 
 /**
@@ -16,6 +19,7 @@ import com.team2.chitchat.ui.base.BaseFragment
  */
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
+    private val viewModel: LoginViewModel by viewModels()
     override fun inflateBinding() {
         binding = FragmentLoginBinding.inflate(layoutInflater)
     }
@@ -34,9 +38,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     override fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.loginStateFlow.collect {loginModel->
+                
+            }
+        }
 
     }
+    fun initListener() {
 
+    }
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
 
     }

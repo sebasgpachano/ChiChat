@@ -45,6 +45,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.security.crypto.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -56,9 +57,15 @@ dependencies {
     implementation(libs.bundles.lifecycle)
     //Retrofit
     implementation(libs.bundles.retrofit)
+    //Okhttp
+    implementation(libs.okhttp)
+    implementation(libs.gson)
     //Hilt
     implementation(libs.daggerHilt)
     kapt(libs.daggerHiltCompiler)
+    // CryptoSharedPreference
+
+    implementation(libs.androidxCryptoSharedPreferences)
 }
 
 kapt {
