@@ -9,8 +9,8 @@ import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,8 +18,8 @@ import javax.inject.Inject
 class RegistrationViewModel @Inject constructor(private val postRegisterUseCase: PostRegisterUseCase) :
     BaseViewModel() {
 
-    private val _successFlow = MutableStateFlow(false)
-    val successFlow: StateFlow<Boolean> = _successFlow
+    private val _successFlow = MutableSharedFlow<Boolean>()
+    val successFlow: SharedFlow<Boolean> = _successFlow
 
     fun postUser(user: String, password: String, nick: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -36,7 +36,7 @@ class RegistrationViewModel @Inject constructor(private val postRegisterUseCase:
                     is BaseResponse.Success -> {
                         loadingMutableSharedFlow.emit(false)
                         Log.d(this@RegistrationViewModel.TAG, "l> Success ${it.data.userModel}")
-                        _successFlow.value = true
+                        _successFlow.emit(true)
                     }
                 }
             }
