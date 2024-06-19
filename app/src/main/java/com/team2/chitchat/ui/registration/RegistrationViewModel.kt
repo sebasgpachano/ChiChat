@@ -18,8 +18,8 @@ import javax.inject.Inject
 class RegistrationViewModel @Inject constructor(private val postRegisterUseCase: PostRegisterUseCase) :
     BaseViewModel() {
 
-    private val _successFlow = MutableSharedFlow<Boolean>()
-    val successFlow: SharedFlow<Boolean> = _successFlow
+    private val successSharedFlow = MutableSharedFlow<Boolean>()
+    val successFlow: SharedFlow<Boolean> = successSharedFlow
 
     fun postUser(user: String, password: String, nick: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -36,7 +36,7 @@ class RegistrationViewModel @Inject constructor(private val postRegisterUseCase:
                     is BaseResponse.Success -> {
                         loadingMutableSharedFlow.emit(false)
                         Log.d(this@RegistrationViewModel.TAG, "l> Success ${it.data.userModel}")
-                        _successFlow.emit(true)
+                        successSharedFlow.emit(true)
                     }
                 }
             }
