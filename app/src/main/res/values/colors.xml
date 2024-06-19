@@ -10,6 +10,9 @@
     <color name="gray808080">#808080</color>
     <color name="azul31b1cd">#31b1cd</color>
 
+    <!-- Color app -->
+    <color name="color_app">@color/azul31b1cd</color>
+
     <color name="colorHint">#7C7C7C</color>
     <color name="grayLight">#BCBCBC</color>
     <color name="black_opacity_20">#20000000</color>
@@ -20,9 +23,6 @@
     <color name="colorAccentLight">#FF4081</color>
     <color name="backgroundColorLight">#FFFFFF</color>
     <color name="textColorLight">#000000</color>
-
-    <!-- Color app -->
-    <color name="color_app">@color/azul31b1cd</color>
 
     <!-- Colores para el tema oscuro -->
     <color name="colorPrimaryDark">#BB86FC</color>
