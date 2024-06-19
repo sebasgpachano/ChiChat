@@ -8,21 +8,22 @@
 
     <TextView
         android:id="@+id/tvUser"
-        style="@style/poppinsW500Regular20h24w500"
+        style="@style/poppinsBold14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
         android:text="@string/user"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/etUser"
-        style="@style/customEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:autofillHints="username"
         android:hint="@string/enter_user"
         android:inputType="text"
@@ -32,21 +33,22 @@
 
     <TextView
         android:id="@+id/tvPassword"
-        style="@style/poppinsW500Regular20h24w500"
+        style="@style/poppinsBold14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/password"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etUser"/>
 
     <EditText
         android:id="@+id/etPassword"
-        style="@style/customEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:hint="@string/enter_password"
         android:inputType="textPassword"
         android:autofillHints="password"
@@ -55,21 +57,22 @@
 
     <TextView
         android:id="@+id/tvRepeatPass"
-        style="@style/poppinsW500Regular20h24w500"
+        style="@style/poppinsBold14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
         android:text="@string/repeat_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etPassword"/>
 
     <EditText
         android:id="@+id/etRepeatPass"
-        style="@style/customEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:hint="@string/repeat_pass"
         android:inputType="textPassword"
         android:autofillHints="password"
@@ -78,21 +81,22 @@
 
     <TextView
         android:id="@+id/tvNick"
-        style="@style/poppinsW500Regular20h24w500"
+        style="@style/poppinsBold14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
         android:text="@string/nick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etRepeatPass"/>
 
     <EditText
         android:id="@+id/etNick"
-        style="@style/customEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:hint="@string/enter_nick"
         android:inputType="text"
         android:autofillHints="name"
@@ -102,7 +106,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btRegister"
         style="@style/buttonStyle"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:text="@string/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
