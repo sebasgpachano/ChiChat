@@ -15,5 +15,19 @@
         android:name="com.team2.chitchat.ui.registration.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" />
+        android:label="LoginFragment" />
+
+    <fragment
+        android:id="@+id/contactsListFragment"
+        android:name="com.team2.chitchat.ui.contactslist.ContactsListFragment"
+        android:label="ContactsListFragment">
+
+        <!--en el popUpTo va el de strartDestination-->
+        <action
+            android:id="@+id/action_contactsListFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/contactsListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>
