@@ -52,9 +52,9 @@ class ListChatsMapper(
 
     private fun getUser(chat: GetChatsModel): GetUserModel? {
         return if (chat.source != dataUserSession.id) {
-            arrayUsers.find { it.login == chat.source }
+            arrayUsers.find { it.id == chat.source }
         } else {
-            arrayUsers.find { it.login == chat.target }
+            arrayUsers.find { it.id == chat.target }
         }
     }
 
