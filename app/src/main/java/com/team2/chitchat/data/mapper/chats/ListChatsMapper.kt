@@ -7,6 +7,7 @@ import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.sesion.DataUserSession
+import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -20,9 +21,11 @@ class ListChatsMapper(
     fun getList(): ArrayList<ListChatsModel> {
         val mappedList = ArrayList<ListChatsModel>()
 
-        for (chat in getChatsUser()) {
+        for (chat in getChats()) {
             val user = getUser(chat)
-            val message: GetMessagesModel? = arrayMessages.find { it.chatId == chat.id }
+            val message: GetMessagesModel? = arrayMessages
+                .sortedByDescending { it.date }
+                .find { it.chatId == chat.id }
 
             if (user != null) {
                 val listChatsModel = ListChatsModel(
@@ -41,7 +44,7 @@ class ListChatsMapper(
         return mappedList
     }
 
-    private fun getChatsUser(): List<GetChatsModel> {
+    private fun getChats(): List<GetChatsModel> {
         return arrayChats.filter { chat ->
             chat.source == dataUserSession.id || chat.target == dataUserSession.id
         }
@@ -59,25 +62,29 @@ class ListChatsMapper(
         return if (message?.date.isNullOrBlank()) {
             ""
         } else {
-            val formatter = DateTimeFormatter.ISO_DATE_TIME
-            val messageZonedDateTime = ZonedDateTime.parse(message?.date, formatter)
-            val currentZonedDateTime = ZonedDateTime.now()
-
+            val localZonedDateTime = ZonedDateTime.parse(fixedServerHour(message?.date))
             val formattedDate = when {
-                messageZonedDateTime.toLocalDate().isEqual(currentZonedDateTime.toLocalDate()) -> {
-                    messageZonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+                localZonedDateTime.toLocalDate()
+                    .isEqual(LocalDate.now(localZonedDateTime.zone)) -> {
+                    localZonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
                 }
 
-                messageZonedDateTime.toLocalDate()
-                    .isEqual(currentZonedDateTime.toLocalDate().minusDays(1)) -> {
+                localZonedDateTime.toLocalDate()
+                    .isEqual(LocalDate.now(localZonedDateTime.zone).minusDays(1)) -> {
                     context.getString(R.string.chat_list_date_yesterday)
                 }
-
                 else -> {
-                    messageZonedDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
+                    localZonedDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
                 }
             }
             formattedDate
         }
+    }
+
+    private fun fixedServerHour(messageTime: String?): String {
+        val formatter = DateTimeFormatter.ISO_DATE_TIME
+        val zonedDateTime = ZonedDateTime.parse(messageTime, formatter)
+        val updatedZonedDateTime = zonedDateTime.plusHours(2)
+        return updatedZonedDateTime.format(formatter)
     }
 }
