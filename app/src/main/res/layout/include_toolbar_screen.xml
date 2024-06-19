@@ -35,7 +35,7 @@
         style="@style/toolbarHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_marginStart="8dp"
         android:maxLines="1"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
@@ -48,13 +48,14 @@
         android:id="@+id/ibToolbarProfile"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginStart="8dp"
         android:background="@null"
         android:contentDescription="@string/toolbar_description_profile_button"
         android:padding="2dp"
         android:scaleType="centerInside"
         android:src="@drawable/baseline_person_24"
         app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
-        app:layout_constraintEnd_toStartOf="@id/ibToolbarNotification"
+        app:layout_constraintEnd_toStartOf="@+id/ibToolbarNotification"
         app:layout_constraintTop_toTopOf="@id/tbToolbar" />
 
     <ImageButton

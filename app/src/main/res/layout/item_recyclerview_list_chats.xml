@@ -17,6 +17,7 @@
         app:shapeAppearanceOverlay="@style/RoundImage" />
 
     <ImageView
+        android:id="@+id/ivState"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:src="@drawable/circle_state"

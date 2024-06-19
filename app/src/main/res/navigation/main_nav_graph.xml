@@ -30,11 +30,10 @@
         android:name="com.team2.chitchat.ui.contactslist.ContactsListFragment"
         android:label="ContactsListFragment">
 
-        <!--en el popUpTo va el de strartDestination-->
         <action
             android:id="@+id/action_contactsListFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/contactsListFragment"
+            app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
