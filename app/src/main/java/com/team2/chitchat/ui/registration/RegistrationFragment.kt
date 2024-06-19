@@ -67,11 +67,20 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
             R.id.btRegister -> {
                 val user = binding?.etUser?.text.toString()
                 val pass = binding?.etPassword?.text.toString()
+                val repeatPass = binding?.etRepeatPass?.text.toString()
                 val nick = binding?.etNick?.text.toString()
-                registrationViewModel.postUser(user, pass, nick)
-                //TODO Navigate a login o a conversaciones activas
+                if (user.isNotBlank() && pass.isNotBlank() && repeatPass.isNotBlank() && nick.isNotBlank()) {
+                    if (pass == repeatPass) {
+                        registrationViewModel.postUser(user, pass, nick)
+                        //TODO Navigate a login
+                    } else {
+                        //Error en EditText
+                        requireContext().toastLong("Contraseñas no coinciden")
+                    }
+                } else {
+                    requireContext().toastLong("Rellena todos los campos")
+                }
             }
         }
     }
-
 }
