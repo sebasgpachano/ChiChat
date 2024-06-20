@@ -69,6 +69,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.btRegister -> {
+                clearErrors()
                 if (canDoLogin()) {
                     if (binding?.etPassword?.text.toString() == binding?.etRepeatPass?.text.toString()) {
                         registrationViewModel.postUser(
@@ -77,11 +78,15 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                             binding?.etNick?.text.toString()
                         )
                     } else {
-                        binding?.etRepeatPass?.setErrorBorder(requireContext())
-                        requireContext().toastLong("Contraseñas no coinciden")
+                        binding?.tvRepeatPasswordError?.text = "Contraseñas no coinciden"
+                        binding?.etRepeatPass?.setErrorBorder(
+                            true,
+                            requireContext(),
+                            binding?.tvRepeatPasswordError
+                        )
                     }
                 } else {
-                    requireContext().toastLong("Rellena todos los campos")
+                    emptyEditText()
                 }
             }
         }
@@ -89,7 +94,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
 
     private fun checkUser(error: ErrorModel) {
         if (error.message == "User exist") {
-            binding?.etUser?.setErrorBorder(requireContext())
+            binding?.tvUserError?.text = "Usuario ya existe"
+            binding?.etUser?.setErrorBorder(true, requireContext(), binding?.tvUserError)
         } else {
             requireContext().toastLong(error.message)
         }
@@ -99,5 +105,31 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         return binding?.etUser?.text.toString().isNotBlank() && binding?.etPassword?.text.toString()
             .isNotBlank() && binding?.etRepeatPass?.text.toString()
             .isNotBlank() && binding?.etNick?.text.toString().isNotBlank()
+    }
+
+    private fun clearErrors() {
+        binding?.etUser?.setErrorBorder(false, requireContext(), binding?.tvUserError)
+        binding?.etPassword?.setErrorBorder(false, requireContext(), binding?.tvPasswordError)
+        binding?.etRepeatPass?.setErrorBorder(
+            false,
+            requireContext(),
+            binding?.tvRepeatPasswordError
+        )
+        binding?.etNick?.setErrorBorder(false, requireContext(), binding?.tvNickError)
+    }
+
+    private fun emptyEditText() {
+        val editTexts = listOf(
+            binding?.etUser to binding?.tvUserError,
+            binding?.etPassword to binding?.tvPasswordError,
+            binding?.etRepeatPass to binding?.tvRepeatPasswordError,
+            binding?.etNick to binding?.tvNickError
+        )
+        editTexts.forEach { (editText, textView) ->
+            if (editText?.text.toString().isBlank()) {
+                textView?.text = "Campo vacío"
+                editText?.setErrorBorder(true, requireContext(), textView)
+            }
+        }
     }
 }
