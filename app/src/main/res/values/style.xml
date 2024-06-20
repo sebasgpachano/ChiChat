@@ -81,4 +81,11 @@
         <item name="android:font">@style/poppinsW500Regular</item>
     </style>
 
+    <!-- Error TextView-->
+    <style name="errorTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/redError</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:font">@style/poppinsRegular14</item>
+    </style>
+
 </resources>
