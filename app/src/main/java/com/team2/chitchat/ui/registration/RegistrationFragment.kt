@@ -78,7 +78,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                             binding?.etNick?.text.toString()
                         )
                     } else {
-                        binding?.tvRepeatPasswordError?.text = "Contraseñas no coinciden"
+                        binding?.tvRepeatPasswordError?.text = getString(R.string.password_error)
                         binding?.etRepeatPass?.setErrorBorder(
                             true,
                             requireContext(),
@@ -94,7 +94,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
 
     private fun checkUser(error: ErrorModel) {
         if (error.message == "User exist") {
-            binding?.tvUserError?.text = "Usuario ya existe"
+            binding?.tvUserError?.text = getString(R.string.user_error)
             binding?.etUser?.setErrorBorder(true, requireContext(), binding?.tvUserError)
         } else {
             requireContext().toastLong(error.message)
@@ -127,7 +127,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         )
         editTexts.forEach { (editText, textView) ->
             if (editText?.text.toString().isBlank()) {
-                textView?.text = "Campo vacío"
+                textView?.text = getString(R.string.required_field)
                 editText?.setErrorBorder(true, requireContext(), textView)
             }
         }
