@@ -1,5 +1,7 @@
 package com.team2.chitchat.data.repository.remote.backend
 
+import com.team2.chitchat.data.domain.model.chats.GetChatsModel
+import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostLoginModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
@@ -26,5 +28,15 @@ class DataProvider @Inject constructor(
     //ContactsList
     override fun getContactsList(): Flow<BaseResponse<ArrayList<GetUserModel>>> {
         return remoteDataSource.getContactsList()
+    }
+
+    //Chats
+    override fun getChats(): Flow<BaseResponse<ArrayList<GetChatsModel>>> {
+        return remoteDataSource.getChats()
+    }
+
+    //Message
+    override fun getMessage(): Flow<BaseResponse<ArrayList<GetMessagesModel>>> {
+        return remoteDataSource.getMessage()
     }
 }
