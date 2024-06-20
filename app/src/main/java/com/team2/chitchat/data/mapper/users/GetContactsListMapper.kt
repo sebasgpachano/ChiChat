@@ -11,6 +11,7 @@ class GetContactsListMapper : ResponseMapper<ArrayList<GetUserResponse>, ArrayLi
         } else {
             ArrayList(response.map { userResponse ->
                 GetUserModel(
+                    id = userResponse.id ?: "",
                     login = userResponse.login ?: "",
                     nick = userResponse.nick ?: "",
                     avatar = userResponse.avatar ?: "",

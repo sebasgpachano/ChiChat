@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/registrationFragment">
+    app:startDestination="@id/chatListFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -22,6 +22,22 @@
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="com.team2.chitchat.ui.chatlist.ChatListFragment"
+        android:label="ChatListFragment">
+
+        <action
+            android:id="@+id/action_chatListFragment_to_contactsListFragment"
+            app:destination="@id/contactsListFragment" />
+
+        <action
+            android:id="@+id/action_contactsListFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/contactsListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
