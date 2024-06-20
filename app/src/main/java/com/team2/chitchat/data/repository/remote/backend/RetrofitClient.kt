@@ -58,14 +58,14 @@ class RetrofitClient @Inject constructor(
                 needAddBearer(chain.request()) -> {
                     val build = original.newBuilder()
                         .header(HEADER_KEY_TOKEN, dataUserSession.token)
-                        .method(original.method(), original.body())
+                        .method(original.method, original.body)
                         .build()
                     build
                 }
 
                 else -> {
                     original.newBuilder()
-                        .method(original.method(), original.body())
+                        .method(original.method, original.body)
                         .build()
                 }
             }
@@ -85,7 +85,7 @@ class RetrofitClient @Inject constructor(
 
     private fun needAddBearer(request: Request): Boolean {
         val buffer = okio.Buffer()
-        request.body()?.writeTo(buffer)
+        request.body?.writeTo(buffer)
 
         return when {
             dataUserSession.token.isNotBlank() -> {

@@ -1,5 +1,6 @@
 package com.team2.chitchat.hilt
 
+import android.app.Application
 import com.team2.chitchat.data.repository.remote.backend.ApiService
 import com.team2.chitchat.data.repository.remote.backend.RetrofitClient
 import dagger.Module
@@ -11,6 +12,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModuleHilt {
+
     @Provides
     @Singleton
     fun provideApiServicesBaseProject(retrofitClient: RetrofitClient): ApiService {
