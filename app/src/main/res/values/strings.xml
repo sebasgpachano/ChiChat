@@ -36,5 +36,8 @@
     <string name="enter_nick">Ingresa el nick</string>
     <string name="register">Registrarse</string>
     <string name="registration_title">Registro</string>
+    <string name="user_error">Usuario ya existe</string>
+    <string name="password_error">Contraseñas no coinciden</string>
+    <string name="required_field">Campo vacío</string>
 
 </resources>
