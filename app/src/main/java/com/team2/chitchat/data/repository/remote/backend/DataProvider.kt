@@ -20,7 +20,7 @@ class DataProvider @Inject constructor(
     }
 
     //LoginUser
-    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<PostLoginModel>> {
+    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> {
         return remoteDataSource.postLoginUser(loginUserRequest)
     }
 

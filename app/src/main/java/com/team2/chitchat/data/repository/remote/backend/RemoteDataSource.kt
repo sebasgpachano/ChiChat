@@ -35,7 +35,7 @@ class RemoteDataSource @Inject constructor(
         }
 
     //LoginUser
-    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<PostLoginModel>> =
+    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> =
         flow {
             val apiResult = callApiService.callPostLoginUser(loginUserRequest)
             if (apiResult is BaseResponse.Success) {
@@ -45,7 +45,7 @@ class RemoteDataSource @Inject constructor(
                         saveUserID(response.user?.id?:"")
                     }
                 }
-                emit(BaseResponse.Success(PostLoginMapper().fromResponse(apiResult.data)))
+                emit(BaseResponse.Success(true))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }

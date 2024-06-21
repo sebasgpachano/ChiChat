@@ -84,6 +84,8 @@ class RetrofitClient @Inject constructor(
     }
 
     private fun needAddBearer(request: Request): Boolean {
+        val buffer = okio.Buffer()
+        request.body?.writeTo(buffer)
 
         return when {
             simpleApplication.getAuthToken().isNotBlank() -> {

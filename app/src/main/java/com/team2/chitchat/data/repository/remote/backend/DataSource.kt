@@ -15,7 +15,7 @@ interface DataSource {
     fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>>
 
     //LoginUser
-    fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<PostLoginModel>>
+    fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>>
 
     //ContactsList
     fun getContactsList(): Flow<BaseResponse<ArrayList<GetUserModel>>>

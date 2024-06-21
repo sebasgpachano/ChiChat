@@ -22,10 +22,8 @@ class LoginViewModel @Inject constructor(
 
 ) {
 
-    private val loginMutableStateFlow: MutableStateFlow<PostLoginModel> = MutableStateFlow(
-        PostLoginModel()
-    )
-    val loginStateFlow: StateFlow<PostLoginModel> = loginMutableStateFlow
+    private val loginMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val loginStateFlow: StateFlow<Boolean> = loginMutableStateFlow
 
     fun getAuthenticationUser(loginUserRequest: LoginUserRequest) {
         viewModelScope.launch(Dispatchers.IO) {

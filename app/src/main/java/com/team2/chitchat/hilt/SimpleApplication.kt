@@ -33,11 +33,4 @@ class SimpleApplication : Application() {
             EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_USER_ID
         )
     }
-    fun getBearerTokenDes(): String {
-        return "Desarrollo"
-    }
-
-    fun getBearerTokenPro(): String {
-        return "Produccion"
-    }
 }
