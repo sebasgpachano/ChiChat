@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.BASE_URL
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.RETROFIT_TIMEOUT_IN_SECOND
 import com.team2.chitchat.hilt.SimpleApplication
-import com.team2.chitchat.utils.TAG
+import com.team2.chitchat.ui.extensions.TAG
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

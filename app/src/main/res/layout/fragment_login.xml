@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textVPasswordLoginFragment" />
 
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchBiometric"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -78,7 +78,7 @@
         android:thumbTint="@color/switch_color"
         android:trackTint="@color/switch_color"/>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/buttonLogin"
         style="@style/buttonStyle"
         android:layout_width="126dp"

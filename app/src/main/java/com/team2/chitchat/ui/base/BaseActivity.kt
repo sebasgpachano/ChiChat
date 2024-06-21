@@ -12,8 +12,8 @@ import androidx.viewbinding.ViewBinding
 import com.team2.chitchat.R
 import com.team2.chitchat.ui.dialogfragment.LoadingDialogFragment
 import com.team2.chitchat.ui.dialogfragment.LoadingDialogFragment.Companion.LOADING_DIALOG_FRAGMENT_TAG
-import com.team2.chitchat.utils.gone
-import com.team2.chitchat.utils.visible
+import com.team2.chitchat.ui.extensions.gone
+import com.team2.chitchat.ui.extensions.visible
 import javax.inject.Inject
 
 abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClickListener {

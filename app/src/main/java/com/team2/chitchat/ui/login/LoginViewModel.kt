@@ -2,12 +2,11 @@ package com.team2.chitchat.ui.login
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.team2.chitchat.data.domain.model.users.PostLoginModel
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.PostLoginUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
-import com.team2.chitchat.utils.TAG
+import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

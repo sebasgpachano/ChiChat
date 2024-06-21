@@ -14,7 +14,7 @@ import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.databinding.FragmentChatListBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chatlist.adapter.ChatsListAdapter
-import com.team2.chitchat.utils.TAG
+import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

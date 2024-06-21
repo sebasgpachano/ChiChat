@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.databinding.ItemRecyclerviewListChatsBinding
-import com.team2.chitchat.utils.gone
+import com.team2.chitchat.ui.extensions.gone
 
 class ChatsListViewHolder(
     private val binding: ItemRecyclerviewListChatsBinding,

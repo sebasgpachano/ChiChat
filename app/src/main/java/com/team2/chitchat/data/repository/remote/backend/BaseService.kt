@@ -6,7 +6,7 @@ import com.team2.chitchat.BuildConfig
 import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.repository.remote.response.error.ErrorResponse
-import com.team2.chitchat.utils.TAG
+import com.team2.chitchat.ui.extensions.TAG
 import retrofit2.Response
 
 abstract class BaseService {
