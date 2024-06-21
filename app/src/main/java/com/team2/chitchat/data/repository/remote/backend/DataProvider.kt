@@ -12,8 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DataProvider @Inject constructor(
-    private val remoteDataSource: RemoteDataSource,
-    private val dataPreferences: RetrofitInterceptor
+    private val remoteDataSource: RemoteDataSource
 ) : DataSource {
     //RegisterUSer
     override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> {

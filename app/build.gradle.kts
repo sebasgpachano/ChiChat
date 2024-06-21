@@ -19,6 +19,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String","BASE_URL","\"https://mock-movilidad.vass.es/chatvass/\"")
     }
 
     buildTypes {
@@ -59,6 +60,8 @@ dependencies {
     implementation(libs.bundles.retrofit)
     //Okhttp
     implementation(libs.okhttp)
+    //Interceptor
+    implementation(libs.interceptor)
     implementation(libs.gson)
     //Hilt
     implementation(libs.daggerHilt)

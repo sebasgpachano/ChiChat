@@ -80,6 +80,9 @@ androidx-security-crypto-ktx = { group = "androidx.security", name = "security-c
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
+#Iterceptor
+interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp"}
+
 #Crypto SharedPreferences
 androidxCryptoSharedPreferences = { group = "androidx.security", name = "security-crypto", version.ref = "cryptoSharedPreferences" }
 

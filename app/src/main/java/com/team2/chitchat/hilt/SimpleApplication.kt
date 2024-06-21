@@ -13,12 +13,24 @@ class SimpleApplication : Application() {
 
     fun saveAuthToken(token: String) {
         encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
-            EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_KEY_LOGIN_AUTH, token
+            EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_KEY_LOGIN_AUTH,
+            token
         )
     }
     fun getAuthToken(): String {
         return encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences(
             EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_KEY_LOGIN_AUTH
+        )
+    }
+    fun saveUserID(userID: String) {
+        encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
+            EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_USER_ID,
+            userID
+        )
+    }
+    fun getUserID(): String {
+        return encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences(
+            EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_USER_ID
         )
     }
     fun getBearerTokenDes(): String {
