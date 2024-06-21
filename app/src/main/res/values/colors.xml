@@ -17,6 +17,7 @@
     <color name="grayLight">#BCBCBC</color>
     <color name="black_opacity_20">#20000000</color>
     <color name="greenEnabled">#12E100</color>
+    <color name="redError">#F31B00</color>
 
     <color name="colorPrimaryLight">#000000</color>
     <color name="colorPrimaryDarkLight">#303F9F</color>

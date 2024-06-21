@@ -78,8 +78,9 @@
         android:thumbTint="@color/switch_color"
         android:trackTint="@color/switch_color"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonLogin"
+        style="@style/buttonStyle"
         android:layout_width="126dp"
         android:layout_height="wrap_content"
         android:text="@string/textLogin"
