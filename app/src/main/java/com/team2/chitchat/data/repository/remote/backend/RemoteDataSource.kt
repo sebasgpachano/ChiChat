@@ -28,11 +28,6 @@ class RemoteDataSource @Inject constructor(
         flow {
             val apiResult = callApiService.callPostRegisterUser(registerUserRequest)
             if (apiResult is BaseResponse.Success) {
-                apiResult.data.user?.let {user->
-                    simpleApplication.saveAuthToken(user.token?:"")
-                    simpleApplication.saveUserID(user.id?:"")
-                }
-
                 emit(BaseResponse.Success(PostRegisterMapper().fromResponse(apiResult.data)))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
@@ -44,6 +39,12 @@ class RemoteDataSource @Inject constructor(
         flow {
             val apiResult = callApiService.callPostLoginUser(loginUserRequest)
             if (apiResult is BaseResponse.Success) {
+                apiResult.data?.let {response->
+                    simpleApplication.apply {
+                        saveAuthToken(response.token?:"")
+                        saveUserID(response.user?.id?:"")
+                    }
+                }
                 emit(BaseResponse.Success(PostLoginMapper().fromResponse(apiResult.data)))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
