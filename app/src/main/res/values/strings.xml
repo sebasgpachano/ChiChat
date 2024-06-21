@@ -2,7 +2,7 @@
     <string name="app_name">ChitChat</string>
     <!-- Toolbar -->
     <string name="toolbar_description_back_button">Boton para ir hacia atras</string>
-    <string name="toolbar_description_profile_button">Poton para acceder a perfil</string>
+    <string name="toolbar_description_profile_button">Boton para acceder a perfil</string>
     <string name="toolbar_description_notification_button">Boton para acceder a notificaciones</string>
     <!-- Loading fragment -->
     <string name="loading_text">Cargando...</string>
@@ -30,5 +30,20 @@
     <string name="imageLogoDescription">Logo ChitChat</string>
     <string name="textRegisterLoginF">Regístrate</string>
     <string name="textRegisterQuestionLoginF">¿No tienes cuenta?</string>
+
+    <!-- Registration fragment -->
+    <string name="user">Usuario</string>
+    <string name="enter_user">Ingresa el usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="enter_password">Ingresa la contraseña</string>
+    <string name="repeat_password">Repetir Contraseña</string>
+    <string name="repeat_pass">Repite la contraseña</string>
+    <string name="nick">Nick</string>
+    <string name="enter_nick">Ingresa el nick</string>
+    <string name="register">Registrarse</string>
+    <string name="registration_title">Registro</string>
+    <string name="user_error">Usuario ya existe</string>
+    <string name="password_error">Contraseñas no coinciden</string>
+    <string name="required_field">Campo vacío</string>
 
 </resources>
