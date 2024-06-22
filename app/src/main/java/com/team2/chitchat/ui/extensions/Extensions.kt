@@ -1,4 +1,4 @@
-package com.team2.chitchat.utils
+package com.team2.chitchat.ui.extensions
 
 import android.content.Context
 import android.os.Handler

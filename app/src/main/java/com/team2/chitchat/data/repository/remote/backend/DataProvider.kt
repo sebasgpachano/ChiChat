@@ -11,15 +11,16 @@ import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class DataProvider @Inject constructor(private val remoteDataSource: RemoteDataSource) :
-    DataSource {
+class DataProvider @Inject constructor(
+    private val remoteDataSource: RemoteDataSource
+) : DataSource {
     //RegisterUSer
     override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> {
         return remoteDataSource.postRegisterUser(registerUserRequest)
     }
 
     //LoginUser
-    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<PostLoginModel>> {
+    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> {
         return remoteDataSource.postLoginUser(loginUserRequest)
     }
 

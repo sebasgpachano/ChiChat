@@ -6,7 +6,7 @@ import com.team2.chitchat.data.repository.remote.request.users.RegisterUserReque
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.PostRegisterUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
-import com.team2.chitchat.utils.TAG
+import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

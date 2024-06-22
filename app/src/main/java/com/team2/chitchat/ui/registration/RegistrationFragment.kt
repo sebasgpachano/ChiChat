@@ -11,8 +11,8 @@ import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.databinding.FragmentRegistrationBinding
 import com.team2.chitchat.ui.base.BaseFragment
-import com.team2.chitchat.utils.setErrorBorder
-import com.team2.chitchat.utils.toastLong
+import com.team2.chitchat.ui.extensions.setErrorBorder
+import com.team2.chitchat.ui.extensions.toastLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

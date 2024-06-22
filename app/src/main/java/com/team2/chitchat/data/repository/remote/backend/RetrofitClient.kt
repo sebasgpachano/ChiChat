@@ -4,8 +4,8 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.BASE_URL
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.RETROFIT_TIMEOUT_IN_SECOND
-import com.team2.chitchat.data.sesion.DataUserSession
-import com.team2.chitchat.utils.TAG
+import com.team2.chitchat.hilt.SimpleApplication
+import com.team2.chitchat.ui.extensions.TAG
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -20,7 +20,7 @@ import javax.net.ssl.HostnameVerifier
 
 @Singleton
 class RetrofitClient @Inject constructor(
-    val dataUserSession: DataUserSession
+    private val simpleApplication: SimpleApplication
 ) {
     companion object {
         const val HEADER_KEY_TOKEN = "Authorization"
@@ -57,15 +57,15 @@ class RetrofitClient @Inject constructor(
             val request = when {
                 needAddBearer(chain.request()) -> {
                     val build = original.newBuilder()
-                        .header(HEADER_KEY_TOKEN, dataUserSession.token)
-                        .method(original.method(), original.body())
+                        .header(HEADER_KEY_TOKEN, simpleApplication.getAuthToken())
+                        .method(original.method, original.body)
                         .build()
                     build
                 }
 
                 else -> {
                     original.newBuilder()
-                        .method(original.method(), original.body())
+                        .method(original.method, original.body)
                         .build()
                 }
             }
@@ -85,10 +85,10 @@ class RetrofitClient @Inject constructor(
 
     private fun needAddBearer(request: Request): Boolean {
         val buffer = okio.Buffer()
-        request.body()?.writeTo(buffer)
+        request.body?.writeTo(buffer)
 
         return when {
-            dataUserSession.token.isNotBlank() -> {
+            simpleApplication.getAuthToken().isNotBlank() -> {
                 Log.d(TAG, "%> NeedAddBearer")
                 true
             }

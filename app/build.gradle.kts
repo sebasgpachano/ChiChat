@@ -19,6 +19,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String","BASE_URL","\"https://mock-movilidad.vass.es/chatvass/\"")
     }
 
     buildTypes {
@@ -45,6 +46,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.security.crypto.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -56,9 +58,17 @@ dependencies {
     implementation(libs.bundles.lifecycle)
     //Retrofit
     implementation(libs.bundles.retrofit)
+    //Okhttp
+    implementation(libs.okhttp)
+    //Interceptor
+    implementation(libs.interceptor)
+    implementation(libs.gson)
     //Hilt
     implementation(libs.daggerHilt)
     kapt(libs.daggerHiltCompiler)
+    // CryptoSharedPreference
+
+    implementation(libs.androidxCryptoSharedPreferences)
 }
 
 kapt {

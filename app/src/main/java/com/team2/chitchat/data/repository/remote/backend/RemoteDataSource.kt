@@ -13,12 +13,15 @@ import com.team2.chitchat.data.mapper.users.PostRegisterMapper
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.hilt.SimpleApplication
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(private val callApiService: CallApiService) :
-    BaseService(), DataSource {
+class RemoteDataSource @Inject constructor(
+    private val callApiService: CallApiService,
+    private val simpleApplication: SimpleApplication
+) : BaseService(), DataSource {
 
     //RegisterUser
     override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> =
@@ -32,11 +35,17 @@ class RemoteDataSource @Inject constructor(private val callApiService: CallApiSe
         }
 
     //LoginUser
-    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<PostLoginModel>> =
+    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> =
         flow {
             val apiResult = callApiService.callPostLoginUser(loginUserRequest)
             if (apiResult is BaseResponse.Success) {
-                emit(BaseResponse.Success(PostLoginMapper().fromResponse(apiResult.data)))
+                apiResult.data?.let {response->
+                    simpleApplication.apply {
+                        saveAuthToken(response.token?:"")
+                        saveUserID(response.user?.id?:"")
+                    }
+                }
+                emit(BaseResponse.Success(true))
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }
