@@ -7,10 +7,10 @@ import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.mapper.chats.ListChatsMapper
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.sesion.DataUserSession
 import com.team2.chitchat.data.usecase.GetChatsUseCase
 import com.team2.chitchat.data.usecase.GetContactsUseCase
 import com.team2.chitchat.data.usecase.GetMessagesUseCase
+import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
     private val application: Application,
-    private val dataUserSession: DataUserSession,
+    private val simpleApplication: SimpleApplication,
     private val getChatsUseCase: GetChatsUseCase,
     private val getUserUseCase: GetContactsUseCase,
     private val getMessagesUseCase: GetMessagesUseCase
@@ -81,7 +81,7 @@ class ChatListViewModel @Inject constructor(
                         loadingMutableSharedFlow.emit(false)
                         val listChatsMapper =
                             ListChatsMapper(
-                                dataUserSession,
+                                simpleApplication,
                                 it.data,
                                 listUsers,
                                 listMessages,
