@@ -11,7 +11,7 @@ import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
     var binding: B? = null
-    lateinit var baseActivity: BaseActivity<*>
+    private lateinit var baseActivity: BaseActivity<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
