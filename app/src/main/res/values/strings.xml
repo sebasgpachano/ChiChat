@@ -44,6 +44,9 @@
     <string name="registration_title">Registro</string>
     <string name="user_error">Usuario ya existe</string>
     <string name="password_error">Contraseñas no coinciden</string>
+    <string name="password_invalid">Contraseña inválida</string>
     <string name="required_field">Campo vacío</string>
+    <string name="accept">Aceptar</string>
+    <string name="error">Error</string>
 
 </resources>

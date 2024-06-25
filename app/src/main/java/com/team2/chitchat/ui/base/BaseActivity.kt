@@ -12,6 +12,7 @@ import androidx.viewbinding.ViewBinding
 import com.team2.chitchat.R
 import com.team2.chitchat.ui.dialogfragment.LoadingDialogFragment
 import com.team2.chitchat.ui.dialogfragment.LoadingDialogFragment.Companion.LOADING_DIALOG_FRAGMENT_TAG
+import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.gone
 import com.team2.chitchat.ui.extensions.visible
 import javax.inject.Inject
@@ -28,6 +29,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
     private var ibToolbarNotification: ImageButton? = null
 
     private var loadingDialogFragment: LoadingDialogFragment = LoadingDialogFragment()
+    private val messageDialogFragment: MessageDialogFragment = MessageDialogFragment()
 
     @Inject
     lateinit var baseActivityControlShowLoading: BaseActivityControlShowLoading
@@ -200,7 +202,61 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
             tvToolbarTitle?.gone()
         }
     }
+    fun showMessageWithOneButton(
+        iconID: Int,
+        title: String? = null,
+        message: String,
+        textPositiveButton: String,
+        listener: MessageDialogFragment.MessageDialogListener
+    ) {
+        if (supportFragmentManager.findFragmentByTag(MessageDialogFragment.MESSAGE_DIALOG_TAG) == null) {
+            messageDialogFragment.apply {
+                this.iconID = iconID
+                this.title =  title
+                this.message = message
+                this.positiveButton = textPositiveButton
+                this.listener = listener
+            }
+            messageDialogFragment.show(supportFragmentManager,MessageDialogFragment.MESSAGE_DIALOG_TAG)
+        } else {
+            messageDialogFragment.refreshValues(
+                iconID = iconID,
+                title = title,
+                message = message,
+                positiveButton = textPositiveButton,
+                listener = listener
+            )
+        }
 
+    }
+    fun showMessageWithTwoButton(
+        iconID: Int,
+        title: String? = null,
+        message: String,
+        textPositiveButton: String,
+        textNegativeButton: String,
+        listener: MessageDialogFragment.MessageDialogListener
+        ) {
+        if (supportFragmentManager.findFragmentByTag(MessageDialogFragment.MESSAGE_DIALOG_TAG) == null) {
+            messageDialogFragment.apply {
+                this.iconID = iconID
+                this.title =  title
+                this.message = message
+                this.positiveButton = textPositiveButton
+                this.negativeButton = textNegativeButton
+                this.listener = listener
+            }
+            messageDialogFragment.show(supportFragmentManager,MessageDialogFragment.MESSAGE_DIALOG_TAG)
+        } else {
+            messageDialogFragment.refreshValues(
+                title = title,
+                message = message,
+                positiveButton = textPositiveButton,
+                negativeButton = textNegativeButton,
+                listener = listener
+            )
+        }
+    }
     protected open fun callViewModelSaveData() = Unit
     abstract fun inflateBinding()
     abstract fun observeViewModel()

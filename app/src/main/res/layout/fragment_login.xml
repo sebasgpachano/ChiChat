@@ -39,12 +39,19 @@
         android:labelFor="@+id/textVUserLoginFragment"
         style="@style/customEditText"
         android:importantForAutofill="no" />
+    <TextView
+        android:id="@+id/textVUserErrorLoginFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/errorTextView"
+        app:layout_constraintStart_toStartOf="@id/editTUserLoginFragment"
+        app:layout_constraintTop_toBottomOf="@id/editTUserLoginFragment" />
 
     <TextView
         android:id="@+id/textVPasswordLoginFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/editTUserLoginFragment"
+        app:layout_constraintTop_toBottomOf="@id/textVUserErrorLoginFragment"
         app:layout_constraintStart_toStartOf="@+id/editTPasswordLoginFragment"
         android:layout_marginTop="13.5dp"
         android:text="@string/textPassword"
@@ -64,7 +71,13 @@
         app:layout_constraintStart_toStartOf="@id/imageVLoginFragment"
         app:layout_constraintTop_toBottomOf="@+id/textVPasswordLoginFragment" />
 
-
+    <TextView
+        android:id="@+id/textVPasswordErrorLoginFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/errorTextView"
+        app:layout_constraintStart_toStartOf="@id/editTPasswordLoginFragment"
+        app:layout_constraintTop_toBottomOf="@id/editTPasswordLoginFragment" />
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchBiometric"
         android:layout_width="0dp"
@@ -74,7 +87,7 @@
         android:text="@string/textAccessBiometric"
         app:layout_constraintEnd_toEndOf="@+id/editTPasswordLoginFragment"
         app:layout_constraintStart_toStartOf="@+id/editTPasswordLoginFragment"
-        app:layout_constraintTop_toBottomOf="@+id/editTPasswordLoginFragment"
+        app:layout_constraintTop_toBottomOf="@+id/textVPasswordErrorLoginFragment"
         android:thumbTint="@color/switch_color"
         android:trackTint="@color/switch_color"/>
 

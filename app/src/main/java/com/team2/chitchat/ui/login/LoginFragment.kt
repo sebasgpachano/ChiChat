@@ -5,7 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,8 +14,10 @@ import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.databinding.FragmentLoginBinding
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseFragment
+import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
+import com.team2.chitchat.ui.extensions.TAG
+import com.team2.chitchat.ui.extensions.setErrorBorder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -55,6 +58,57 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.errorFlow.collect{errorModel->
 
+                when(errorModel.errorCode) {
+                    "400" -> {
+                        binding?.apply {
+                            editTUserLoginFragment.setErrorBorder(
+                                true,
+                                requireContext(),
+                                binding?.textVUserErrorLoginFragment
+                            )
+                            textVUserErrorLoginFragment.setText(R.string.user_error)
+                        }
+                    }
+                    "401" -> {
+                        binding?.apply {
+                            editTPasswordLoginFragment.setErrorBorder(
+                                true,
+                                requireContext(),
+                                binding?.textVPasswordErrorLoginFragment
+                            )
+                            textVPasswordErrorLoginFragment.setText(R.string.password_invalid)
+                        }
+                    }
+                    "" -> {
+                        binding?.apply {
+                            editTUserLoginFragment.setErrorBorder(
+                                false,
+                                requireContext(),
+                                binding?.textVUserErrorLoginFragment
+                            )
+                            textVUserErrorLoginFragment.setText(R.string.user_error)
+                        }
+                        binding?.apply {
+                            editTPasswordLoginFragment.setErrorBorder(
+                                false,
+                                requireContext(),
+                                binding?.textVPasswordErrorLoginFragment
+                            )
+                            textVPasswordErrorLoginFragment.setText(R.string.password_invalid)
+                        }
+                    }
+                    else -> {
+                        showErrorMessage(
+                            message = errorModel.message,
+                            listener = object: MessageDialogFragment.MessageDialogListener{
+                                override fun positiveButtonOnclick(view: View) {
+                                    Log.d(this.TAG, "positiveButtonOnclick: ")
+                                }
+                            }
+                        )
+                    }
+                }
+
             }
         }
         lifecycleScope.launch {
@@ -64,37 +118,49 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
 
     }
+
+    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
+
+    }
     private fun initListener() {
-        binding?.let {fragmentBinding->
-            fragmentBinding.textButtonRegisterLoginF.apply {
-                setOnClickListener {
-                    findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
-                }
+
+        binding?.apply {
+
+            textButtonRegisterLoginF.setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
             }
-            fragmentBinding.textVRegisterLoginF.apply {
-                setOnClickListener {
-                    findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
-                }
+            textVRegisterLoginF.setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
             }
-            fragmentBinding.buttonLogin.apply {
-                setOnClickListener {
-                    val userInput = fragmentBinding.editTUserLoginFragment.text.toString()
-                    val passwordInput = fragmentBinding.editTPasswordLoginFragment.text.toString()
-                    if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
-                        viewModel.getAuthenticationUser(LoginUserRequest(
-                            login = userInput, password = passwordInput
-                        ))
-                    } else {
-                        Toast.makeText(context,"Por favor ingresa usuario y contraseña válidos",Toast.LENGTH_LONG)
-                            .show()
-                    }
+            buttonLogin.setOnClickListener {
+                viewModel.resetError()
+                val userInput = editTUserLoginFragment.text.toString()
+                val passwordInput = editTPasswordLoginFragment.text.toString()
+                if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
+                    viewModel.getAuthenticationUser(LoginUserRequest(
+                        login = userInput, password = passwordInput
+                    ))
+                } else {
+                    emptyEditText(
+                        listOf(
+                            editTUserLoginFragment to textVUserErrorLoginFragment,
+                            editTPasswordLoginFragment to textVPasswordErrorLoginFragment
+                        )
+                    )
                 }
             }
         }
 
     }
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
+    private fun emptyEditText(pairOfEditTextToTextView: List<Pair<EditText,TextView>>) {
 
+        pairOfEditTextToTextView.forEach { (editText, textView) ->
+            if (editText.text.toString().isBlank()) {
+                textView.text = getString(R.string.required_field)
+                editText.setErrorBorder(true, requireContext(), textView)
+            }
+        }
     }
+
 
 }
