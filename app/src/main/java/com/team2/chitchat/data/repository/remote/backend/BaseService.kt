@@ -35,9 +35,16 @@ abstract class BaseService {
         val errorBody = response.errorBody()?.string()
         val errorData = try {
             val parsedData = Gson().fromJson(errorBody, ErrorResponse::class.java)
-            if (response.code() == 401) {
-                parsedData.errorCode = 401.toString()
-                parsedData.error = response.message()
+
+            when (response.code()) {
+                400 -> {
+                    parsedData.errorCode = "400"
+                    parsedData.error = response.message()
+                }
+                401 -> {
+                    parsedData.errorCode = "401"
+                    parsedData.error = response.message()
+                }
             }
             parsedData
         } catch (exception: java.lang.Exception) {

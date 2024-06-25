@@ -57,14 +57,58 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
         lifecycleScope.launch {
             viewModel.errorFlow.collect{errorModel->
-                showErrorMessage(
-                    message = errorModel.message,
-                    listener = object: MessageDialogFragment.MessageDialogListener{
-                        override fun positiveButtonOnclick(view: View) {
-                            Log.d(this.TAG, "positiveButtonOnclick: ")
+
+                when(errorModel.errorCode) {
+                    "400" -> {
+                        binding?.apply {
+                            editTUserLoginFragment.setErrorBorder(
+                                true,
+                                requireContext(),
+                                binding?.textVUserErrorLoginFragment
+                            )
+                            textVUserErrorLoginFragment.setText(R.string.user_error)
                         }
                     }
-                )
+                    "401" -> {
+                        binding?.apply {
+                            editTPasswordLoginFragment.setErrorBorder(
+                                true,
+                                requireContext(),
+                                binding?.textVPasswordErrorLoginFragment
+                            )
+                            textVPasswordErrorLoginFragment.setText(R.string.password_invalid)
+                        }
+                    }
+                    "" -> {
+                        binding?.apply {
+                            editTUserLoginFragment.setErrorBorder(
+                                false,
+                                requireContext(),
+                                binding?.textVUserErrorLoginFragment
+                            )
+                            textVUserErrorLoginFragment.setText(R.string.user_error)
+                        }
+                        binding?.apply {
+                            editTPasswordLoginFragment.setErrorBorder(
+                                false,
+                                requireContext(),
+                                binding?.textVPasswordErrorLoginFragment
+                            )
+                            textVPasswordErrorLoginFragment.setText(R.string.password_invalid)
+                        }
+                    }
+                    else -> {
+                        showErrorMessage(
+                            message = errorModel.message,
+                            listener = object: MessageDialogFragment.MessageDialogListener{
+                                override fun positiveButtonOnclick(view: View) {
+                                    Log.d(this.TAG, "positiveButtonOnclick: ")
+                                }
+                            }
+                        )
+                    }
+                }
+
             }
         }
         lifecycleScope.launch {
@@ -89,6 +133,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
             }
             buttonLogin.setOnClickListener {
+                viewModel.resetError()
                 val userInput = editTUserLoginFragment.text.toString()
                 val passwordInput = editTPasswordLoginFragment.text.toString()
                 if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
@@ -110,9 +155,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private fun emptyEditText(pairOfEditTextToTextView: List<Pair<EditText,TextView>>) {
 
         pairOfEditTextToTextView.forEach { (editText, textView) ->
-            if (editText?.text.toString().isBlank()) {
-                textView?.text = getString(R.string.required_field)
-                editText?.setErrorBorder(true, requireContext(), textView)
+            if (editText.text.toString().isBlank()) {
+                textView.text = getString(R.string.required_field)
+                editText.setErrorBorder(true, requireContext(), textView)
             }
         }
     }
