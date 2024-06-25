@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.team2.chitchat.R
+import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
     var binding: B? = null
-    private lateinit var baseActivity: BaseActivity<*>
+    lateinit var baseActivity: BaseActivity<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +99,35 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     )
-
+    fun showErrorMessage(
+        message: String,
+        listener: MessageDialogFragment.MessageDialogListener
+    ) {
+        baseActivity.showMessageWithOneButton(
+            iconID = R.drawable.error_24px,
+            title = context?.getString(R.string.error),
+            message = message,
+            textPositiveButton = resources.getString(R.string.accept),
+            listener = listener
+        )
+    }
+    fun showMessageDialog(
+        iconID: Int,
+        title: String,
+        message: String,
+        textPositiveButton: String,
+        textNegativeButton: String,
+        listener: MessageDialogFragment.MessageDialogListener
+    ) {
+        baseActivity.showMessageWithTwoButton(
+            iconID = iconID,
+            title = title,
+            message = message,
+            textPositiveButton = textPositiveButton,
+            textNegativeButton = textNegativeButton,
+            listener = listener
+        )
+    }
     abstract fun configureToolbarAndConfigScreenSections()
 
     protected open fun setupViewModel() = Unit

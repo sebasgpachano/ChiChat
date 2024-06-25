@@ -45,5 +45,7 @@
     <string name="user_error">Usuario ya existe</string>
     <string name="password_error">Contraseñas no coinciden</string>
     <string name="required_field">Campo vacío</string>
+    <string name="accept">Aceptar</string>
+    <string name="error">Error</string>
 
 </resources>

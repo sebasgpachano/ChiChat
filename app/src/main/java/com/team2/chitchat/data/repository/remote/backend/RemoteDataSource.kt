@@ -3,12 +3,10 @@ package com.team2.chitchat.data.repository.remote.backend
 import com.team2.chitchat.data.domain.model.chats.GetChatsModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
-import com.team2.chitchat.data.domain.model.users.PostLoginModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
 import com.team2.chitchat.data.mapper.chats.GetChatsMapper
 import com.team2.chitchat.data.mapper.messages.GetMessagesMapper
 import com.team2.chitchat.data.mapper.users.GetContactsListMapper
-import com.team2.chitchat.data.mapper.users.PostLoginMapper
 import com.team2.chitchat.data.mapper.users.PostRegisterMapper
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
@@ -39,7 +37,7 @@ class RemoteDataSource @Inject constructor(
         flow {
             val apiResult = callApiService.callPostLoginUser(loginUserRequest)
             if (apiResult is BaseResponse.Success) {
-                apiResult.data?.let {response->
+                apiResult.data.let { response->
                     simpleApplication.apply {
                         saveAuthToken(response.token?:"")
                         saveUserID(response.user?.id?:"")
