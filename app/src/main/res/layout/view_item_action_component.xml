@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutButtonActionComponent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_border"
+    android:paddingVertical="11dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+        android:id="@+id/imageVLeftActionItem"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button"
+        android:backgroundTint="@color/azul31b1cd"
+        android:padding="11dp"
+        android:src="@drawable/logout_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textVActionItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/imageVLeftActionItem"
+        app:layout_constraintEnd_toStartOf="@+id/imageVIconArrowActionItem"
+        app:layout_constraintStart_toEndOf="@id/imageVLeftActionItem"
+        app:layout_constraintTop_toTopOf="@id/imageVLeftActionItem"
+        tools:text="Cerrar sesión" />
+
+    <ImageView
+        android:id="@+id/imageVIconArrowActionItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_forward_ios_24"
+        app:layout_constraintBottom_toBottomOf="@id/textVActionItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textVActionItem" />
+</androidx.constraintlayout.widget.ConstraintLayout>
