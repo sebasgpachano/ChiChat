@@ -19,6 +19,7 @@ class ActionItemViewGroup @JvmOverloads constructor(
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.ActionItemViewGroup)
         binding.imageVLeftActionItem.setImageDrawable(attributes.getDrawable(R.styleable.ActionItemViewGroup_icon))
         binding.textVActionItem.text = attributes.getString(R.styleable.ActionItemViewGroup_textAction)
+        attributes.recycle()
     }
 
 }
