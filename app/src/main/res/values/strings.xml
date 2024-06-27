@@ -48,6 +48,10 @@
     <string name="required_field">Campo vacío</string>
     <string name="accept">Aceptar</string>
     <string name="error">Error</string>
+    <string name="close_session">Cerrar sesióon</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="editProfileDescription">icono de camara</string>
+    <string name="photoProfileDescription">Photo de perfil en pantalla de Perfil</string>
 
     <!-- Chat fragment-->
     <string name="send_message">Escribe un mensaje...</string>

@@ -4,6 +4,7 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="editTextStyle">@style/customEditText</item>
+        <item name="android:textViewStyle">@style/poppinsRegular16</item>
         <!-- Colores para el tema claro -->
 
 
