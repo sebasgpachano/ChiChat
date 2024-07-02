@@ -48,8 +48,18 @@
     <string name="required_field">Campo vacío</string>
     <string name="accept">Aceptar</string>
     <string name="error">Error</string>
-    <string name="close_session">Cerrar sesióon</string>
+    <string name="close_session">Cerrar sesión</string>
     <string name="change_password">Cambiar contraseña</string>
     <string name="editProfileDescription">icono de camara</string>
     <string name="photoProfileDescription">Photo de perfil en pantalla de Perfil</string>
+    <string name="icon_action_description">icono de una accion o funcionalidad añadida</string>
+    <string name="icon_arrow_right_description">Icono dirección derecha o hacia adelante</string>
+    <string name="cancel">Cancelar</string>
+    <string name="question_close_session">¿Estás seguro de que quieres cerrar sesión?</string>
+    <string name="message_logout">Su sesión ha caducado debe de autenticar su cuenta de nuevo.</string>
+    <string name="error_401">Permisos no autorizados, vuelve iniciar sesión.</string>
+    <string name="error_403">Error en la solicitud, vuelve a intentarlo más tarde.</string>
+    <string name="error_500">Tenemos problemas internos, contacta con servicio técnico.</string>
+    <string name="error_unknown">Algo inesperado ha ocurrido, vuelve a intentarlo.</string>
+    <string name="profile">Perfil</string>
 </resources>

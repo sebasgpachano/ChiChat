@@ -7,6 +7,7 @@ import com.team2.chitchat.data.domain.model.users.PostRegisterModel
 import com.team2.chitchat.data.mapper.chats.GetChatsMapper
 import com.team2.chitchat.data.mapper.messages.GetMessagesMapper
 import com.team2.chitchat.data.mapper.users.GetContactsListMapper
+import com.team2.chitchat.data.mapper.users.GetUserMapper
 import com.team2.chitchat.data.mapper.users.PostRegisterMapper
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
@@ -74,6 +75,25 @@ class RemoteDataSource @Inject constructor(
         val apiResult = callApiService.callGetMessages()
         if (apiResult is BaseResponse.Success) {
             emit(BaseResponse.Success(GetMessagesMapper().fromResponse(apiResult.data)))
+        } else if (apiResult is BaseResponse.Error) {
+            emit(BaseResponse.Error(apiResult.error))
+        }
+    }
+
+    override fun getProfile(): Flow<BaseResponse<GetUserModel>> = flow{
+        val apiResult = callApiService.callGetProfile()
+        if (apiResult is BaseResponse.Success) {
+            emit(BaseResponse.Success(GetUserMapper().fromResponse(apiResult.data)))
+        } else if (apiResult is BaseResponse.Error) {
+            emit(BaseResponse.Error(apiResult.error))
+        }
+    }
+
+    override fun putLogOut(): Flow<BaseResponse<Boolean>> = flow{
+        val apiResult = callApiService.callLogout()
+        if (apiResult is BaseResponse.Success) {
+            simpleApplication.saveAuthToken("")
+            emit(BaseResponse.Success(true))
         } else if (apiResult is BaseResponse.Error) {
             emit(BaseResponse.Error(apiResult.error))
         }

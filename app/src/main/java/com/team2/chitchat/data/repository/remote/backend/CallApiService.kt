@@ -3,6 +3,7 @@ package com.team2.chitchat.data.repository.remote.backend
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.repository.remote.response.LogOutResponse
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
 import com.team2.chitchat.data.repository.remote.response.messages.GetMessagesResponse
 import com.team2.chitchat.data.repository.remote.response.users.GetUserResponse
@@ -39,4 +40,12 @@ class CallApiService @Inject constructor(private val apiService: ApiService) : B
         return apiCall { apiService.getMessages() }
     }
 
+    // Get Profile
+    suspend fun callGetProfile(): BaseResponse<GetUserResponse> {
+        return apiCall { apiService.getProfile() }
+    }
+
+    suspend fun callLogout(): BaseResponse<LogOutResponse> {
+        return apiCall { apiService.putLogOut() }
+    }
 }

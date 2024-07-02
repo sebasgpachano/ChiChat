@@ -3,8 +3,7 @@
     android:id="@+id/linearLayoutButtonActionComponent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bottom_border"
-    android:paddingVertical="11dp"
+    android:paddingHorizontal="1dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <ImageView
@@ -39,4 +38,10 @@
         app:layout_constraintBottom_toBottomOf="@id/textVActionItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/textVActionItem" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="11dp"
+        android:background="@color/grayD9D9D9"
+        app:layout_constraintTop_toBottomOf="@id/imageVLeftActionItem"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.databinding.FragmentChatListBinding
+import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chatlist.adapter.ChatsListAdapter
 import com.team2.chitchat.ui.extensions.TAG
@@ -34,6 +35,9 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
         configRecyclerView()
         binding?.btnAddChat?.setOnClickListener {
             findNavController().navigate(ChatListFragmentDirections.actionChatListFragmentToContactsListFragment())
+        }
+        if ((context?.applicationContext as SimpleApplication).getAuthToken().isBlank()) {
+            findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
         }
     }
 

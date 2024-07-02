@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.viewpager.widget.ViewPager.LayoutParams
 import com.team2.chitchat.R
 import com.team2.chitchat.databinding.FragmentDialogErrorMessageBinding
+import com.team2.chitchat.ui.extensions.TAG
 
 class MessageDialogFragment: DialogFragment(){
     var iconID: Int? = null
@@ -33,17 +34,17 @@ class MessageDialogFragment: DialogFragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("prueba", "-> Oncreate")
+        Log.d(TAG, "-> Oncreate")
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d("prueba", "-> OnStart")
+        Log.d(TAG, "-> OnStart")
     }
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        Log.d("prueba", "-> onCreateDialog")
+        Log.d(TAG, "-> onCreateDialog")
         return activity?.let {
             val builder = AlertDialog.Builder(it,R.style.backGroundDialog)
             // Get the layout inflater.
@@ -93,14 +94,14 @@ class MessageDialogFragment: DialogFragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("prueba", "-> onCreateView")
+        Log.d(TAG, "-> onCreateView")
         binding = FragmentDialogErrorMessageBinding.inflate(inflater)
         paintDialog()
         return binding.root
     }
     override fun onResume() {
         super.onResume()
-        Log.d("prueba", "-> onResume")
+        Log.d(TAG, "-> onResume")
     }
     fun refreshValues(
         iconID: Int? = null,

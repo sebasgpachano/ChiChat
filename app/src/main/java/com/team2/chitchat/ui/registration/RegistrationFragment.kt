@@ -52,7 +52,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         viewLifecycleOwner.lifecycleScope.launch {
             registrationViewModel.successFlow.collect {
                 requireContext().toastLong("Registro exitoso")
-                findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToLoginFragment())
+                findNavController().navigateUp()
             }
         }
 
