@@ -3,7 +3,6 @@ package com.team2.chitchat.data.repository.remote.backend
 import com.team2.chitchat.data.domain.model.chats.GetChatsModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
-import com.team2.chitchat.data.domain.model.users.PostLoginModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
@@ -37,5 +36,13 @@ class DataProvider @Inject constructor(
     //Message
     override fun getMessage(): Flow<BaseResponse<ArrayList<GetMessagesModel>>> {
         return remoteDataSource.getMessage()
+    }
+
+    override fun getProfile(): Flow<BaseResponse<GetUserModel>> {
+        return remoteDataSource.getProfile()
+    }
+
+    override fun putLogOut(): Flow<BaseResponse<Boolean>> {
+        return remoteDataSource.putLogOut()
     }
 }

@@ -141,9 +141,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
 
     protected open fun goToNotificationFragment() = Unit
 
-    protected open fun goToProfileFragment() {
-        navController.navigate(R.id.action_global_profileFragment)
-    }
+    protected open fun goToProfileFragment() = Unit
 
     fun updateShowToolbarBack(showBack: Boolean) {
         if (showBack) {
