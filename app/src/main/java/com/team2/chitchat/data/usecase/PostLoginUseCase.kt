@@ -1,6 +1,5 @@
 package com.team2.chitchat.data.usecase
 
-import com.team2.chitchat.data.domain.model.users.PostLoginModel
 import com.team2.chitchat.data.repository.remote.backend.DataProvider
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse

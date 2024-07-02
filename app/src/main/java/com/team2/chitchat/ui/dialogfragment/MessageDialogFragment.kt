@@ -48,20 +48,14 @@ class MessageDialogFragment: DialogFragment(){
         return activity?.let {
             val builder = AlertDialog.Builder(it,R.style.backGroundDialog)
             // Get the layout inflater.
-            val inflater = requireActivity().layoutInflater;
+            val inflater = requireActivity().layoutInflater
             binding = FragmentDialogErrorMessageBinding.inflate(inflater)
-            // Inflate and set the layout for the dialog.
-            // Pass null as the parent view because it's going in the dialog
-            // layout.
 
             builder.setView(binding.root)
-                // Add action buttons.
-            // Configura tu AlertDialog aquí
             val dialog = builder.create()
-            // Debe llamarse después de dialog.show()
             dialog!!.setOnShowListener {
                 // Obtenemos el objeto Window para acceder a los atributos de la ventana del diálogo
-                val window = dialog!!.window
+                val window = dialog.window
                 if (window != null) {
                     // Creamos un nuevo objeto LayoutParams para definir el ancho y el alto del diálogo
                     val layoutParams = WindowManager.LayoutParams()
@@ -93,7 +87,7 @@ class MessageDialogFragment: DialogFragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         Log.d(TAG, "-> onCreateView")
         binding = FragmentDialogErrorMessageBinding.inflate(inflater)
         paintDialog()
