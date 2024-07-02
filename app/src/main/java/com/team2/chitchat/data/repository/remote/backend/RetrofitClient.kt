@@ -10,6 +10,7 @@ import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.Executors
@@ -51,13 +52,25 @@ class RetrofitClient @Inject constructor(
             .writeTimeout(RETROFIT_TIMEOUT_IN_SECOND, TimeUnit.SECONDS)
 
         httpClient.interceptors().clear()
-        httpClient.interceptors().add(Interceptor { chain ->
-            val original = chain.request()
+        val logging = HttpLoggingInterceptor()
 
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        httpClient
+            .addInterceptor(logging)
+            .addInterceptor(Interceptor { chain ->
+                val originalRequest: Request = chain.request()
+                val builder: Request.Builder = originalRequest.newBuilder()
+                val newRequest: Request = builder.build()
+                chain.proceed(newRequest)
+            })
+            .interceptors().add(Interceptor { chain ->
+            val original = chain.request()
+            val token = simpleApplication.getAuthToken().ifEmpty { "null" }
+            Log.d(TAG, "%> token: $token")
             val request = when {
                 needAddBearer(chain.request()) -> {
                     val build = original.newBuilder()
-                        .header(HEADER_KEY_TOKEN, simpleApplication.getAuthToken())
+                        .header(HEADER_KEY_TOKEN, token)
                         .method(original.method, original.body)
                         .build()
                     build

@@ -30,13 +30,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        if (simpleApplication.getAuthToken().isNotBlank()) {
-            val navController = navHostFragment.navController
-            val navGraph = navController.navInflater.inflate(R.navigation.main_nav_graph)
-            navGraph.setStartDestination(R.id.chatListFragment)
-            navController.graph = navGraph
-        }
+    }
 
+    override fun goToProfileFragment() {
+        super.goToProfileFragment()
+        navController.navigate(R.id.action_global_profileFragment)
     }
 
 }

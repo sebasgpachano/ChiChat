@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.team2.chitchat.R
+import com.team2.chitchat.data.repository.remote.backend.BaseService
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
@@ -31,7 +32,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         inflateBinding()
         createViewAfterInflateBinding(inflater, container, savedInstanceState)
-        return binding!!.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -99,7 +100,26 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     )
-    fun showErrorMessage(
+
+    fun showDialogError(errorCode: String,listener: (view: View) -> Unit) {
+        val message = when (errorCode) {
+            BaseService.ERROR_UNAUTHORIZED.toString() -> getString(R.string.error_401)
+            BaseService.ERROR_FORBIDDEN.toString() -> getString(R.string.error_403)
+            BaseService.ERROR_INTERNAL_SERVER.toString() -> getString(R.string.error_500)
+            else -> getString(R.string.error_unknown)
+        }
+        showErrorMessage(
+            message = message,
+            listener = object :MessageDialogFragment.MessageDialogListener{
+                override fun positiveButtonOnclick(view: View) {
+                    listener(view)
+                    //findNavController().navigate(R.id.action_global_loginFragment)
+                }
+
+            }
+        )
+    }
+    private fun showErrorMessage(
         message: String,
         listener: MessageDialogFragment.MessageDialogListener
     ) {

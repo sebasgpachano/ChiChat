@@ -15,8 +15,6 @@ import com.team2.chitchat.R
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.databinding.FragmentLoginBinding
 import com.team2.chitchat.ui.base.BaseFragment
-import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
-import com.team2.chitchat.ui.extensions.TAG
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -51,7 +49,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.loginStateFlow.collect {isOk->
                 if (isOk) {
-                    findNavController().navigate(R.id.action_loginFragment_to_chatListFragment)
+                    findNavController().popBackStack()
                 }
             }
         }
@@ -98,14 +96,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                         }
                     }
                     else -> {
-                        showErrorMessage(
-                            message = errorModel.message,
-                            listener = object: MessageDialogFragment.MessageDialogListener{
-                                override fun positiveButtonOnclick(view: View) {
-                                    Log.d(this.TAG, "positiveButtonOnclick: ")
-                                }
-                            }
-                        )
+                        showDialogError(errorModel.errorCode) {
+
+                        }
                     }
                 }
 
