@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.DialogFragment
 import androidx.viewpager.widget.ViewPager.LayoutParams
 import com.team2.chitchat.R
@@ -123,7 +124,7 @@ class MessageDialogFragment: DialogFragment(){
         if (iconID != null) {
             binding.imageVMessageDF.apply {
                 visibility = View.VISIBLE
-                setImageDrawable(context.getDrawable(iconID!!))
+                setImageDrawable(AppCompatResources.getDrawable(context,iconID!!))
             }
 
         } else {
