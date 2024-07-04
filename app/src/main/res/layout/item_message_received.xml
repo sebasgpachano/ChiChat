@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:background="@drawable/message_received"
         android:padding="5dp"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_regular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Mensaje recibido" />
 
     <TextView
-        android:id="@+id/tvTimeMessage"
+        android:id="@+id/tvTimeMessageReceived"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
