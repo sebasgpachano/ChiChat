@@ -1,9 +1,10 @@
-package com.team2.chitchat.data.repository.remote.backend
+package com.team2.chitchat.data.repository
 
 import com.team2.chitchat.data.domain.model.chats.GetChatsModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
+import com.team2.chitchat.data.repository.remote.backend.RemoteDataSource
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse

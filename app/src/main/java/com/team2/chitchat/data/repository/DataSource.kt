@@ -1,4 +1,4 @@
-package com.team2.chitchat.data.repository.remote.backend
+package com.team2.chitchat.data.repository
 
 import com.team2.chitchat.data.domain.model.chats.GetChatsModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel

@@ -1,6 +1,6 @@
 package com.team2.chitchat.data.usecase
 
-import com.team2.chitchat.data.repository.remote.backend.DataProvider
+import com.team2.chitchat.data.repository.DataProvider
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import kotlinx.coroutines.flow.Flow
