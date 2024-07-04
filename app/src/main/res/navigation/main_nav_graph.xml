@@ -24,12 +24,12 @@
     <fragment
         android:id="@+id/contactsListFragment"
         android:name="com.team2.chitchat.ui.contactslist.ContactsListFragment"
-        android:label="ContactsListFragment"/>
+        android:label="ContactsListFragment" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.team2.chitchat.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_chatListFragment"
             app:destination="@id/chatListFragment"
@@ -39,7 +39,8 @@
     <action
         android:id="@+id/action_global_profileFragment"
         app:destination="@id/profileFragment" />
-    <navigation android:id="@+id/loginNavigation"
+    <navigation
+        android:id="@+id/loginNavigation"
         app:startDestination="@id/loginFragment">
         <fragment
             android:id="@+id/loginFragment"
@@ -53,13 +54,15 @@
         <fragment
             android:id="@+id/registrationFragment"
             android:name="com.team2.chitchat.ui.registration.RegistrationFragment"
-            android:label="fragment_registration"
-            tools:layout="@layout/fragment_registration"/>
+            android:label="RegistrationFragment"
+            tools:layout="@layout/fragment_registration">
+
+            <action
+                android:id="@+id/action_registrationFragment_to_mainNavigation"
+                app:destination="@id/main_nav_graph"
+                app:launchSingleTop="false"
+                app:popUpToInclusive="false" />
+        </fragment>
     </navigation>
-    <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.team2.chitchat.ui.chat.ChatFragment"
-        android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
 
 </navigation>

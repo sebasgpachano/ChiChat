@@ -111,9 +111,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
+    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
+        Unit
 
-    }
     private fun initListener() {
 
         binding?.apply {
