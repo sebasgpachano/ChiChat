@@ -19,7 +19,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String","BASE_URL","\"https://mock-movilidad.vass.es/chatvass/\"")
+        buildConfigField("String", "BASE_URL", "\"https://mock-movilidad.vass.es/chatvass/\"")
     }
 
     buildTypes {
@@ -66,8 +66,10 @@ dependencies {
     //Hilt
     implementation(libs.daggerHilt)
     kapt(libs.daggerHiltCompiler)
+    //Rooms
+    implementation(libs.bundles.room)
+    kapt(libs.androidx.room.compiler)
     // CryptoSharedPreference
-
     implementation(libs.androidxCryptoSharedPreferences)
 }
 
