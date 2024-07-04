@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.navigateUp
 import com.team2.chitchat.R
 import com.team2.chitchat.databinding.FragmentChatBinding
 import com.team2.chitchat.ui.base.BaseFragment
@@ -30,7 +32,9 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener {
         binding?.ibSend?.setOnClickListener(this)
     }
 
-    override fun configureToolbarAndConfigScreenSections() = Unit
+    override fun configureToolbarAndConfigScreenSections() {
+        hideToolbar()
+    }
 
     override fun observeViewModel() {
         //TODO("Not yet implemented")
@@ -43,7 +47,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view?.id) {
             R.id.ibToolbarBack -> {
-                //TODO sebas
+                findNavController().navigateUp()
             }
 
             R.id.ibProfile -> {

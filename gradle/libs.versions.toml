@@ -86,7 +86,7 @@ interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", ver
 
 #Crypto SharedPreferences
 androidxCryptoSharedPreferences = { group = "androidx.security", name = "security-crypto", version.ref = "cryptoSharedPreferences" }
-security-crypto-ktx = { group = "androidx.security", name = "security-crypto-ktx", version.ref = "securityCryptoKtxVersion" }
+
 
 [bundles]
 android = ["androidxCoreKtx", "androidxCoreSplash", "androidxAppcompat", "androidxConstraitLayout", "androidxSwipeRefresh", "androidMaterial", "androidPlayServicesMaps"]
