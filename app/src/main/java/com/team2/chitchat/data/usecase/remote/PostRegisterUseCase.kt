@@ -1,4 +1,4 @@
-package com.team2.chitchat.data.usecase
+package com.team2.chitchat.data.usecase.remote
 
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
 import com.team2.chitchat.data.repository.DataProvider

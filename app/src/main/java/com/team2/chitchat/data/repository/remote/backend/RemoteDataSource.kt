@@ -9,7 +9,6 @@ import com.team2.chitchat.data.mapper.messages.GetMessagesMapper
 import com.team2.chitchat.data.mapper.users.GetContactsListMapper
 import com.team2.chitchat.data.mapper.users.GetUserMapper
 import com.team2.chitchat.data.mapper.users.PostRegisterMapper
-import com.team2.chitchat.data.repository.DataSource
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
@@ -21,10 +20,10 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor(
     private val callApiService: CallApiService,
     private val simpleApplication: SimpleApplication
-) : BaseService(), DataSource {
+) : BaseService() {
 
     //RegisterUser
-    override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> =
+    fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> =
         flow {
             val apiResult = callApiService.callPostRegisterUser(registerUserRequest)
             if (apiResult is BaseResponse.Success) {
@@ -35,7 +34,7 @@ class RemoteDataSource @Inject constructor(
         }
 
     //LoginUser
-    override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> =
+    fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> =
         flow {
             val apiResult = callApiService.callPostLoginUser(loginUserRequest)
             if (apiResult is BaseResponse.Success) {
@@ -52,7 +51,7 @@ class RemoteDataSource @Inject constructor(
         }
 
     //ContactsList
-    override fun getContactsList(): Flow<BaseResponse<ArrayList<GetUserModel>>> = flow {
+    fun getContactsList(): Flow<BaseResponse<ArrayList<GetUserModel>>> = flow {
         val apiResult = callApiService.callGetContactsList()
         if (apiResult is BaseResponse.Success) {
             emit(BaseResponse.Success(GetContactsListMapper().fromResponse(apiResult.data)))
@@ -62,7 +61,7 @@ class RemoteDataSource @Inject constructor(
     }
 
     //Chats
-    override fun getChats(): Flow<BaseResponse<ArrayList<GetChatsModel>>> = flow {
+    fun getChats(): Flow<BaseResponse<ArrayList<GetChatsModel>>> = flow {
         val apiResult = callApiService.callGetChats()
         if (apiResult is BaseResponse.Success) {
             emit(BaseResponse.Success(GetChatsMapper().fromResponse(apiResult.data)))
@@ -72,7 +71,7 @@ class RemoteDataSource @Inject constructor(
     }
 
     //Messages
-    override fun getMessage(): Flow<BaseResponse<ArrayList<GetMessagesModel>>> = flow {
+    fun getMessage(): Flow<BaseResponse<ArrayList<GetMessagesModel>>> = flow {
         val apiResult = callApiService.callGetMessages()
         if (apiResult is BaseResponse.Success) {
             emit(BaseResponse.Success(GetMessagesMapper().fromResponse(apiResult.data)))
@@ -81,7 +80,7 @@ class RemoteDataSource @Inject constructor(
         }
     }
 
-    override fun getProfile(): Flow<BaseResponse<GetUserModel>> = flow{
+    fun getProfile(): Flow<BaseResponse<GetUserModel>> = flow {
         val apiResult = callApiService.callGetProfile()
         if (apiResult is BaseResponse.Success) {
             emit(BaseResponse.Success(GetUserMapper().fromResponse(apiResult.data)))
@@ -90,7 +89,7 @@ class RemoteDataSource @Inject constructor(
         }
     }
 
-    override fun putLogOut(): Flow<BaseResponse<Boolean>> = flow{
+    fun putLogOut(): Flow<BaseResponse<Boolean>> = flow {
         val apiResult = callApiService.callLogout()
         if (apiResult is BaseResponse.Success) {
             simpleApplication.saveAuthToken("")

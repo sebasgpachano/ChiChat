@@ -62,4 +62,5 @@
     <string name="error_500">Tenemos problemas internos, contacta con servicio técnico.</string>
     <string name="error_unknown">Algo inesperado ha ocurrido, vuelve a intentarlo.</string>
     <string name="profile">Perfil</string>
+    <string name="error_unknown_error">Unknown Error</string>
 </resources>

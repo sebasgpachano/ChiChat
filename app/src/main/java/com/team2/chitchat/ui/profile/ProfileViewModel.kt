@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.usecase.GetProfileUseCase
-import com.team2.chitchat.data.usecase.PutLogOutUseCase
+import com.team2.chitchat.data.usecase.remote.GetProfileUseCase
+import com.team2.chitchat.data.usecase.remote.PutLogOutUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel

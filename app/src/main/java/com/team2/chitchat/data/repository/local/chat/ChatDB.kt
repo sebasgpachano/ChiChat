@@ -8,12 +8,20 @@ import com.team2.chitchat.data.repository.local.user.UserDB
 
 @Entity(
     tableName = "chat",
-    foreignKeys = [ForeignKey(
-        entity = UserDB::class,
-        parentColumns = ["id"],
-        childColumns = ["sourceId", "targetId"],
-        onDelete = ForeignKey.CASCADE
-    )],
+    foreignKeys = [
+        ForeignKey(
+            entity = UserDB::class,
+            parentColumns = ["id"],
+            childColumns = ["sourceId"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = UserDB::class,
+            parentColumns = ["id"],
+            childColumns = ["targetId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
     indices = [Index(value = ["sourceId", "targetId"])]
 )
 data class ChatDB(

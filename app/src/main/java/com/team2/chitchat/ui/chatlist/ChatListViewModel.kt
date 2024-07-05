@@ -7,9 +7,9 @@ import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.mapper.chats.ListChatsMapper
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.usecase.GetChatsUseCase
-import com.team2.chitchat.data.usecase.GetContactsUseCase
-import com.team2.chitchat.data.usecase.GetMessagesUseCase
+import com.team2.chitchat.data.usecase.remote.GetChatsUseCase
+import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
+import com.team2.chitchat.data.usecase.remote.GetMessagesUseCase
 import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
