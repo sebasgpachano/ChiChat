@@ -80,7 +80,7 @@
 
             <action
                 android:id="@+id/action_registrationFragment_to_mainNavigation"
-                app:destination="@id/main_nav_graph"
+                app:destination="@id/mainNavigation"
                 app:launchSingleTop="false"
                 app:popUpToInclusive="false" />
         </fragment>

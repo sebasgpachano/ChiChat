@@ -63,4 +63,5 @@
 
     <!-- Fragment splash-->
     <string name="splash_iv_logo">Logo de la aplicacion</string>
+    <string name="send_message">Enviar mensaje</string>
 </resources>
