@@ -33,4 +33,5 @@
     <color name="colorAccentDark">#03DAC6</color>
     <color name="backgroundColorDark">#121212</color>
     <color name="textColorDark">#FFFFFF</color>
+    <color name="gray_chat">#ECEAEA</color>
 </resources>

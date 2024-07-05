@@ -40,6 +40,7 @@ gson = "2.10.1"
 
 #Crypto SharedPreferences
 cryptoSharedPreferences = "1.0.0"
+securityCryptoKtxVersion = "1.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -85,6 +86,7 @@ interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", ver
 
 #Crypto SharedPreferences
 androidxCryptoSharedPreferences = { group = "androidx.security", name = "security-crypto", version.ref = "cryptoSharedPreferences" }
+
 
 [bundles]
 android = ["androidxCoreKtx", "androidxCoreSplash", "androidxAppcompat", "androidxConstraitLayout", "androidxSwipeRefresh", "androidMaterial", "androidPlayServicesMaps"]

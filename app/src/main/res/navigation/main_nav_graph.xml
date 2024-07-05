@@ -75,8 +75,15 @@
         <fragment
             android:id="@+id/registrationFragment"
             android:name="com.team2.chitchat.ui.registration.RegistrationFragment"
-            android:label="fragment_registration"
-            tools:layout="@layout/fragment_registration" />
+            android:label="RegistrationFragment"
+            tools:layout="@layout/fragment_registration">
+
+            <action
+                android:id="@+id/action_registrationFragment_to_mainNavigation"
+                app:destination="@id/main_nav_graph"
+                app:launchSingleTop="false"
+                app:popUpToInclusive="false" />
+        </fragment>
     </navigation>
 
 </navigation>
