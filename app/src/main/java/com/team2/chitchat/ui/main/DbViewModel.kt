@@ -10,6 +10,8 @@ import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +21,8 @@ class DbViewModel @Inject constructor(
     private val getContactsUseCase: GetContactsUseCase,
     private val setUsersDatabaseUseCase: SetUsersDatabaseUseCase,
 ) : BaseViewModel() {
+    private val initDbMutableSharedFlow = MutableSharedFlow<Boolean>()
+    val initDbSharedFlow: SharedFlow<Boolean> = initDbMutableSharedFlow
 
     fun startDataBase() {
         val idUser = simpleApplication.getUserID()
@@ -48,6 +52,7 @@ class DbViewModel @Inject constructor(
                                         TAG,
                                         "%> Respuesta de cargar contactos en DB -> ${setContact.data}"
                                     )
+                                    initDbMutableSharedFlow.emit(setContact.data)
                                 }
                             }
                         }
