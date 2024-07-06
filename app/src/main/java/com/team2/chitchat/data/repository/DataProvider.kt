@@ -67,4 +67,8 @@ class DataProvider @Inject constructor(
         return localDataSource.insertChats(chats)
     }
 
+    override fun deleteChatTable(): Flow<BaseResponse<Boolean>> {
+        return localDataSource.deleteChatTable()
+    }
+
 }

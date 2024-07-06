@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.usecase.local.DeleteChatTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteUserTableUseCase
 import com.team2.chitchat.data.usecase.remote.GetProfileUseCase
 import com.team2.chitchat.data.usecase.remote.PutLogOutUseCase
@@ -16,13 +17,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
     private val putLogOutUseCase: PutLogOutUseCase,
-    private val deleteUserTableUseCase: DeleteUserTableUseCase
+    private val deleteUserTableUseCase: DeleteUserTableUseCase,
+    private val deleteChatTableUseCase: DeleteChatTableUseCase
 ) : BaseViewModel() {
     private val deleteDbMutableSharedFlow = MutableSharedFlow<Boolean>()
     val deleteDbSharedFlow: SharedFlow<Boolean> = deleteDbMutableSharedFlow
@@ -84,31 +87,40 @@ class ProfileViewModel @Inject constructor(
         )
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
-            deleteUserTable()
+            val deleteUsers = deleteUserTable()
+            val deleteChats = deleteChatTable()
+            if (deleteUsers && deleteChats) {
+                loadingMutableSharedFlow.emit(false)
+                deleteDbMutableSharedFlow.emit(true)
+            }
         }
     }
 
-    private fun deleteUserTable() {
-        Log.d(
-            TAG,
-            "%> Borrando contactos..."
-        )
-        viewModelScope.launch(Dispatchers.IO) {
-            deleteUserTableUseCase().collect { response ->
-                when (response) {
-                    is BaseResponse.Success -> {
-                        Log.d(
-                            TAG,
-                            "%> Contactos borrados: ${response.data}"
-                        )
-                        deleteDbMutableSharedFlow.emit(response.data)
-                    }
-
-                    is BaseResponse.Error -> {
-                        errorMutableSharedFlow.emit(response.error)
-                    }
+    private suspend fun deleteUserTable(): Boolean {
+        Log.d(TAG, "%> Borrando contactos...")
+        return withContext(Dispatchers.IO) {
+            var response = false
+            deleteUserTableUseCase().collect {
+                response = when (it) {
+                    is BaseResponse.Error -> false
+                    is BaseResponse.Success -> it.data
                 }
             }
+            response
+        }
+    }
+
+    private suspend fun deleteChatTable(): Boolean {
+        Log.d(TAG, "%> Borrando chats...")
+        return withContext(Dispatchers.IO) {
+            var response = false
+            deleteChatTableUseCase().collect {
+                response = when (it) {
+                    is BaseResponse.Error -> false
+                    is BaseResponse.Success -> it.data
+                }
+            }
+            response
         }
     }
 }
