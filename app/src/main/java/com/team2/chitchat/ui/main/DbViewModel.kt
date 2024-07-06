@@ -25,6 +25,10 @@ class DbViewModel @Inject constructor(
     val initDbSharedFlow: SharedFlow<Boolean> = initDbMutableSharedFlow
 
     fun startDataBase() {
+        Log.d(
+            TAG,
+            "%> Iniciando Base de datos...}"
+        )
         val idUser = simpleApplication.getUserID()
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
@@ -33,6 +37,10 @@ class DbViewModel @Inject constructor(
     }
 
     private fun startContact() {
+        Log.d(
+            TAG,
+            "%> Iniciando contactos...}"
+        )
         viewModelScope.launch(Dispatchers.IO) {
             getContactsUseCase().collect { getContacts ->
                 when (getContacts) {
@@ -50,7 +58,7 @@ class DbViewModel @Inject constructor(
                                 is BaseResponse.Success -> {
                                     Log.d(
                                         TAG,
-                                        "%> Respuesta de cargar contactos en DB -> ${setContact.data}"
+                                        "%> Contactos en DB -> ${setContact.data}"
                                     )
                                     initDbMutableSharedFlow.emit(setContact.data)
                                 }

@@ -13,6 +13,7 @@ import com.team2.chitchat.databinding.FragmentRegistrationBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.extensions.toastLong
+import com.team2.chitchat.ui.main.DbViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener {
 
     private val registrationViewModel: RegistrationViewModel by viewModels()
+    private val dbViewModel: DbViewModel by viewModels()
 
     override fun inflateBinding() {
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
@@ -49,9 +51,19 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
             }
         }
 
+        lifecycleScope.launch {
+            dbViewModel.initDbSharedFlow.collect { isOk ->
+                if (isOk) {
+                    findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainNavigation())
+                }
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
-            registrationViewModel.successFlow.collect {
-                findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainNavigation())
+            registrationViewModel.successFlow.collect { isOk ->
+                if (isOk) {
+                    dbViewModel.startDataBase()
+                }
             }
         }
 
