@@ -1,7 +1,7 @@
 package com.team2.chitchat.ui.contactslist
 
 import androidx.lifecycle.viewModelScope
-import com.team2.chitchat.data.domain.model.users.GetUserModel
+import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
@@ -15,9 +15,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ContactsListViewModel @Inject constructor(private val getContactsUseCase: GetContactsUseCase) :
     BaseViewModel() {
-    private val contactsMutableSharedFlow: MutableSharedFlow<ArrayList<GetUserModel>> =
+    private val contactsMutableSharedFlow: MutableSharedFlow<ArrayList<UserDB>> =
         MutableSharedFlow()
-    val contactsSharedFlow: SharedFlow<ArrayList<GetUserModel>> = contactsMutableSharedFlow
+    val contactsSharedFlow: SharedFlow<ArrayList<UserDB>> = contactsMutableSharedFlow
 
     fun getContactsList() {
         viewModelScope.launch(Dispatchers.IO) {

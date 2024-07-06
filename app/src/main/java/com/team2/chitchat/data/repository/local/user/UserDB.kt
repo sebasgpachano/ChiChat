@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
     tableName = "user"
 )
 data class UserDB(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey val id: String,
+    val avatar: String,
     val nick: String,
     var online: Boolean,
     var block: Boolean

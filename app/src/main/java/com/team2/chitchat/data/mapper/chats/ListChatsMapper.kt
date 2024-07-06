@@ -5,7 +5,7 @@ import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.GetChatsModel
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
-import com.team2.chitchat.data.domain.model.users.GetUserModel
+import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.hilt.SimpleApplication
 import java.time.LocalDate
 import java.time.ZonedDateTime
@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 class ListChatsMapper(
     private val simpleApplication: SimpleApplication,
     private val arrayChats: ArrayList<GetChatsModel>,
-    private val arrayUsers: ArrayList<GetUserModel>,
+    private val arrayUsers: ArrayList<UserDB>,
     private val arrayMessages: ArrayList<GetMessagesModel>,
     private val context: Context
 ) {
@@ -50,7 +50,7 @@ class ListChatsMapper(
         }
     }
 
-    private fun getUser(chat: GetChatsModel): GetUserModel? {
+    private fun getUser(chat: GetChatsModel): UserDB? {
         return if (chat.source != simpleApplication.getUserID()) {
             arrayUsers.find { it.id == chat.source }
         } else {

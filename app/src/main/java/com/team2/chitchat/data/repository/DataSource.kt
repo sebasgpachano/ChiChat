@@ -18,7 +18,7 @@ interface DataSource {
     fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>>
 
     //ContactsList
-    fun getContactsList(): Flow<BaseResponse<ArrayList<GetUserModel>>>
+    fun getContactsList(): Flow<BaseResponse<ArrayList<UserDB>>>
 
     //Chats
     fun getChats(): Flow<BaseResponse<ArrayList<GetChatsModel>>>

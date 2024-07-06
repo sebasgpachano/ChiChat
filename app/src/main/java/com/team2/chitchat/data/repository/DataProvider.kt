@@ -29,7 +29,7 @@ class DataProvider @Inject constructor(
     }
 
     //ContactsList
-    override fun getContactsList(): Flow<BaseResponse<ArrayList<GetUserModel>>> {
+    override fun getContactsList(): Flow<BaseResponse<ArrayList<UserDB>>> {
         return remoteDataSource.getContactsList()
     }
 

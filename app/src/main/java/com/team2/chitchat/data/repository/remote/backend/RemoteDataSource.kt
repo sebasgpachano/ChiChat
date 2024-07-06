@@ -9,6 +9,7 @@ import com.team2.chitchat.data.mapper.messages.GetMessagesMapper
 import com.team2.chitchat.data.mapper.users.GetContactsListMapper
 import com.team2.chitchat.data.mapper.users.GetUserMapper
 import com.team2.chitchat.data.mapper.users.PostRegisterMapper
+import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
@@ -51,7 +52,7 @@ class RemoteDataSource @Inject constructor(
         }
 
     //ContactsList
-    fun getContactsList(): Flow<BaseResponse<ArrayList<GetUserModel>>> = flow {
+    fun getContactsList(): Flow<BaseResponse<ArrayList<UserDB>>> = flow {
         val apiResult = callApiService.callGetContactsList()
         if (apiResult is BaseResponse.Success) {
             emit(BaseResponse.Success(GetContactsListMapper().fromResponse(apiResult.data)))
@@ -80,6 +81,7 @@ class RemoteDataSource @Inject constructor(
         }
     }
 
+    //Profile
     fun getProfile(): Flow<BaseResponse<GetUserModel>> = flow {
         val apiResult = callApiService.callGetProfile()
         if (apiResult is BaseResponse.Success) {
@@ -89,6 +91,7 @@ class RemoteDataSource @Inject constructor(
         }
     }
 
+    //Log out
     fun putLogOut(): Flow<BaseResponse<Boolean>> = flow {
         val apiResult = callApiService.callLogout()
         if (apiResult is BaseResponse.Success) {
