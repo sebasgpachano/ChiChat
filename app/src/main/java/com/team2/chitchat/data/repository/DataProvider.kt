@@ -17,7 +17,7 @@ class DataProvider @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
 
-) : DataSource {
+    ) : DataSource {
     //RegisterUSer
     override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> {
         return remoteDataSource.postRegisterUser(registerUserRequest)
@@ -56,6 +56,10 @@ class DataProvider @Inject constructor(
     //User Database
     override fun insertUsers(users: ArrayList<UserDB>): Flow<BaseResponse<Boolean>> {
         return localDataSource.insertUsers(users)
+    }
+
+    override fun deleteUserTable(): Flow<BaseResponse<Boolean>> {
+        return localDataSource.deleteUserTable()
     }
 
 }

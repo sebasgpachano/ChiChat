@@ -34,4 +34,5 @@ interface DataSource {
 
     //User Database
     fun insertUsers(users: ArrayList<UserDB>): Flow<BaseResponse<Boolean>>
+    fun deleteUserTable(): Flow<BaseResponse<Boolean>>
 }

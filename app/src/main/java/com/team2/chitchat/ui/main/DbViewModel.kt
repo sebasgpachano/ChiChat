@@ -27,7 +27,7 @@ class DbViewModel @Inject constructor(
     fun startDataBase() {
         Log.d(
             TAG,
-            "%> Iniciando Base de datos...}"
+            "%> Iniciando Base de datos..."
         )
         val idUser = simpleApplication.getUserID()
         viewModelScope.launch(Dispatchers.IO) {
@@ -39,7 +39,7 @@ class DbViewModel @Inject constructor(
     private fun startContact() {
         Log.d(
             TAG,
-            "%> Iniciando contactos...}"
+            "%> Iniciando contactos..."
         )
         viewModelScope.launch(Dispatchers.IO) {
             getContactsUseCase().collect { getContacts ->
