@@ -3,7 +3,9 @@ package com.team2.chitchat.ui.main
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.usecase.local.SetChatsDatabaseUseCase
 import com.team2.chitchat.data.usecase.local.SetUsersDatabaseUseCase
+import com.team2.chitchat.data.usecase.remote.GetChatsUseCase
 import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
 import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
@@ -20,19 +22,22 @@ class DbViewModel @Inject constructor(
     private val simpleApplication: SimpleApplication,
     private val getContactsUseCase: GetContactsUseCase,
     private val setUsersDatabaseUseCase: SetUsersDatabaseUseCase,
+    private val getChatsUseCase: GetChatsUseCase,
+    private val setChatsDatabaseUseCase: SetChatsDatabaseUseCase,
 ) : BaseViewModel() {
     private val initDbMutableSharedFlow = MutableSharedFlow<Boolean>()
     val initDbSharedFlow: SharedFlow<Boolean> = initDbMutableSharedFlow
 
     fun startDataBase() {
+        val idUser = simpleApplication.getUserID()
         Log.d(
             TAG,
-            "%> Iniciando Base de datos..."
+            "%> Iniciando Base de datos del usuario: $idUser..."
         )
-        val idUser = simpleApplication.getUserID()
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
             startContact()
+            //startChats()
         }
     }
 
@@ -68,5 +73,8 @@ class DbViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun startChats() {
     }
 }

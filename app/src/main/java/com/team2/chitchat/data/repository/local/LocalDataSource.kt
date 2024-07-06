@@ -3,6 +3,7 @@ package com.team2.chitchat.data.repository.local
 import android.content.Context
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.error.ErrorModel
+import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import kotlinx.coroutines.flow.Flow
@@ -13,6 +14,7 @@ class LocalDataSource @Inject constructor(
     private val appDatabaseManager: AppDatabaseManager,
     private val context: Context
 ) {
+    //User
     fun insertUsers(users: ArrayList<UserDB>): Flow<BaseResponse<Boolean>> = flow {
         try {
             appDatabaseManager.db.userDAO().insertUsers(users)
@@ -34,4 +36,17 @@ class LocalDataSource @Inject constructor(
             emit(BaseResponse.Error(errorModel))
         }
     }
+
+    //Chat
+    fun insertChats(chats: ArrayList<ChatDB>): Flow<BaseResponse<Boolean>> = flow {
+        try {
+            appDatabaseManager.db.chatDAO().insertChats(chats)
+            emit(BaseResponse.Success(true))
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
 }

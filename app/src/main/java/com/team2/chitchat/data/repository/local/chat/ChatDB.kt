@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
 
 @Entity(
@@ -12,21 +13,24 @@ import com.team2.chitchat.data.repository.local.user.UserDB
         ForeignKey(
             entity = UserDB::class,
             parentColumns = ["id"],
-            childColumns = ["sourceId"],
+            childColumns = ["idOtherUser"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = UserDB::class,
+            entity = MessageDB::class,
             parentColumns = ["id"],
-            childColumns = ["targetId"],
+            childColumns = ["idLastViewMsg"],
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["sourceId", "targetId"])]
+    indices = [Index(value = ["idOtherUser", "idLastViewMsg"])]
 )
 data class ChatDB(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val sourceId: Int,
-    val targetId: Int,
-    var view: Boolean
+    @PrimaryKey val id: String,
+    val idOtherUser: String,
+    var view: Boolean,
+    var otherUserOnline: Boolean,
+    val otherUserName: String,
+    var otherUserImg: String,
+    var idLastViewMsg: String,
 )

@@ -35,7 +35,7 @@ interface ApiService {
     suspend fun getContactsList(): Response<ArrayList<GetUserResponse>>
 
     //Chats
-    @GET("api/chats")
+    @GET("api/chats/view")
     suspend fun getChats(): Response<ArrayList<GetChatsResponse>>
 
     //Message

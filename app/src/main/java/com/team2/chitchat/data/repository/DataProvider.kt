@@ -1,10 +1,10 @@
 package com.team2.chitchat.data.repository
 
-import com.team2.chitchat.data.domain.model.chats.GetChatsModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
 import com.team2.chitchat.data.repository.local.LocalDataSource
+import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.backend.RemoteDataSource
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
@@ -34,7 +34,7 @@ class DataProvider @Inject constructor(
     }
 
     //Chats
-    override fun getChats(): Flow<BaseResponse<ArrayList<GetChatsModel>>> {
+    override fun getChats(): Flow<BaseResponse<ArrayList<ChatDB>>> {
         return remoteDataSource.getChats()
     }
 
@@ -60,6 +60,11 @@ class DataProvider @Inject constructor(
 
     override fun deleteUserTable(): Flow<BaseResponse<Boolean>> {
         return localDataSource.deleteUserTable()
+    }
+
+    //Chat Database
+    override fun insertChats(chats: ArrayList<ChatDB>): Flow<BaseResponse<Boolean>> {
+        return localDataSource.insertChats(chats)
     }
 
 }

@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertUsers(cities: List<UserDB>)
+    suspend fun insertUsers(users: List<UserDB>)
 
     @Query("DELETE FROM user")
     suspend fun deleteUserTable()
