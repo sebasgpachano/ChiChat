@@ -8,7 +8,6 @@ import com.team2.chitchat.data.mapper.chats.ListChatsMapper
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.remote.GetChatsUseCase
 import com.team2.chitchat.data.usecase.remote.GetMessagesUseCase
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
     private val application: Application,
-    private val simpleApplication: SimpleApplication,
     private val getChatsUseCase: GetChatsUseCase,
     private val getMessagesUseCase: GetMessagesUseCase
 ) :

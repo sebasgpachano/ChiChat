@@ -7,7 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface ChatDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertChats(chats: List<ChatDB>)
 
     @Query("DELETE FROM chat")

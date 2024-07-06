@@ -2,6 +2,8 @@ package com.team2.chitchat.ui.main
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.team2.chitchat.data.repository.local.chat.ChatDB
+import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.local.SetChatsDatabaseUseCase
 import com.team2.chitchat.data.usecase.local.SetUsersDatabaseUseCase
@@ -15,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,51 +33,78 @@ class DbViewModel @Inject constructor(
 
     fun startDataBase() {
         val idUser = simpleApplication.getUserID()
-        Log.d(
-            TAG,
-            "%> Iniciando Base de datos del usuario: $idUser..."
-        )
+        Log.d(TAG, "%> Iniciando base de datos del usuario: $idUser...")
+
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
-            startContact()
-            //startChats()
-        }
-    }
-
-    private fun startContact() {
-        Log.d(
-            TAG,
-            "%> Iniciando contactos..."
-        )
-        viewModelScope.launch(Dispatchers.IO) {
-            getContactsUseCase().collect { getContacts ->
-                when (getContacts) {
-                    is BaseResponse.Error -> {
-                        errorMutableSharedFlow.emit(getContacts.error)
-                    }
-
-                    is BaseResponse.Success -> {
-                        setUsersDatabaseUseCase(getContacts.data).collect { setContact ->
-                            when (setContact) {
-                                is BaseResponse.Error -> {
-                                    errorMutableSharedFlow.emit(setContact.error)
-                                }
-
-                                is BaseResponse.Success -> {
-                                    Log.d(
-                                        TAG,
-                                        "%> Contactos en DB -> ${setContact.data}"
-                                    )
-                                    initDbMutableSharedFlow.emit(setContact.data)
-                                }
-                            }
-                        }
-                    }
-                }
+            val usersAdd = startContact()
+            val chatsAdd = startChats()
+            if (usersAdd && chatsAdd) {
+                loadingMutableSharedFlow.emit(false)
+                initDbMutableSharedFlow.emit(true)
             }
         }
     }
 
-    private fun startChats() {
+    private suspend fun getContacts(): ArrayList<UserDB> {
+        return withContext(Dispatchers.IO) {
+            var listUser = ArrayList<UserDB>()
+            getContactsUseCase().collect {
+                listUser = when (it) {
+                    is BaseResponse.Error -> {
+                        errorMutableSharedFlow.emit(it.error)
+                        ArrayList()
+                    }
+
+                    is BaseResponse.Success -> it.data
+                }
+            }
+            listUser
+        }
+    }
+
+    private suspend fun startContact(): Boolean {
+        Log.d(TAG, "%> Iniciando contactos...")
+        return withContext(Dispatchers.IO) {
+            var response = false
+            setUsersDatabaseUseCase(getContacts()).collect {
+                response = when (it) {
+                    is BaseResponse.Error -> false
+                    is BaseResponse.Success -> it.data
+                }
+            }
+            response
+        }
+    }
+
+    private suspend fun getChats(): ArrayList<ChatDB> {
+        return withContext(Dispatchers.IO) {
+            var listChat = ArrayList<ChatDB>()
+            getChatsUseCase().collect {
+                listChat = when (it) {
+                    is BaseResponse.Error -> {
+                        errorMutableSharedFlow.emit(it.error)
+                        ArrayList()
+                    }
+
+                    is BaseResponse.Success -> it.data
+                }
+            }
+            listChat
+        }
+    }
+
+    private suspend fun startChats(): Boolean {
+        Log.d(TAG, "%> Iniciando chats...")
+        return withContext(Dispatchers.IO) {
+            var response = false
+            setChatsDatabaseUseCase(getChats()).collect {
+                response = when (it) {
+                    is BaseResponse.Error -> false
+                    is BaseResponse.Success -> it.data
+                }
+            }
+            response
+        }
     }
 }
