@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.local.DeleteChatTableUseCase
+import com.team2.chitchat.data.usecase.local.DeleteMessageTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteUserTableUseCase
 import com.team2.chitchat.data.usecase.remote.GetProfileUseCase
 import com.team2.chitchat.data.usecase.remote.PutLogOutUseCase
@@ -25,7 +26,8 @@ class ProfileViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
     private val putLogOutUseCase: PutLogOutUseCase,
     private val deleteUserTableUseCase: DeleteUserTableUseCase,
-    private val deleteChatTableUseCase: DeleteChatTableUseCase
+    private val deleteChatTableUseCase: DeleteChatTableUseCase,
+    private val deleteMessageTableUseCase: DeleteMessageTableUseCase
 ) : BaseViewModel() {
     private val deleteDbMutableSharedFlow = MutableSharedFlow<Boolean>()
     val deleteDbSharedFlow: SharedFlow<Boolean> = deleteDbMutableSharedFlow
@@ -89,7 +91,8 @@ class ProfileViewModel @Inject constructor(
             loadingMutableSharedFlow.emit(true)
             val deleteUsers = deleteUserTable()
             val deleteChats = deleteChatTable()
-            if (deleteUsers && deleteChats) {
+            val deleteMessages = deleteMessageTable()
+            if (deleteUsers && deleteChats && deleteMessages) {
                 loadingMutableSharedFlow.emit(false)
                 deleteDbMutableSharedFlow.emit(true)
             }
@@ -115,6 +118,20 @@ class ProfileViewModel @Inject constructor(
         return withContext(Dispatchers.IO) {
             var response = false
             deleteChatTableUseCase().collect {
+                response = when (it) {
+                    is BaseResponse.Error -> false
+                    is BaseResponse.Success -> it.data
+                }
+            }
+            response
+        }
+    }
+
+    private suspend fun deleteMessageTable(): Boolean {
+        Log.d(TAG, "%> Borrando mensajes...")
+        return withContext(Dispatchers.IO) {
+            var response = false
+            deleteMessageTableUseCase().collect {
                 response = when (it) {
                     is BaseResponse.Error -> false
                     is BaseResponse.Success -> it.data

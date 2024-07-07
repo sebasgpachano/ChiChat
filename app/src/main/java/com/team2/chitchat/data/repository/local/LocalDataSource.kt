@@ -73,4 +73,15 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    fun deleteMessageTable(): Flow<BaseResponse<Boolean>> = flow {
+        try {
+            appDatabaseManager.db.messagesDAO().deleteMessageTable()
+            emit(BaseResponse.Success(true))
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
 }
