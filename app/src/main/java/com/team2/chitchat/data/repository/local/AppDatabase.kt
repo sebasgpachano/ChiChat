@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.team2.chitchat.data.repository.local.chat.ChatDAO
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
+import com.team2.chitchat.data.repository.local.message.MessagesDAO
 import com.team2.chitchat.data.repository.local.user.UserDAO
 import com.team2.chitchat.data.repository.local.user.UserDB
 
@@ -12,4 +13,5 @@ import com.team2.chitchat.data.repository.local.user.UserDB
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDAO(): UserDAO
     abstract fun chatDAO(): ChatDAO
+    abstract fun messagesDAO(): MessagesDAO
 }

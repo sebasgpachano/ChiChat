@@ -3,31 +3,31 @@ package com.team2.chitchat.data.mapper.chats
 import android.content.Context
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
-import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.repository.local.chat.ChatDB
+import com.team2.chitchat.data.repository.local.message.MessageDB
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class ListChatsMapper(
     private val arrayChats: ArrayList<ChatDB>,
-    private val arrayMessages: ArrayList<GetMessagesModel>,
+    private val arrayMessages: ArrayList<MessageDB>,
     private val context: Context
 ) {
     fun getList(): ArrayList<ListChatsModel> {
         val mappedList = ArrayList<ListChatsModel>()
 
         for (chat in arrayChats) {
-            val message: GetMessagesModel? = arrayMessages
+            val message: MessageDB? = arrayMessages
                 .sortedByDescending { it.date }
                 .find { it.chatId == chat.id }
             val listChatsModel = ListChatsModel(
-                chat.id,
-                chat.otherUserName,
-                chat.otherUserImg,
-                chat.otherUserOnline,
-                0,
-                message?.message ?: "",
+                id = chat.id,
+                name = chat.otherUserName,
+                image = chat.otherUserImg,
+                state = chat.otherUserOnline,
+                notification = 0,
+                lastMessage = message?.message ?: "",
                 getDate(message)
             )
             mappedList.add(listChatsModel)
@@ -36,7 +36,7 @@ class ListChatsMapper(
         return ArrayList(mappedList.sortedByDescending { it.date })
     }
 
-    private fun getDate(message: GetMessagesModel?): String {
+    private fun getDate(message: MessageDB?): String {
         return if (message?.date.isNullOrBlank()) {
             ""
         } else {

@@ -26,9 +26,9 @@ import com.team2.chitchat.data.repository.local.user.UserDB
     indices = [Index(value = ["chatId", "sourceId"])]
 )
 data class MessageDB(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val chatId: Int,
-    val sourceId: Int,
+    @PrimaryKey val id: String,
+    val chatId: String,
+    val sourceId: String,
     val message: String,
     val date: String,
     var view: Boolean

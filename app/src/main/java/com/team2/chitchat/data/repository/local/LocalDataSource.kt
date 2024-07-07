@@ -4,6 +4,7 @@ import android.content.Context
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.repository.local.chat.ChatDB
+import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import kotlinx.coroutines.flow.Flow
@@ -52,6 +53,18 @@ class LocalDataSource @Inject constructor(
     fun deleteChatTable(): Flow<BaseResponse<Boolean>> = flow {
         try {
             appDatabaseManager.db.chatDAO().deleteChatTable()
+            emit(BaseResponse.Success(true))
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
+    //Messages
+    fun insertMessages(messages: ArrayList<MessageDB>): Flow<BaseResponse<Boolean>> = flow {
+        try {
+            appDatabaseManager.db.messagesDAO().insertMessages(messages)
             emit(BaseResponse.Success(true))
         } catch (e: Exception) {
             val errorModel =

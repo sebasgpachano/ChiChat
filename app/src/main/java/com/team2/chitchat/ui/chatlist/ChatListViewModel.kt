@@ -3,8 +3,8 @@ package com.team2.chitchat.ui.chatlist
 import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
-import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.mapper.chats.ListChatsMapper
+import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.remote.GetChatsUseCase
 import com.team2.chitchat.data.usecase.remote.GetMessagesUseCase
@@ -27,8 +27,8 @@ class ChatListViewModel @Inject constructor(
         MutableSharedFlow()
     val chatsSharedFlow: SharedFlow<ArrayList<ListChatsModel>> = chatsMutableSharedFlow
 
-    private suspend fun getMessages(): ArrayList<GetMessagesModel> {
-        var listMessages: ArrayList<GetMessagesModel> = ArrayList()
+    private suspend fun getMessages(): ArrayList<MessageDB> {
+        var listMessages: ArrayList<MessageDB> = ArrayList()
         getMessagesUseCase().collect {
             listMessages = when (it) {
                 is BaseResponse.Error -> {
@@ -54,7 +54,7 @@ class ChatListViewModel @Inject constructor(
                     }
 
                     is BaseResponse.Success -> {
-                        val listMessages: ArrayList<GetMessagesModel> = getMessages()
+                        val listMessages: ArrayList<MessageDB> = getMessages()
                         loadingMutableSharedFlow.emit(false)
                         val listChatsMapper =
                             ListChatsMapper(
