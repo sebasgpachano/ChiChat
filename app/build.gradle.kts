@@ -70,8 +70,7 @@ dependencies {
     implementation(libs.bundles.room)
     kapt(libs.androidx.room.compiler)
     //coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+    implementation(libs.bundles.coroutines)
     // CryptoSharedPreference
     implementation(libs.androidxCryptoSharedPreferences)
 }

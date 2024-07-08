@@ -40,10 +40,13 @@ gson = "2.10.1"
 
 #Crypto SharedPreferences
 cryptoSharedPreferences = "1.0.0"
-securityCryptoKtxVersion = "1.0.0"
 
 #Room
 roomRuntime = "2.6.1"
+
+#Coroutines
+kotlinxCoroutinesAndroid = "1.8.0"
+kotlinxCoroutinesCore = "1.7.3"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -95,12 +98,17 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 
+#Coroutines
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+
 [bundles]
 android = ["androidxCoreKtx", "androidxCoreSplash", "androidxAppcompat", "androidxConstraitLayout", "androidxSwipeRefresh", "androidMaterial", "androidPlayServicesMaps"]
 navigation = ["androidxNavigationFragment", "androidxNavigationUI", "androidxNavigationDynamicFragment", "androidxNavigationCompose"]
 lifecycle = ["androidxLivecycleLivedata", "androidxLivecycleRuntime", "androidxLivecycleViewmodel"]
 retrofit = ["retrofit", "retrofitGson"]
 room = ["androidx-room-runtime", "androidx-room-ktx"]
+coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
