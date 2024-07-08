@@ -6,6 +6,7 @@ import android.os.IBinder
 import android.util.Log
 import com.team2.chitchat.data.repository.DataProvider
 import com.team2.chitchat.data.repository.local.chat.ChatDB
+import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +42,7 @@ class ChatService : Service() {
             while (true) {
                 Log.d(TAG, "%> loadData")
                 addChats()
+                addMessages()
                 delay(10000)
             }
         }
@@ -84,6 +86,53 @@ class ChatService : Service() {
             return@withContext response
         } catch (e: Exception) {
             Log.e(TAG, "%> Exception in addChats: ${e.message}", e)
+            return@withContext false
+        }
+    }
+
+    private suspend fun getMessages(chats: ArrayList<ChatDB>): ArrayList<MessageDB> =
+        withContext(Dispatchers.IO) {
+            val listAllMessages = ArrayList<MessageDB>()
+            val listMessage = ArrayList<MessageDB>()
+            try {
+                dataProvider.getMessage().collect { response ->
+                    when (response) {
+                        is BaseResponse.Error -> {
+                            Log.e(TAG, "%> Error fetching chats: ${response.error}")
+                        }
+
+                        is BaseResponse.Success -> {
+                            listAllMessages.addAll(response.data)
+                        }
+                    }
+                }
+                val chatIds = chats.map { it.id }.toSet()
+                listMessage.addAll(listAllMessages.filter { it.chatId in chatIds })
+            } catch (e: Exception) {
+                Log.e(TAG, "%> Exception in getMessages: ${e.message}", e)
+            }
+            return@withContext listMessage
+        }
+
+    private suspend fun addMessages(): Boolean = withContext(Dispatchers.IO) {
+        try {
+            Log.d(TAG, "%> Insert messages...")
+            val chats = getChats()
+            val messages = getMessages(chats)
+            var response = false
+            dataProvider.insertMessages(messages).collect { result ->
+                response = when (result) {
+                    is BaseResponse.Error -> {
+                        Log.e(TAG, "%> Error inserting messages: ${result.error}")
+                        false
+                    }
+
+                    is BaseResponse.Success -> result.data
+                }
+            }
+            return@withContext response
+        } catch (e: Exception) {
+            Log.e(TAG, "%> Exception in addMessages: ${e.message}", e)
             return@withContext false
         }
     }
