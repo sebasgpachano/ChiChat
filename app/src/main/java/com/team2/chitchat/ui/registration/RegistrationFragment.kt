@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.error.ErrorModel
+import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.databinding.FragmentRegistrationBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.extensions.setErrorBorder
@@ -54,6 +56,8 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         lifecycleScope.launch {
             dbViewModel.initDbSharedFlow.collect { isOk ->
                 if (isOk) {
+                    val intent = Intent(requireContext(), ChatService::class.java)
+                    requireContext().startService(intent)
                     findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainNavigation())
                 }
             }

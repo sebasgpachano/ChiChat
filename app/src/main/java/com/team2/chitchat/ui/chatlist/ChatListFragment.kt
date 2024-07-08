@@ -67,7 +67,6 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
         }
         lifecycleScope.launch {
             chatListViewModel.chatsSharedFlow.collect { chatsList ->
-                Log.d(TAG, "%> chats-> $chatsList")
                 updateList(chatsList)
             }
         }
