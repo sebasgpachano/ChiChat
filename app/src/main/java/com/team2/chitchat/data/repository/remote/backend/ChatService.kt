@@ -43,7 +43,7 @@ class ChatService : Service() {
                 Log.d(TAG, "%> loadData")
                 addChats()
                 addMessages()
-                delay(10000)
+                delay(2000)
             }
         }
     }

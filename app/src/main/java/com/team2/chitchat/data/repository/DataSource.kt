@@ -39,6 +39,7 @@ interface DataSource {
     //Chat Database
     fun insertChats(chats: ArrayList<ChatDB>): Flow<BaseResponse<Boolean>>
     fun deleteChatTable(): Flow<BaseResponse<Boolean>>
+    fun getChatsDb(): Flow<BaseResponse<ArrayList<ChatDB>>>
 
     //Message Database
     fun insertMessages(messages: ArrayList<MessageDB>): Flow<BaseResponse<Boolean>>

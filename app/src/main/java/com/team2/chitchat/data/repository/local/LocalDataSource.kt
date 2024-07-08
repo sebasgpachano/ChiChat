@@ -61,6 +61,22 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    fun getChatsDb(): Flow<BaseResponse<ArrayList<ChatDB>>> = flow {
+        try {
+            appDatabaseManager.db.chatDAO().getChatsDb().collect { chats ->
+                if (chats.isNotEmpty()) {
+                    emit(BaseResponse.Success(ArrayList(chats)))
+                } else {
+                    emit(BaseResponse.Error(ErrorModel("", "", "Empty list")))
+                }
+            }
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
     //Messages
     fun insertMessages(messages: ArrayList<MessageDB>): Flow<BaseResponse<Boolean>> = flow {
         try {
