@@ -44,4 +44,5 @@ interface DataSource {
     //Message Database
     fun insertMessages(messages: ArrayList<MessageDB>): Flow<BaseResponse<Boolean>>
     fun deleteMessageTable(): Flow<BaseResponse<Boolean>>
+    fun getMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>>
 }

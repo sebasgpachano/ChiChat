@@ -100,4 +100,20 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    fun getMessagesDb(): Flow<BaseResponse<ArrayList<MessageDB>>> = flow {
+        try {
+            appDatabaseManager.db.messagesDAO().getMessagesDb().collect { messages ->
+                if (messages.isNotEmpty()) {
+                    emit(BaseResponse.Success(ArrayList(messages)))
+                } else {
+                    emit(BaseResponse.Error(ErrorModel("", "", "Empty list")))
+                }
+            }
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
 }

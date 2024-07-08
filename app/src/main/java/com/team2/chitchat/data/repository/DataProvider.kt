@@ -84,4 +84,7 @@ class DataProvider @Inject constructor(
         return localDataSource.deleteMessageTable()
     }
 
+    override fun getMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>> {
+        return localDataSource.getMessagesDb()
+    }
 }
