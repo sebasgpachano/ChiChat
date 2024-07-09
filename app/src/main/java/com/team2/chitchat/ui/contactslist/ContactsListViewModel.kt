@@ -31,7 +31,7 @@ class ContactsListViewModel @Inject constructor(private val getContactsUseCase: 
 
                     is BaseResponse.Success -> {
                         loadingMutableSharedFlow.emit(false)
-                        contactsMutableSharedFlow.emit(it.data)
+                        contactsMutableSharedFlow.emit(ArrayList(it.data.sortedBy { user -> user.nick }))
                     }
                 }
             }
