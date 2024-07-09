@@ -3,12 +3,12 @@ package com.team2.chitchat.ui.contactslist.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.team2.chitchat.data.domain.model.users.GetUserModel
+import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.databinding.ItemRecyclerviewListContactsBinding
 
 class ContactsListAdapter(
     private val contactsListAdapterListener: ContactsListAdapterListener
-) : ListAdapter<GetUserModel, ContactsListViewHolder>(ContactsListDiffCallback()) {
+) : ListAdapter<UserDB, ContactsListViewHolder>(ContactsListDiffCallback()) {
 
     interface ContactsListAdapterListener {
         fun onItemClick(idChat: String)
@@ -20,7 +20,7 @@ class ContactsListAdapter(
                 LayoutInflater.from(
                     parent.context
                 ), parent, false
-            ), contactsListAdapterListener
+            )
         )
     }
 

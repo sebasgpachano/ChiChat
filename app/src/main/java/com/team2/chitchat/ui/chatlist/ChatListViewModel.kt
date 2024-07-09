@@ -1,95 +1,62 @@
 package com.team2.chitchat.ui.chatlist
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
-import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
-import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.mapper.chats.ListChatsMapper
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.usecase.GetChatsUseCase
-import com.team2.chitchat.data.usecase.GetContactsUseCase
-import com.team2.chitchat.data.usecase.GetMessagesUseCase
-import com.team2.chitchat.hilt.SimpleApplication
+import com.team2.chitchat.data.usecase.local.GetChatsDbUseCase
+import com.team2.chitchat.data.usecase.local.GetMessagesDbUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
-    private val application: Application,
-    private val simpleApplication: SimpleApplication,
-    private val getChatsUseCase: GetChatsUseCase,
-    private val getUserUseCase: GetContactsUseCase,
-    private val getMessagesUseCase: GetMessagesUseCase
+    @ApplicationContext private val context: Context,
+    private val getChatsDbUseCase: GetChatsDbUseCase,
+    private val getMessagesDbUseCase: GetMessagesDbUseCase
 ) :
     BaseViewModel() {
     private val chatsMutableSharedFlow: MutableSharedFlow<ArrayList<ListChatsModel>> =
         MutableSharedFlow()
     val chatsSharedFlow: SharedFlow<ArrayList<ListChatsModel>> = chatsMutableSharedFlow
 
-
-    private suspend fun getUsers(): ArrayList<GetUserModel> {
-        var listUsers: ArrayList<GetUserModel> = ArrayList()
-        getUserUseCase().collect {
-            listUsers = when (it) {
-                is BaseResponse.Error -> {
-                    ArrayList()
-                }
-
-                is BaseResponse.Success -> {
-                    it.data
-                }
-            }
-        }
-        return listUsers
-    }
-
-    private suspend fun getMessages(): ArrayList<GetMessagesModel> {
-        var listMessages: ArrayList<GetMessagesModel> = ArrayList()
-        getMessagesUseCase().collect {
-            listMessages = when (it) {
-                is BaseResponse.Error -> {
-                    ArrayList()
-                }
-
-                is BaseResponse.Success -> {
-                    it.data
-                }
-            }
-        }
-        return listMessages
-    }
-
     fun getChats() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             loadingMutableSharedFlow.emit(true)
-            getChatsUseCase().collect {
-                when (it) {
+
+            val chatsFlow = getChatsDbUseCase()
+            val messagesFlow = getMessagesDbUseCase()
+
+            combine(chatsFlow, messagesFlow) { chatsResponse, messagesResponse ->
+                val listChats = when (chatsResponse) {
                     is BaseResponse.Error -> {
-                        loadingMutableSharedFlow.emit(false)
-                        errorMutableSharedFlow.emit(it.error)
+                        errorMutableSharedFlow.emit(chatsResponse.error)
+                        ArrayList()
                     }
 
-                    is BaseResponse.Success -> {
-                        val listUsers: ArrayList<GetUserModel> = getUsers()
-                        val listMessages: ArrayList<GetMessagesModel> = getMessages()
-                        loadingMutableSharedFlow.emit(false)
-                        val listChatsMapper =
-                            ListChatsMapper(
-                                simpleApplication,
-                                it.data,
-                                listUsers,
-                                listMessages,
-                                application
-                            )
-                        chatsMutableSharedFlow.emit(listChatsMapper.getList())
-                    }
+                    is BaseResponse.Success -> chatsResponse.data
                 }
+
+                val listMessages = when (messagesResponse) {
+                    is BaseResponse.Error -> {
+                        errorMutableSharedFlow.emit(messagesResponse.error)
+                        ArrayList()
+                    }
+
+                    is BaseResponse.Success -> messagesResponse.data
+                }
+                Pair(listChats, listMessages)
+            }.collect { (chats, messages) ->
+                loadingMutableSharedFlow.emit(false)
+                val listChatsMapper = ListChatsMapper(chats, messages, context)
+                chatsMutableSharedFlow.emit(listChatsMapper.getList())
             }
         }
     }

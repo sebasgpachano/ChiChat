@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
+import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.databinding.FragmentLoginBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.extensions.setErrorBorder
+import com.team2.chitchat.ui.main.DbViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,6 +30,8 @@ import kotlinx.coroutines.launch
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private val viewModel: LoginViewModel by viewModels()
+    private val dbViewModel: DbViewModel by viewModels()
+
     override fun inflateBinding() {
         binding = FragmentLoginBinding.inflate(layoutInflater)
     }
@@ -46,16 +51,27 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override fun observeViewModel() {
         lifecycleScope.launch {
-            viewModel.loginStateFlow.collect {isOk->
+            viewModel.loginStateFlow.collect { isOk ->
                 if (isOk) {
+                    dbViewModel.startDataBase()
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            dbViewModel.initDbSharedFlow.collect { isOk ->
+                if (isOk) {
+                    val intent = Intent(requireContext(), ChatService::class.java)
+                    requireContext().startService(intent)
                     findNavController().popBackStack()
                 }
             }
         }
-        lifecycleScope.launch {
-            viewModel.errorFlow.collect{errorModel->
 
-                when(errorModel.errorCode) {
+        lifecycleScope.launch {
+            viewModel.errorFlow.collect { errorModel ->
+
+                when (errorModel.errorCode) {
                     "400" -> {
                         binding?.apply {
                             editTUserLoginFragment.setErrorBorder(
@@ -66,6 +82,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                             textVUserErrorLoginFragment.setText(R.string.user_error)
                         }
                     }
+
                     "401" -> {
                         binding?.apply {
                             editTPasswordLoginFragment.setErrorBorder(
@@ -76,6 +93,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                             textVPasswordErrorLoginFragment.setText(R.string.password_invalid)
                         }
                     }
+
                     "" -> {
                         binding?.apply {
                             editTUserLoginFragment.setErrorBorder(
@@ -94,6 +112,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                             textVPasswordErrorLoginFragment.setText(R.string.password_invalid)
                         }
                     }
+
                     else -> {
                         showDialogError(errorModel.errorCode) {
 
@@ -104,7 +123,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             }
         }
         lifecycleScope.launch {
-            viewModel.loadingFlow.collect{loading->
+            viewModel.loadingFlow.collect { loading ->
                 showLoading(loading)
             }
         }
@@ -129,9 +148,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 val userInput = editTUserLoginFragment.text.toString()
                 val passwordInput = editTPasswordLoginFragment.text.toString()
                 if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
-                    viewModel.getAuthenticationUser(LoginUserRequest(
-                        login = userInput, password = passwordInput
-                    ))
+                    viewModel.getAuthenticationUser(
+                        LoginUserRequest(
+                            login = userInput, password = passwordInput
+                        )
+                    )
                 } else {
                     emptyEditText(
                         listOf(
@@ -144,7 +165,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
 
     }
-    private fun emptyEditText(pairOfEditTextToTextView: List<Pair<EditText,TextView>>) {
+
+    private fun emptyEditText(pairOfEditTextToTextView: List<Pair<EditText, TextView>>) {
 
         pairOfEditTextToTextView.forEach { (editText, textView) ->
             if (editText.text.toString().isBlank()) {

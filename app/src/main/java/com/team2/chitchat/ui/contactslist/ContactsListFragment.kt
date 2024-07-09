@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.team2.chitchat.R
-import com.team2.chitchat.data.domain.model.users.GetUserModel
+import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.databinding.FragmentContactsListBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.contactslist.adapter.ContactsListAdapter
@@ -86,7 +86,8 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
         }
     }
 
-    private fun updateList(contactsList: ArrayList<GetUserModel>) {
+    private fun updateList(contactsList: ArrayList<UserDB>) {
+        Log.d(TAG, "%> Contacts list size: ${contactsList.size}")
         contactsListAdapter.submitList(contactsList) {
             binding?.rvContacts?.scrollToPosition(0)
         }
