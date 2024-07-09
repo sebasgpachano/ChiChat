@@ -1,15 +1,17 @@
 package com.team2.chitchat.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
+import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.databinding.FragmentProfileBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
@@ -51,6 +53,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 showDialogError(errorModel.errorCode) {}
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.deleteDbSharedFlow.collect { isOk ->
+                if (isOk) {
+                    viewModel.putLogOut()
+                }
+            }
+        }
+
         lifecycleScope.launch {
             viewModel.getUserStateFlow.collect {user->
                 binding?.apply {
@@ -69,8 +80,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
-    }
+    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
+        Unit
+
     private fun initializeListeners() {
         if (binding == null) Log.d(TAG, "l> BINDING IS NULL")
         else Log.d(TAG, "l> BINDING IS NOT NULL")
@@ -86,9 +98,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     textNegativeButton = context?.getString(R.string.cancel)?: "Cancelar",
                     listener = object : MessageDialogFragment.MessageDialogListener{
                         override fun positiveButtonOnclick(view: View) {
-                            viewModel.putLogOut()
+                            val intent = Intent(requireContext(), ChatService::class.java)
+                            requireContext().stopService(intent)
+                            viewModel.deleteDb()
                         }
-
                     }
                 )
             }

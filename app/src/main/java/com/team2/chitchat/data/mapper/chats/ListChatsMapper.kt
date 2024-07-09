@@ -2,63 +2,41 @@ package com.team2.chitchat.data.mapper.chats
 
 import android.content.Context
 import com.team2.chitchat.R
-import com.team2.chitchat.data.domain.model.chats.GetChatsModel
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
-import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
-import com.team2.chitchat.data.domain.model.users.GetUserModel
-import com.team2.chitchat.hilt.SimpleApplication
+import com.team2.chitchat.data.repository.local.chat.ChatDB
+import com.team2.chitchat.data.repository.local.message.MessageDB
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class ListChatsMapper(
-    private val simpleApplication: SimpleApplication,
-    private val arrayChats: ArrayList<GetChatsModel>,
-    private val arrayUsers: ArrayList<GetUserModel>,
-    private val arrayMessages: ArrayList<GetMessagesModel>,
+    private val arrayChats: ArrayList<ChatDB>,
+    private val arrayMessages: ArrayList<MessageDB>,
     private val context: Context
 ) {
     fun getList(): ArrayList<ListChatsModel> {
         val mappedList = ArrayList<ListChatsModel>()
 
-        for (chat in getChats()) {
-            val user = getUser(chat)
-            val message: GetMessagesModel? = arrayMessages
+        for (chat in arrayChats) {
+            val message: MessageDB? = arrayMessages
                 .sortedByDescending { it.date }
                 .find { it.chatId == chat.id }
-
-            if (user != null) {
-                val listChatsModel = ListChatsModel(
-                    chat.id,
-                    user.nick,
-                    user.avatar,
-                    user.online,
-                    0,
-                    message?.message ?: "",
-                    getDate(message)
-                )
-                mappedList.add(listChatsModel)
-            }
+            val listChatsModel = ListChatsModel(
+                id = chat.id,
+                name = chat.otherUserName,
+                image = chat.otherUserImg,
+                state = chat.otherUserOnline,
+                notification = 0,
+                lastMessage = message?.message ?: "",
+                getDate(message)
+            )
+            mappedList.add(listChatsModel)
         }
 
-        return mappedList
+        return ArrayList(mappedList.sortedByDescending { it.date })
     }
 
-    private fun getChats(): List<GetChatsModel> {
-        return arrayChats.filter { chat ->
-            chat.source == simpleApplication.getUserID() || chat.target == simpleApplication.getUserID()
-        }
-    }
-
-    private fun getUser(chat: GetChatsModel): GetUserModel? {
-        return if (chat.source != simpleApplication.getUserID()) {
-            arrayUsers.find { it.id == chat.source }
-        } else {
-            arrayUsers.find { it.id == chat.target }
-        }
-    }
-
-    private fun getDate(message: GetMessagesModel?): String {
+    private fun getDate(message: MessageDB?): String {
         return if (message?.date.isNullOrBlank()) {
             ""
         } else {
@@ -73,6 +51,7 @@ class ListChatsMapper(
                     .isEqual(LocalDate.now(localZonedDateTime.zone).minusDays(1)) -> {
                     context.getString(R.string.chat_list_date_yesterday)
                 }
+
                 else -> {
                     localZonedDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
                 }

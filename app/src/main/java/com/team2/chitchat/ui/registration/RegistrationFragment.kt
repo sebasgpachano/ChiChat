@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.registration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.error.ErrorModel
+import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.databinding.FragmentRegistrationBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.extensions.toastLong
+import com.team2.chitchat.ui.main.DbViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -20,6 +23,7 @@ import kotlinx.coroutines.launch
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener {
 
     private val registrationViewModel: RegistrationViewModel by viewModels()
+    private val dbViewModel: DbViewModel by viewModels()
 
     override fun inflateBinding() {
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
@@ -49,9 +53,21 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
             }
         }
 
+        lifecycleScope.launch {
+            dbViewModel.initDbSharedFlow.collect { isOk ->
+                if (isOk) {
+                    val intent = Intent(requireContext(), ChatService::class.java)
+                    requireContext().startService(intent)
+                    findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainNavigation())
+                }
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
-            registrationViewModel.successFlow.collect {
-                findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainNavigation())
+            registrationViewModel.successFlow.collect { isOk ->
+                if (isOk) {
+                    dbViewModel.startDataBase()
+                }
             }
         }
 

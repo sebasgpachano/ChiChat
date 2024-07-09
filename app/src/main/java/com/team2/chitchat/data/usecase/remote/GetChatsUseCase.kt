@@ -1,13 +1,13 @@
-package com.team2.chitchat.data.usecase
+package com.team2.chitchat.data.usecase.remote
 
-import com.team2.chitchat.data.domain.model.chats.GetChatsModel
-import com.team2.chitchat.data.repository.remote.backend.DataProvider
+import com.team2.chitchat.data.repository.DataProvider
+import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetChatsUseCase @Inject constructor(private val dataProvider: DataProvider) {
-    operator fun invoke(): Flow<BaseResponse<ArrayList<GetChatsModel>>> {
+    operator fun invoke(): Flow<BaseResponse<ArrayList<ChatDB>>> {
         return dataProvider.getChats()
     }
 }

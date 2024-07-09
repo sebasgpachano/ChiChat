@@ -28,6 +28,7 @@
     <string name="imageLogoDescription">Logo ChitChat</string>
     <string name="textRegisterLoginF">Regístrate</string>
     <string name="textRegisterQuestionLoginF">¿No tienes cuenta?</string>
+    <string name="error_unknown_error">Unknown Error</string>
 
     <!-- Registration fragment -->
     <string name="user">Usuario</string>

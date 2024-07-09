@@ -1,25 +1,26 @@
 package com.team2.chitchat.data.mapper.messages
 
-import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.mapper.ResponseMapper
+import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.remote.response.messages.GetMessagesResponse
 
 class GetMessagesMapper :
-    ResponseMapper<ArrayList<GetMessagesResponse>, ArrayList<GetMessagesModel>> {
-    override fun fromResponse(response: ArrayList<GetMessagesResponse>): ArrayList<GetMessagesModel> {
-        val messagesModel: ArrayList<GetMessagesModel> = if (response.isEmpty()) {
+    ResponseMapper<ArrayList<GetMessagesResponse>, ArrayList<MessageDB>> {
+    override fun fromResponse(response: ArrayList<GetMessagesResponse>): ArrayList<MessageDB> {
+        val messages: ArrayList<MessageDB> = if (response.isEmpty()) {
             ArrayList()
         } else {
             ArrayList(response.map { messagesResponse ->
-                GetMessagesModel(
+                MessageDB(
                     id = messagesResponse.id ?: "",
                     chatId = messagesResponse.chat ?: "",
                     sourceId = messagesResponse.source ?: "",
                     message = messagesResponse.message ?: "",
-                    date = messagesResponse.date ?: ""
+                    date = messagesResponse.date ?: "",
+                    view = false
                 )
             })
         }
-        return messagesModel
+        return messages
     }
 }
