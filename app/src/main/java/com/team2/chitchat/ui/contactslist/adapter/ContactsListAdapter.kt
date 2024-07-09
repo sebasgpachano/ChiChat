@@ -20,7 +20,7 @@ class ContactsListAdapter(
                 LayoutInflater.from(
                     parent.context
                 ), parent, false
-            )
+            ), contactsListAdapterListener
         )
     }
 

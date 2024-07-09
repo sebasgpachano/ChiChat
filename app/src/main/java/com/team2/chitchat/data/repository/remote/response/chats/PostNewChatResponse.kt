@@ -8,5 +8,5 @@ data class PostNewChatResponse(
     @SerializedName("created")
     val created: Boolean?,
     @SerializedName("chat")
-    val chat: GetChatsResponse?
+    val chat: PostChatsResponse?
 )

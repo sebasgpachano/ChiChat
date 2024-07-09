@@ -2,14 +2,12 @@ package com.team2.chitchat.ui.contactslist
 
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
-import com.team2.chitchat.data.domain.model.users.GetUserModel
-import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.local.user.UserDB
+import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.usecase.GetContactsUseCase
-import com.team2.chitchat.data.usecase.PostNewChatUseCase
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
+import com.team2.chitchat.data.usecase.remote.PostNewChatUseCase
+import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
