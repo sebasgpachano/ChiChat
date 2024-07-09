@@ -8,7 +8,8 @@ class PostNewChatMapper : ResponseMapper<PostNewChatResponse, PostNewChatModel> 
     override fun fromResponse(response: PostNewChatResponse): PostNewChatModel {
         return PostNewChatModel(
             success = response.success ?: false,
-            created = response.created ?: false
+            created = response.created ?: false,
+            idChat = response.chat?.id ?: ""
         )
     }
 }

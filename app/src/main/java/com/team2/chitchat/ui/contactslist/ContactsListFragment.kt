@@ -75,6 +75,15 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
                 updateList(contactsList)
             }
         }
+        lifecycleScope.launch {
+            contactsListViewModel.newChatSharedFlow.collect { newChat ->
+                findNavController().navigate(
+                    ContactsListFragmentDirections.actionContactsListFragmentToChatFragment(
+                        newChat.idChat
+                    )
+                )
+            }
+        }
     }
 
     private fun updateList(contactsList: ArrayList<GetUserModel>) {
@@ -88,8 +97,9 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
         contactsListViewModel.getContactsList()
     }
 
-    override fun onItemClick(idChat: String) {
-        Log.d(TAG, "%> Has pulsado en el chat con id: $idChat")
+    override fun onItemClick(idTarget: String) {
+        Log.d(TAG, "%> Has pulsado en el usuario con id: $idTarget")
+        contactsListViewModel.postNewChat(idTarget)
     }
 
 }
