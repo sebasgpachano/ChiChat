@@ -7,13 +7,14 @@ import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
     private val appDatabaseManager: AppDatabaseManager,
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) {
     //User
     fun insertUsers(users: ArrayList<UserDB>): Flow<BaseResponse<Boolean>> = flow {
