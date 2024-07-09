@@ -1,7 +1,5 @@
 package com.team2.chitchat.data.mapper.chats
 
-import android.content.Context
-import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
@@ -10,9 +8,9 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class ListChatsMapper(
+    private val userId: String,
     private val arrayChats: ArrayList<ChatDB>,
     private val arrayMessages: ArrayList<MessageDB>,
-    private val context: Context
 ) {
     fun getList(): ArrayList<ListChatsModel> {
         val mappedList = ArrayList<ListChatsModel>()
@@ -26,14 +24,29 @@ class ListChatsMapper(
                 name = chat.otherUserName,
                 image = chat.otherUserImg,
                 state = chat.otherUserOnline,
-                notification = 0,
+                notification = getNotifications(chat),
                 lastMessage = message?.message ?: "",
-                getDate(message)
+                date = getDate(message)
             )
             mappedList.add(listChatsModel)
         }
 
         return ArrayList(mappedList.sortedByDescending { it.date })
+    }
+
+    private fun getNotifications(chat: ChatDB): Int {
+        val lastMessageSendDate: String? = chat.dateLastMessageSend.ifBlank {
+            val lastMessage = arrayMessages
+                .sortedByDescending { it.date }
+                .find { it.sourceId == userId }
+            lastMessage?.date
+        }
+        val unreadMessagesCount = arrayMessages.count {
+            it.chatId == chat.id && !it.view &&
+                    (lastMessageSendDate == null || it.date > lastMessageSendDate)
+        }
+
+        return unreadMessagesCount
     }
 
     private fun getDate(message: MessageDB?): String {
@@ -46,12 +59,6 @@ class ListChatsMapper(
                     .isEqual(LocalDate.now(localZonedDateTime.zone)) -> {
                     localZonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
                 }
-
-                localZonedDateTime.toLocalDate()
-                    .isEqual(LocalDate.now(localZonedDateTime.zone).minusDays(1)) -> {
-                    context.getString(R.string.chat_list_date_yesterday)
-                }
-
                 else -> {
                     localZonedDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
                 }
