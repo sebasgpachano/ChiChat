@@ -37,6 +37,12 @@
                 app:launchSingleTop="false"
                 app:popUpToInclusive="false" />
 
+            <action
+                android:id="@+id/action_chatListFragment_to_chatFragment"
+                app:destination="@id/chatFragment"
+                app:popUpTo="@id/chatListFragment"
+                app:popUpToInclusive="false" />
+
         </fragment>
 
         <fragment
