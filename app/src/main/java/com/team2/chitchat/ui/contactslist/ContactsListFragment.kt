@@ -65,7 +65,7 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
         lifecycleScope.launch {
             contactsListViewModel.errorFlow.collect { errorModel ->
                 if (errorModel.message == "No token provided") {
-                    requireContext().toastLong(getString(R.string.apy_error_session_expired))
+                    requireContext().toastLong(getString(R.string.error_session_expired))
                     findNavController().navigateUp()
                 }
             }
