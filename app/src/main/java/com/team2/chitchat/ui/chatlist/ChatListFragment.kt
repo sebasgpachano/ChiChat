@@ -16,12 +16,15 @@ import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chatlist.adapter.ChatsListAdapter
 import com.team2.chitchat.ui.extensions.TAG
+import com.team2.chitchat.ui.extensions.gone
+import com.team2.chitchat.ui.extensions.invisible
+import com.team2.chitchat.ui.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
-    ChatsListAdapter.ListChatsAdapterListener {
+    ChatsListAdapter.ListChatsAdapterListener, View.OnClickListener {
     private val chatListViewModel: ChatListViewModel by viewModels()
     private val chatsListAdapter = ChatsListAdapter(this)
 
@@ -33,9 +36,7 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) {
         configRecyclerView()
-        binding?.btnAddChat?.setOnClickListener {
-            findNavController().navigate(ChatListFragmentDirections.actionChatListFragmentToContactsListFragment())
-        }
+        setupListeners()
         if ((context?.applicationContext as SimpleApplication).getAuthToken().isBlank()) {
             findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
         }
@@ -46,6 +47,32 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = chatsListAdapter
+        }
+    }
+
+    private fun setupListeners() {
+        binding?.btnAddChat?.setOnClickListener(this)
+        binding?.ibSearch?.setOnClickListener(this)
+        binding?.ibQuitSearch?.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.btnAddChat -> findNavController().navigate(ChatListFragmentDirections.actionChatListFragmentToContactsListFragment())
+
+            R.id.ibSearch -> {
+                binding?.ibSearch?.invisible()
+                binding?.tvSubtitle?.invisible()
+                binding?.etSearchUser?.visible()
+                binding?.ibQuitSearch?.visible()
+            }
+
+            R.id.ibQuitSearch -> {
+                binding?.ibSearch?.visible()
+                binding?.tvSubtitle?.visible()
+                binding?.etSearchUser?.gone()
+                binding?.ibQuitSearch?.gone()
+            }
         }
     }
 
