@@ -22,7 +22,8 @@
     <string name="chat_list_user_state">Estado del usuario</string>
     <string name="chat_list_add_chat">Añadir persona para hablar</string>
     <string name="chat_list_btn_search">Boton para filtrar conversaciones</string>
-    <string name="chat_list_et_hint_search_user">Bucar usuario...</string>
+    <string name="chat_list_btn_quit_search">Boton para cancelar la busqueda de conversaciones</string>
+    <string name="chat_list_et_hint_search_user">Bucar conversación...</string>
 
     <!-- Error -->
     <string name="error_session_expired">Su sesión ha expirado</string>
