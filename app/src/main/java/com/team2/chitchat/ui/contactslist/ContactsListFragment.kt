@@ -20,9 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
+class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
+    ContactsListAdapter.ContactsListAdapterListener {
     private val contactsListViewModel: ContactsListViewModel by viewModels()
-    private val contactsListAdapter = ContactsListAdapter()
+    private val contactsListAdapter = ContactsListAdapter(this)
     override fun inflateBinding() {
         binding = FragmentContactsListBinding.inflate(layoutInflater)
     }
@@ -74,6 +75,15 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
                 updateList(contactsList)
             }
         }
+        lifecycleScope.launch {
+            contactsListViewModel.newChatSharedFlow.collect { newChat ->
+                findNavController().navigate(
+                    ContactsListFragmentDirections.actionContactsListFragmentToChatFragment(
+                        newChat.idChat
+                    )
+                )
+            }
+        }
     }
 
     private fun updateList(contactsList: ArrayList<UserDB>) {
@@ -86,6 +96,11 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>() {
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
         contactsListViewModel.getContactsList()
+    }
+
+    override fun onItemClick(idTarget: String) {
+        Log.d(TAG, "%> Has pulsado en el usuario con id: $idTarget")
+        contactsListViewModel.postNewChat(idTarget)
     }
 
 }

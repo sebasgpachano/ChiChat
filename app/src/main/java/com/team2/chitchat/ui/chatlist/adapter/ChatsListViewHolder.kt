@@ -7,6 +7,7 @@ import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.databinding.ItemRecyclerviewListChatsBinding
 import com.team2.chitchat.ui.extensions.gone
+import com.team2.chitchat.ui.extensions.visible
 
 class ChatsListViewHolder(
     private val binding: ItemRecyclerviewListChatsBinding,
@@ -28,6 +29,9 @@ class ChatsListViewHolder(
             }
             if (chatList.notification == 0) {
                 tvNotification.gone()
+            } else {
+                tvNotification.visible()
+                tvNotification.text = chatList.notification.toString()
             }
             binding.root.setOnClickListener {
                 listChatsAdapterListener.onItemClick(chatList.id)

@@ -1,9 +1,11 @@
 package com.team2.chitchat.data.repository.remote.backend
 
+import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.LogOutResponse
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
+import com.team2.chitchat.data.repository.remote.response.chats.PostNewChatResponse
 import com.team2.chitchat.data.repository.remote.response.messages.GetMessagesResponse
 import com.team2.chitchat.data.repository.remote.response.users.GetUserResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostLoginResponse
@@ -37,6 +39,11 @@ interface ApiService {
     //Chats
     @GET("api/chats/view")
     suspend fun getChats(): Response<ArrayList<GetChatsResponse>>
+
+    @POST("api/chats")
+    suspend fun postNewChat(
+        @Body newChatRequest: NewChatRequest
+    ): Response<PostNewChatResponse>
 
     //Message
     @GET("api/messages/")
