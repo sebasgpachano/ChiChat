@@ -25,6 +25,5 @@ data class ChatDB(
     var view: Boolean,
     var otherUserOnline: Boolean,
     var otherUserImg: String,
-    var lastMessageId: String,
-    var notifications: Int
+    var dateLastMessageSend: String
 )

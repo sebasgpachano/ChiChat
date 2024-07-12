@@ -29,8 +29,7 @@ class GetChatsMapper(
                 otherUserImg = otherUserResponseImg ?: "",
                 idOtherUser = otherUserResponseId ?: "",
                 otherUserName = otherUserResponseName ?: "",
-                lastMessageId = "",
-                notifications = 0,
+                dateLastMessageSend = ""
             )
             chatList.add(chatDB)
         }

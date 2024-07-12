@@ -1,15 +1,14 @@
 package com.team2.chitchat.ui.chatlist
 
-import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.mapper.chats.ListChatsMapper
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.local.GetChatsDbUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesDbUseCase
+import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
@@ -18,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val simpleApplication: SimpleApplication,
     private val getChatsDbUseCase: GetChatsDbUseCase,
     private val getMessagesDbUseCase: GetMessagesDbUseCase
 ) :
@@ -55,7 +54,8 @@ class ChatListViewModel @Inject constructor(
                 Pair(listChats, listMessages)
             }.collect { (chats, messages) ->
                 loadingMutableSharedFlow.emit(false)
-                val listChatsMapper = ListChatsMapper(chats, messages, context)
+                val listChatsMapper =
+                    ListChatsMapper(simpleApplication.getUserID(), chats, messages)
                 chatsMutableSharedFlow.emit(listChatsMapper.getList())
             }
         }

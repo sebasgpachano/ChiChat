@@ -110,6 +110,10 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
     }
 
     override fun onItemClick(idChat: String) {
-        Log.d(TAG, "%> Has pulsado en el chat con id: $idChat")
+        findNavController().navigate(
+            ChatListFragmentDirections.actionChatListFragmentToChatFragment(
+                idChat
+            )
+        )
     }
 }
