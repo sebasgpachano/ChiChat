@@ -1,10 +1,13 @@
 package com.team2.chitchat.ui.chat
 
 import androidx.lifecycle.viewModelScope
+import com.team2.chitchat.data.domain.model.chats.GetChatModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
+import com.team2.chitchat.data.mapper.chats.GetChatMapper
 import com.team2.chitchat.data.mapper.messages.MessagesMapper
 import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.usecase.local.GetChatUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesForChatUseCase
 import com.team2.chitchat.data.usecase.remote.PostNewMessageUseCase
 import com.team2.chitchat.hilt.SimpleApplication
@@ -21,7 +24,9 @@ class ChatViewModel @Inject constructor(
     private val getMessagesForChatUseCase: GetMessagesForChatUseCase,
     private val messagesMapper: MessagesMapper,
     private val simpleApplication: SimpleApplication,
-    private val postNewMessageUseCase: PostNewMessageUseCase
+    private val postNewMessageUseCase: PostNewMessageUseCase,
+    private val getChatUseCase: GetChatUseCase,
+    private val getChatMapper: GetChatMapper
 ) :
     BaseViewModel() {
     private val messagesMutableStateFlow: MutableStateFlow<List<GetMessagesModel>> =
@@ -29,6 +34,9 @@ class ChatViewModel @Inject constructor(
             emptyList()
         )
     val messagesStateFlow: StateFlow<List<GetMessagesModel>> = messagesMutableStateFlow
+    private val chatMutableStateFlow: MutableStateFlow<GetChatModel> =
+        MutableStateFlow(GetChatModel("", "", "", false))
+    val chatStateFlow: StateFlow<GetChatModel> = chatMutableStateFlow
 
     fun getMessagesForChat(chatId: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -41,6 +49,23 @@ class ChatViewModel @Inject constructor(
                     is BaseResponse.Success -> {
                         val messages = messagesMapper.getMessages(it.data)
                         messagesMutableStateFlow.value = messages
+                    }
+                }
+            }
+        }
+    }
+
+    fun getChat(chatId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            getChatUseCase(chatId).collect {
+                when (it) {
+                    is BaseResponse.Error -> {
+                        errorMutableSharedFlow.emit(it.error)
+                    }
+
+                    is BaseResponse.Success -> {
+                        val chat = getChatMapper.getChat(it.data)
+                        chatMutableStateFlow.value = chat
                     }
                 }
             }

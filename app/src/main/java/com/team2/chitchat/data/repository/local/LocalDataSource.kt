@@ -86,6 +86,19 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+
+    fun getChat(chatId: String): Flow<BaseResponse<ChatDB>> = flow {
+        try {
+            appDatabaseManager.db.chatDAO().getChat(chatId).collect { chat ->
+                emit(BaseResponse.Success(chat))
+            }
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
     //Messages
     fun insertMessages(messages: ArrayList<MessageDB>): Flow<BaseResponse<Boolean>> = flow {
         try {

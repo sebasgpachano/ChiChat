@@ -10,9 +10,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.team2.chitchat.R
+import com.team2.chitchat.data.domain.model.chats.GetChatModel
 import com.team2.chitchat.databinding.FragmentChatBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chat.adapter.ChatAdapter
+import com.team2.chitchat.ui.extensions.invisible
+import com.team2.chitchat.ui.extensions.toastLong
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -36,6 +39,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         setUpListeners()
         configRecyclerView()
         setUpKeyboardListener()
+        chatViewModel.getChat(args.idChat)
     }
 
     private fun configRecyclerView() {
@@ -62,10 +66,31 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
                 chatAdapter.submitListWithScroll(messages, binding?.rvChat)
             }
         }
+
+        lifecycleScope.launch {
+            chatViewModel.chatStateFlow.collect { chat ->
+                getUser(chat)
+            }
+        }
+
+        lifecycleScope.launch {
+            chatViewModel.errorFlow.collect {
+                requireContext().toastLong(it.error)
+            }
+        }
     }
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
         chatViewModel.getMessagesForChat(args.idChat)
+    }
+
+    private fun getUser(chat: GetChatModel) {
+        binding?.tvUsername?.text = chat.name
+        if (chat.online) {
+            binding?.tvStatus?.text = "En línea"
+        } else {
+            binding?.tvStatus?.invisible()
+        }
     }
 
     override fun onClick(view: View?) {
@@ -82,7 +107,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
                 if (binding?.etSend?.text.toString().isNotEmpty()) {
                     chatViewModel.postNewMessage(binding?.etSend?.text.toString(), args.idChat)
                 }
-                binding?.etSend?.setText("")
+                binding?.etSend?.text?.clear()
             }
         }
     }
