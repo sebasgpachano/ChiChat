@@ -11,6 +11,11 @@ class SimpleApplication : Application() {
     @Inject
     lateinit var encryptedSharedPreferencesManager: EncryptedSharedPreferencesManager
 
+    override fun onCreate() {
+        super.onCreate()
+        INSTANCE = this
+    }
+
     fun saveAuthToken(token: String) {
         encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
             EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_KEY_LOGIN_AUTH,
@@ -32,5 +37,11 @@ class SimpleApplication : Application() {
         return encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences(
             EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_USER_ID
         )
+    }
+
+    companion object {
+        @get:Synchronized
+        lateinit var INSTANCE: SimpleApplication
+            private set
     }
 }

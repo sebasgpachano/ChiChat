@@ -68,7 +68,15 @@ class LocalDataSource @Inject constructor(
                 if (chats.isNotEmpty()) {
                     emit(BaseResponse.Success(ArrayList(chats)))
                 } else {
-                    emit(BaseResponse.Error(ErrorModel("", "", "Empty list")))
+                    emit(
+                        BaseResponse.Error(
+                            ErrorModel(
+                                "",
+                                "",
+                                context.getString(R.string.empty_list)
+                            )
+                        )
+                    )
                 }
             }
         } catch (e: Exception) {
@@ -107,7 +115,15 @@ class LocalDataSource @Inject constructor(
                 if (messages.isNotEmpty()) {
                     emit(BaseResponse.Success(ArrayList(messages)))
                 } else {
-                    emit(BaseResponse.Error(ErrorModel("", "", "Empty list")))
+                    emit(
+                        BaseResponse.Error(
+                            ErrorModel(
+                                "",
+                                "",
+                                context.getString(R.string.empty_list)
+                            )
+                        )
+                    )
                 }
             }
         } catch (e: Exception) {
@@ -117,4 +133,26 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    fun getMessagesForChat(chatId: String): Flow<BaseResponse<List<MessageDB>>> = flow {
+        try {
+            appDatabaseManager.db.messagesDAO().getMessagesForChat(chatId).collect { messages ->
+                if (messages.isNotEmpty()) {
+                    emit(BaseResponse.Success(ArrayList(messages)))
+                } else {
+                    emit(
+                        BaseResponse.Error(
+                            ErrorModel(
+                                "", "",
+                                context.getString(R.string.empty_list)
+                            )
+                        )
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
 }

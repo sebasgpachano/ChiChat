@@ -9,5 +9,6 @@ data class GetMessagesModel(
     val chatId: String,
     val sourceId: String,
     val message: String,
-    val date: String
+    val date: String,
+    val view: Boolean
 ) : BaseModel()

@@ -64,5 +64,8 @@
 
     <!-- Fragment splash-->
     <string name="splash_iv_logo">Logo de la aplicacion</string>
+
+    <!-- Chat fragment-->
     <string name="send_message">Enviar mensaje</string>
+    <string name="empty_list">Empty list</string>
 </resources>

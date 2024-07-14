@@ -16,4 +16,7 @@ interface MessagesDAO {
 
     @Query("SELECT * FROM message")
     fun getMessagesDb(): Flow<List<MessageDB>>
+
+    @Query("SELECT * FROM message WHERE chatId = :chatId ORDER BY date ASC")
+    fun getMessagesForChat(chatId: String): Flow<List<MessageDB>>
 }
