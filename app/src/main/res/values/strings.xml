@@ -68,4 +68,5 @@
     <!-- Chat fragment-->
     <string name="send_message">Enviar mensaje</string>
     <string name="empty_list">Empty list</string>
+    <string name="send_button">Botón enviar</string>
 </resources>
