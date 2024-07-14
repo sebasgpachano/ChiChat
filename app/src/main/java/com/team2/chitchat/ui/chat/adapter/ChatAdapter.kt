@@ -3,6 +3,7 @@ package com.team2.chitchat.ui.chat.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.databinding.ItemMessageReceivedBinding
 import com.team2.chitchat.databinding.ItemMessageSentBinding
@@ -59,6 +60,12 @@ class ChatAdapter(private val chatAdapterListener: ChatAdapterListener) :
         when (holder) {
             is ChatViewHolder.ReceivedMessageViewHolder -> holder.onBind(message)
             is ChatViewHolder.SentMessageViewHolder -> holder.onBind(message)
+        }
+    }
+
+    fun submitListWithScroll(newList: List<GetMessagesModel>, recyclerView: RecyclerView?) {
+        submitList(newList) {
+            recyclerView?.scrollToPosition(itemCount - 1)
         }
     }
 

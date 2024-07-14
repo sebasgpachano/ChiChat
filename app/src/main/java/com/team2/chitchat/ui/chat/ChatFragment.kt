@@ -35,6 +35,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     ) {
         setUpListeners()
         configRecyclerView()
+        setUpKeyboardListener()
     }
 
     private fun configRecyclerView() {
@@ -58,7 +59,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     override fun observeViewModel() {
         lifecycleScope.launch {
             chatViewModel.messagesStateFlow.collect { messages ->
-                chatAdapter.submitList(messages)
+                chatAdapter.submitListWithScroll(messages, binding?.rvChat)
             }
         }
     }
@@ -78,7 +79,22 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
             }
 
             R.id.ibSend -> {
-                //TODO sebas
+                if (binding?.etSend?.text.toString().isNotEmpty()) {
+                    chatViewModel.postNewMessage(binding?.etSend?.text.toString(), args.idChat)
+                }
+                binding?.etSend?.setText("")
+            }
+        }
+    }
+
+    private fun setUpKeyboardListener() {
+        binding?.root?.viewTreeObserver?.addOnGlobalLayoutListener {
+            val rect = android.graphics.Rect()
+            binding!!.root.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = binding!!.root.rootView.height
+            val keypadHeight = screenHeight - rect.bottom
+            if (keypadHeight > 150) {
+                binding!!.rvChat.scrollToPosition(chatAdapter.itemCount - 1)
             }
         }
     }
