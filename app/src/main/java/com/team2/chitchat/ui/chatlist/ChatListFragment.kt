@@ -84,9 +84,7 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
 
     override fun onItemClick(idChat: String) {
         findNavController().navigate(
-            ChatListFragmentDirections.actionChatListFragmentToChatFragment(
-                idChat
-            )
+            ChatListFragmentDirections.actionChatListFragmentToChatFragment(idChat)
         )
     }
 }

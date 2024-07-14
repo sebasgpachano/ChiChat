@@ -4,15 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.navigateUp
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.team2.chitchat.R
 import com.team2.chitchat.databinding.FragmentChatBinding
 import com.team2.chitchat.ui.base.BaseFragment
+import com.team2.chitchat.ui.chat.adapter.ChatAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener {
+class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
+    ChatAdapter.ChatAdapterListener {
+
+    private val chatViewModel: ChatViewModel by viewModels()
+    private val chatAdapter = ChatAdapter(this)
+    private val args: ChatFragmentArgs by navArgs()
 
     override fun inflateBinding() {
         binding = FragmentChatBinding.inflate(layoutInflater)
@@ -24,6 +34,15 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener {
         savedInstanceState: Bundle?
     ) {
         setUpListeners()
+        configRecyclerView()
+    }
+
+    private fun configRecyclerView() {
+        binding?.rvChat?.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = chatAdapter
+        }
     }
 
     private fun setUpListeners() {
@@ -37,11 +56,15 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener {
     }
 
     override fun observeViewModel() {
-        //TODO("Not yet implemented")
+        lifecycleScope.launch {
+            chatViewModel.messagesStateFlow.collect { messages ->
+                chatAdapter.submitList(messages)
+            }
+        }
     }
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
-        //TODO("Not yet implemented")
+        chatViewModel.getMessagesForChat(args.idChat)
     }
 
     override fun onClick(view: View?) {
@@ -51,13 +74,17 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener {
             }
 
             R.id.ibProfile -> {
-                //TODO sebas
+                findNavController().navigate(ChatFragmentDirections.actionChatFragmentToProfileFragment())
             }
 
             R.id.ibSend -> {
                 //TODO sebas
             }
         }
+    }
+
+    override fun onItemClick(messageId: String) {
+        TODO("Not yet implemented")
     }
 
 }
