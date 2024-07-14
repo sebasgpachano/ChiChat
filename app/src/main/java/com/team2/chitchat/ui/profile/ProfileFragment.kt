@@ -42,9 +42,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun configureToolbarAndConfigScreenSections() {
         fragmentLayoutWithToolbar()
-        updateShowToolbarTitle(getString(R.string.profile))
-        updateShowToolbarProfile(false)
-        updateShowToolbarNotification(true)
+        showToolbar(
+            showBack = true,
+            showProfile = false,
+            showNotification = true,
+            title = getString(R.string.profile)
+        )
     }
 
     override fun observeViewModel() {
