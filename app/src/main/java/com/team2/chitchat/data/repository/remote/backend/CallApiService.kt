@@ -6,6 +6,7 @@ import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.repository.remote.response.LogOutResponse
+import com.team2.chitchat.data.repository.remote.response.chats.DeleteResponse
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
 import com.team2.chitchat.data.repository.remote.response.chats.PostNewChatResponse
 import com.team2.chitchat.data.repository.remote.response.messages.GetMessagesResponse
@@ -41,6 +42,10 @@ class CallApiService @Inject constructor(private val apiService: ApiService) : B
 
     suspend fun callPostNewChat(newChatRequest: NewChatRequest): BaseResponse<PostNewChatResponse> {
         return apiCall { apiService.postNewChat(newChatRequest) }
+    }
+
+    suspend fun callDeleteChat(id: String): BaseResponse<DeleteResponse> {
+        return apiCall { apiService.deleteChat(id) }
     }
 
     //Messages

@@ -11,5 +11,6 @@ data class ListChatsModel(
     val state: Boolean,
     val notification: Int,
     val lastMessage: String,
-    val date: String
+    val date: String,
+    var view: Boolean
 ) : BaseModel()

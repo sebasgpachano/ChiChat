@@ -20,8 +20,7 @@ import javax.inject.Inject
 class DataProvider @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
-
-    ) : DataSource {
+) : DataSource {
     //RegisterUSer
     override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> {
         return remoteDataSource.postRegisterUser(registerUserRequest)
@@ -44,6 +43,10 @@ class DataProvider @Inject constructor(
 
     override fun postNewChat(newChatRequest: NewChatRequest): Flow<BaseResponse<PostNewChatModel>> {
         return remoteDataSource.postNewChat(newChatRequest)
+    }
+
+    override fun deleteChat(id: String): Flow<BaseResponse<Boolean>> {
+        return remoteDataSource.deleteChat(id)
     }
 
     //Message
@@ -79,6 +82,10 @@ class DataProvider @Inject constructor(
         return localDataSource.insertChats(chats)
     }
 
+    override suspend fun deleteChatsNotIn(chats: List<String>) {
+        return localDataSource.deleteChatsNotIn(chats)
+    }
+
     override fun deleteChatTable(): Flow<BaseResponse<Boolean>> {
         return localDataSource.deleteChatTable()
     }
@@ -89,6 +96,10 @@ class DataProvider @Inject constructor(
 
     override fun getChat(chatId: String): Flow<BaseResponse<ChatDB>> {
         return localDataSource.getChat(chatId)
+    }
+
+    override fun updateChatView(id: String, view: Boolean): Flow<BaseResponse<Boolean>> {
+        return localDataSource.updateChatView(id, view)
     }
 
     //Message Database

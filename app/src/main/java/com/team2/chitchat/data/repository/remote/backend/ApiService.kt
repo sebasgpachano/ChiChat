@@ -5,6 +5,7 @@ import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequ
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.LogOutResponse
+import com.team2.chitchat.data.repository.remote.response.chats.DeleteResponse
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
 import com.team2.chitchat.data.repository.remote.response.chats.PostNewChatResponse
 import com.team2.chitchat.data.repository.remote.response.messages.GetMessagesResponse
@@ -14,8 +15,10 @@ import com.team2.chitchat.data.repository.remote.response.users.PostLoginRespons
 import com.team2.chitchat.data.repository.remote.response.users.PostRegisterResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
     //RegisterUser
@@ -46,6 +49,11 @@ interface ApiService {
     suspend fun postNewChat(
         @Body newChatRequest: NewChatRequest
     ): Response<PostNewChatResponse>
+
+    @DELETE("api/chats/{id}")
+    suspend fun deleteChat(
+        @Path("id") id: String
+    ): Response<DeleteResponse>
 
     //Message
     @GET("api/messages/")

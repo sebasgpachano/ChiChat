@@ -22,6 +22,10 @@ class ChatsListAdapter(private val listChatsAdapterListener: ListChatsAdapterLis
         )
     }
 
+    fun getItemSelected(position: Int): ListChatsModel {
+        return getItem(position)
+    }
+
     override fun onBindViewHolder(holder: ChatsListViewHolder, position: Int) {
         holder.onBind(getItem(position), position)
     }

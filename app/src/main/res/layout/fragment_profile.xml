@@ -55,7 +55,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textVUserNameProfileFragment"
+        android:id="@+id/textVUserNickNameProfileFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Jimena"
@@ -65,13 +65,13 @@
         app:layout_constraintStart_toEndOf="@id/FrameLImageProfileFragment"
         app:layout_constraintTop_toTopOf="@+id/FrameLImageProfileFragment"/>
     <TextView
-        android:id="@+id/textVUserNickNameProfileFragment"
+        android:id="@+id/textVUserNameProfileFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Jimena_2003"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@id/textVUserNameProfileFragment"
-        app:layout_constraintTop_toBottomOf="@+id/textVUserNameProfileFragment"/>
+        app:layout_constraintStart_toStartOf="@id/textVUserNickNameProfileFragment"
+        app:layout_constraintTop_toBottomOf="@+id/textVUserNickNameProfileFragment"/>
 
     <com.team2.chitchat.ui.views.ActionItemViewGroup
         android:id="@+id/actionIResetPassProfileFragment"
