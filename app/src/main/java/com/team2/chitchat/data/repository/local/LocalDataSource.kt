@@ -72,7 +72,15 @@ class LocalDataSource @Inject constructor(
                 if (chats.isNotEmpty()) {
                     emit(BaseResponse.Success(ArrayList(chats)))
                 } else {
-                    emit(BaseResponse.Error(ErrorModel("", "", "Empty list")))
+                    emit(
+                        BaseResponse.Error(
+                            ErrorModel(
+                                "",
+                                "",
+                                context.getString(R.string.empty_list)
+                            )
+                        )
+                    )
                 }
             }
         } catch (e: Exception) {
@@ -87,6 +95,19 @@ class LocalDataSource @Inject constructor(
             val rowsUpdated = appDatabaseManager.db.chatDAO().updateChatView(id, view)
             if (rowsUpdated > 0) {
                 emit(BaseResponse.Success(true))
+            }
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
+
+    fun getChat(chatId: String): Flow<BaseResponse<ChatDB>> = flow {
+        try {
+            appDatabaseManager.db.chatDAO().getChat(chatId).collect { chat ->
+                emit(BaseResponse.Success(chat))
             }
         } catch (e: Exception) {
             val errorModel =
@@ -124,7 +145,38 @@ class LocalDataSource @Inject constructor(
                 if (messages.isNotEmpty()) {
                     emit(BaseResponse.Success(ArrayList(messages)))
                 } else {
-                    emit(BaseResponse.Error(ErrorModel("", "", "Empty list")))
+                    emit(
+                        BaseResponse.Error(
+                            ErrorModel(
+                                "",
+                                "",
+                                context.getString(R.string.empty_list)
+                            )
+                        )
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
+    fun getMessagesForChat(chatId: String): Flow<BaseResponse<List<MessageDB>>> = flow {
+        try {
+            appDatabaseManager.db.messagesDAO().getMessagesForChat(chatId).collect { messages ->
+                if (messages.isNotEmpty()) {
+                    emit(BaseResponse.Success(ArrayList(messages)))
+                } else {
+                    emit(
+                        BaseResponse.Error(
+                            ErrorModel(
+                                "", "",
+                                context.getString(R.string.empty_list)
+                            )
+                        )
+                    )
                 }
             }
         } catch (e: Exception) {

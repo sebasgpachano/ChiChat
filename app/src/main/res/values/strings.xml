@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">ChitChat</string>
-
     <!-- Toolbar -->
     <string name="toolbar_description_back_button">Boton para ir hacia atras</string>
     <string name="toolbar_description_profile_button">Boton para acceder a perfil</string>
@@ -80,6 +79,10 @@
 
     <!-- Fragment splash-->
     <string name="splash_iv_logo">Logo de la aplicacion</string>
+
+    <!-- Chat fragment-->
     <string name="send_message">Enviar mensaje</string>
 
+    <string name="empty_list">Empty list</string>
+    <string name="send_button">Botón enviar</string>
 </resources>

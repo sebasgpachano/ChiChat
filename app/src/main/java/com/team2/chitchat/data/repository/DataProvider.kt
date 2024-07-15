@@ -1,6 +1,7 @@
 package com.team2.chitchat.data.repository
 
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
+import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
 import com.team2.chitchat.data.repository.local.LocalDataSource
@@ -9,6 +10,7 @@ import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.backend.RemoteDataSource
 import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
+import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
@@ -52,6 +54,10 @@ class DataProvider @Inject constructor(
         return remoteDataSource.getMessage()
     }
 
+    override fun postNewMessage(newMessageRequest: NewMessageRequest): Flow<BaseResponse<PostNewMessageModel>> {
+        return remoteDataSource.postNewMessage(newMessageRequest)
+    }
+
     //Profile
     override fun getProfile(): Flow<BaseResponse<GetUserModel>> {
         return remoteDataSource.getProfile()
@@ -88,6 +94,10 @@ class DataProvider @Inject constructor(
         return localDataSource.getChatsDb()
     }
 
+    override fun getChat(chatId: String): Flow<BaseResponse<ChatDB>> {
+        return localDataSource.getChat(chatId)
+    }
+
     override fun updateChatView(id: String, view: Boolean): Flow<BaseResponse<Boolean>> {
         return localDataSource.updateChatView(id, view)
     }
@@ -104,4 +114,9 @@ class DataProvider @Inject constructor(
     override fun getMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>> {
         return localDataSource.getMessagesDb()
     }
+
+    override fun getMessagesForChat(chatId: String): Flow<BaseResponse<List<MessageDB>>> {
+        return localDataSource.getMessagesForChat(chatId)
+    }
+
 }

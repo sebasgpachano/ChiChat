@@ -1,6 +1,7 @@
 package com.team2.chitchat.data.repository.remote.backend
 
 import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
+import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
@@ -9,6 +10,7 @@ import com.team2.chitchat.data.repository.remote.response.chats.DeleteResponse
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
 import com.team2.chitchat.data.repository.remote.response.chats.PostNewChatResponse
 import com.team2.chitchat.data.repository.remote.response.messages.GetMessagesResponse
+import com.team2.chitchat.data.repository.remote.response.messages.PostNewMessageResponse
 import com.team2.chitchat.data.repository.remote.response.users.GetUserResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostLoginResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostRegisterResponse
@@ -49,6 +51,10 @@ class CallApiService @Inject constructor(private val apiService: ApiService) : B
     //Messages
     suspend fun callGetMessages(): BaseResponse<ArrayList<GetMessagesResponse>> {
         return apiCall { apiService.getMessages() }
+    }
+
+    suspend fun callPostNewMessage(newMessageRequest: NewMessageRequest): BaseResponse<PostNewMessageResponse> {
+        return apiCall { apiService.postNewMessage(newMessageRequest) }
     }
 
     // Get Profile
