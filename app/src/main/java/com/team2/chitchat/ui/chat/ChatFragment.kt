@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     private val chatViewModel: ChatViewModel by viewModels()
     private val chatAdapter = ChatAdapter(this)
     private val args: ChatFragmentArgs by navArgs()
+    private lateinit var keyboardListener: ViewTreeObserver.OnGlobalLayoutListener
 
     override fun inflateBinding() {
         binding = FragmentChatBinding.inflate(layoutInflater)
@@ -38,7 +40,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     ) {
         setUpListeners()
         configRecyclerView()
-        //setUpKeyboardListener()
+        setUpKeyboardListener()
         chatViewModel.getChat(args.idChat)
     }
 
@@ -52,7 +54,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
 
     private fun setUpListeners() {
         binding?.ibBack?.setOnClickListener(this)
-        binding?.ibProfile?.setOnClickListener(this)
         binding?.ibSend?.setOnClickListener(this)
     }
 
@@ -99,10 +100,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
                 findNavController().navigateUp()
             }
 
-            R.id.ibProfile -> {
-                findNavController().navigate(ChatFragmentDirections.actionChatFragmentToProfileFragment())
-            }
-
             R.id.ibSend -> {
                 if (binding?.etSend?.text.toString().isNotEmpty()) {
                     chatViewModel.postNewMessage(binding?.etSend?.text.toString(), args.idChat)
@@ -112,20 +109,26 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         }
     }
 
-    /*private fun setUpKeyboardListener() {
-        binding?.root?.viewTreeObserver?.addOnGlobalLayoutListener {
+    private fun setUpKeyboardListener() {
+        keyboardListener = ViewTreeObserver.OnGlobalLayoutListener {
             val rect = android.graphics.Rect()
-            binding!!.root.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = binding!!.root.rootView.height
+            val rootView = binding?.root ?: return@OnGlobalLayoutListener
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = rootView.rootView.height
             val keypadHeight = screenHeight - rect.bottom
             if (keypadHeight > 150) {
-                binding!!.rvChat.scrollToPosition(chatAdapter.itemCount - 1)
+                binding?.rvChat?.scrollToPosition(chatAdapter.itemCount - 1)
             }
         }
-    }*/
-
-    override fun onItemClick(messageId: String) {
-        TODO("Not yet implemented")
+        binding?.root?.viewTreeObserver?.addOnGlobalLayoutListener(keyboardListener)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding?.root?.viewTreeObserver?.removeOnGlobalLayoutListener(keyboardListener)
+        binding = null
+    }
+
+    override fun onItemClick(messageId: String) = Unit
 
 }
