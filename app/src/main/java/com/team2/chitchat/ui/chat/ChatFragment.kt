@@ -38,7 +38,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     ) {
         setUpListeners()
         configRecyclerView()
-        setUpKeyboardListener()
+        //setUpKeyboardListener()
         chatViewModel.getChat(args.idChat)
     }
 
@@ -51,7 +51,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     }
 
     private fun setUpListeners() {
-        binding?.ibToolbarBack?.setOnClickListener(this)
+        binding?.ibBack?.setOnClickListener(this)
         binding?.ibProfile?.setOnClickListener(this)
         binding?.ibSend?.setOnClickListener(this)
     }
@@ -95,7 +95,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.ibToolbarBack -> {
+            R.id.ibBack -> {
                 findNavController().navigateUp()
             }
 
@@ -112,7 +112,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         }
     }
 
-    private fun setUpKeyboardListener() {
+    /*private fun setUpKeyboardListener() {
         binding?.root?.viewTreeObserver?.addOnGlobalLayoutListener {
             val rect = android.graphics.Rect()
             binding!!.root.getWindowVisibleDisplayFrame(rect)
@@ -122,7 +122,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
                 binding!!.rvChat.scrollToPosition(chatAdapter.itemCount - 1)
             }
         }
-    }
+    }*/
 
     override fun onItemClick(messageId: String) {
         TODO("Not yet implemented")
