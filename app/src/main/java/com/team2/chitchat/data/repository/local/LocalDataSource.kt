@@ -51,6 +51,10 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    suspend fun deleteChatsNotIn(listIds: List<String>) {
+        return appDatabaseManager.db.chatDAO().deleteChatsNotIn(listIds)
+    }
+
     fun deleteChatTable(): Flow<BaseResponse<Boolean>> = flow {
         try {
             appDatabaseManager.db.chatDAO().deleteChatTable()
@@ -70,6 +74,19 @@ class LocalDataSource @Inject constructor(
                 } else {
                     emit(BaseResponse.Error(ErrorModel("", "", "Empty list")))
                 }
+            }
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
+    fun updateChatView(id: String, view: Boolean): Flow<BaseResponse<Boolean>> = flow {
+        try {
+            val rowsUpdated = appDatabaseManager.db.chatDAO().updateChatView(id, view)
+            if (rowsUpdated > 0) {
+                emit(BaseResponse.Success(true))
             }
         } catch (e: Exception) {
             val errorModel =

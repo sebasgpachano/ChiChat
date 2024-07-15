@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
     private val callApiService: CallApiService,
-    private val simpleApplication: SimpleApplication
+    private val simpleApplication: SimpleApplication,
 ) : BaseService() {
 
     //RegisterUser
@@ -48,10 +48,10 @@ class RemoteDataSource @Inject constructor(
         flow {
             val apiResult = callApiService.callPostLoginUser(loginUserRequest)
             if (apiResult is BaseResponse.Success) {
-                apiResult.data.let { response->
+                apiResult.data.let { response ->
                     simpleApplication.apply {
-                        saveAuthToken(response.token?:"")
-                        saveUserID(response.user?.id?:"")
+                        saveAuthToken(response.token ?: "")
+                        saveUserID(response.user?.id ?: "")
                     }
                 }
                 emit(BaseResponse.Success(true))
@@ -80,15 +80,24 @@ class RemoteDataSource @Inject constructor(
         }
     }
 
-    fun postNewChat(newChatRequest: NewChatRequest): Flow<BaseResponse<PostNewChatModel>> =
-        flow {
-            val apiResult = callApiService.callPostNewChat(newChatRequest)
-            if (apiResult is BaseResponse.Success) {
-                emit(BaseResponse.Success(PostNewChatMapper().fromResponse(apiResult.data)))
-            } else if (apiResult is BaseResponse.Error) {
-                emit(BaseResponse.Error(apiResult.error))
-            }
+    fun postNewChat(newChatRequest: NewChatRequest): Flow<BaseResponse<PostNewChatModel>> = flow {
+        val apiResult = callApiService.callPostNewChat(newChatRequest)
+        if (apiResult is BaseResponse.Success) {
+            emit(BaseResponse.Success(PostNewChatMapper().fromResponse(apiResult.data)))
+        } else if (apiResult is BaseResponse.Error) {
+            emit(BaseResponse.Error(apiResult.error))
         }
+    }
+
+    fun deleteChat(id: String): Flow<BaseResponse<Boolean>> = flow {
+        val apiResult = callApiService.callDeleteChat(id)
+        if (apiResult is BaseResponse.Success) {
+
+            emit(BaseResponse.Success(true))
+        } else if (apiResult is BaseResponse.Error) {
+            emit(BaseResponse.Error(apiResult.error))
+        }
+    }
 
     //Messages
     fun getMessage(): Flow<BaseResponse<ArrayList<MessageDB>>> = flow {

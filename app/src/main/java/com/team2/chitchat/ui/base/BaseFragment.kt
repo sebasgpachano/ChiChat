@@ -119,7 +119,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
             }
         )
     }
-    private fun showErrorMessage(
+    fun showErrorMessage(
         message: String,
         listener: MessageDialogFragment.MessageDialogListener
     ) {
