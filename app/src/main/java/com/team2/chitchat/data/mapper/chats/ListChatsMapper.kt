@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter
 class ListChatsMapper(
     private val userId: String,
     private val arrayChats: ArrayList<ChatDB>,
-    private val arrayMessages: ArrayList<MessageDB>,
+    private val arrayMessages: ArrayList<MessageDB>
 ) {
     fun getList(): ArrayList<ListChatsModel> {
         val mappedList = ArrayList<ListChatsModel>()
@@ -26,9 +26,12 @@ class ListChatsMapper(
                 state = chat.otherUserOnline,
                 notification = getNotifications(chat),
                 lastMessage = message?.message ?: "",
-                date = getDate(message)
+                date = getDate(message),
+                view = chat.view
             )
-            mappedList.add(listChatsModel)
+            if (chat.view || listChatsModel.notification > 0) {
+                mappedList.add(listChatsModel)
+            }
         }
 
         return ArrayList(mappedList.sortedByDescending { it.date })
@@ -59,6 +62,7 @@ class ListChatsMapper(
                     .isEqual(LocalDate.now(localZonedDateTime.zone)) -> {
                     localZonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
                 }
+
                 else -> {
                     localZonedDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
                 }

@@ -1,24 +1,42 @@
 <resources>
     <string name="app_name">ChitChat</string>
+
     <!-- Toolbar -->
     <string name="toolbar_description_back_button">Boton para ir hacia atras</string>
     <string name="toolbar_description_profile_button">Boton para acceder a perfil</string>
     <string name="toolbar_description_notification_button">Boton para acceder a notificaciones</string>
+
     <!-- Loading fragment -->
     <string name="loading_text">Cargando…</string>
+
     <!-- Contacts list fragment -->
     <string name="list_contacts_title_toolbar">Contactos</string>
     <string name="list_contacts_subtitle">Awesome to Chat With</string>
     <string name="list_contacts_profile_img">Foto de perfil</string>
     <string name="list_contacts_update_list">Actualizar la lista de contactos</string>
+    <string name="list_contacts_btn_search">Boton para filtrar contactos</string>
+    <string name="list_contacts_btn_quit_search">Boton para cancelar la busqueda de contactos</string>
+    <string name="list_contacts_et_hint_search_user">Bucar contacto...</string>
+
     <!-- Chat list fragment -->
     <string name="chat_list_title_toolbar">ChitChat</string>
     <string name="chat_list_date_yesterday">Ayer</string>
     <string name="chat_list_subtitle">Conversaciones</string>
     <string name="chat_list_user_state">Estado del usuario</string>
     <string name="chat_list_add_chat">Añadir persona para hablar</string>
-    <!-- Error api -->
-    <string name="apy_error_session_expired">Su sesión ha expirado</string>
+    <string name="chat_list_btn_search">Boton para filtrar conversaciones</string>
+    <string name="chat_list_btn_quit_search">Boton para cancelar la busqueda de conversaciones</string>
+    <string name="chat_list_et_hint_search_user">Bucar conversación...</string>
+    <string name="chat_list_delete_chat">¿Eliminar chat?</string>
+    <string name="chat_list_delete_chat_question">Al no ser el creador de la conversación no puedes borrarla de la base de datos, ¿quieres eliminarla de tus lista de conversaciones?</string>
+    <string name="chat_list_warning_notification_chat">No puedes eliminar el chat si tienes notificaciones por leer</string>
+
+    <!-- Error -->
+    <string name="error">Error</string>
+    <string name="error_session_expired">Su sesión ha expirado</string>
+    <string name="error_unknown_error">Unknown Error</string>
+
+    <!-- Login -->
     <string name="textUser">Usuario</string>
     <string name="hintUser">Ingresa tu usuario</string>
     <string name="textPassword">Contraseña</string>
@@ -28,7 +46,6 @@
     <string name="imageLogoDescription">Logo ChitChat</string>
     <string name="textRegisterLoginF">Regístrate</string>
     <string name="textRegisterQuestionLoginF">¿No tienes cuenta?</string>
-    <string name="error_unknown_error">Unknown Error</string>
 
     <!-- Registration fragment -->
     <string name="user">Usuario</string>
@@ -46,7 +63,6 @@
     <string name="password_invalid">Contraseña inválida</string>
     <string name="required_field">Campo vacío</string>
     <string name="accept">Aceptar</string>
-    <string name="error">Error</string>
     <string name="close_session">Cerrar sesión</string>
     <string name="change_password">Cambiar contraseña</string>
     <string name="editProfileDescription">icono de camara</string>
@@ -65,4 +81,5 @@
     <!-- Fragment splash-->
     <string name="splash_iv_logo">Logo de la aplicacion</string>
     <string name="send_message">Enviar mensaje</string>
+
 </resources>

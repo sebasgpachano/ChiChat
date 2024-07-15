@@ -16,4 +16,10 @@ interface ChatDAO {
 
     @Query("SELECT * FROM chat")
     fun getChatsDb(): Flow<List<ChatDB>>
+
+    @Query("DELETE FROM chat WHERE id NOT IN (:chatIds)")
+    suspend fun deleteChatsNotIn(chatIds: List<String>)
+
+    @Query("UPDATE chat SET `view` = :view WHERE id = :id")
+    fun updateChatView(id: String, view: Boolean): Int
 }

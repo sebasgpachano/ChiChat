@@ -80,7 +80,10 @@ class ChatService : Service() {
                         false
                     }
 
-                    is BaseResponse.Success -> result.data
+                    is BaseResponse.Success -> {
+                        dataProvider.deleteChatsNotIn(chats.map { it.id })
+                        result.data
+                    }
                 }
             }
             return@withContext response
