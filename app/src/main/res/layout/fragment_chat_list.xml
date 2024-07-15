@@ -14,53 +14,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/chat_list_subtitle"
-        app:layout_constraintEnd_toStartOf="@id/ibSearch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/ibSearch"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="@string/chat_list_btn_search"
-        android:src="@drawable/icon_search"
-        app:layout_constraintBottom_toBottomOf="@id/tvSubtitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvSubtitle"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etSearchUser"
-        style="@style/subtitleFramework"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/searchEditText"
         android:layout_marginTop="12dp"
         android:autofillHints="name"
-        android:background="@drawable/edittext_chat"
         android:hint="@string/chat_list_et_hint_search_user"
-        android:inputType="text"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ibQuitSearch"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <ImageButton
-        android:id="@+id/ibQuitSearch"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="@string/chat_list_btn_quit_search"
-        android:src="@drawable/baseline_arrow_back_24"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/etSearchUser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChatList"
@@ -71,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        app:layout_constraintTop_toBottomOf="@id/etSearchUser"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_recyclerview_list_chats" />
 
