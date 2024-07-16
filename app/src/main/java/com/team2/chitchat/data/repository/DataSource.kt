@@ -41,7 +41,11 @@ interface DataSource {
 
     //User Database
     fun insertUsers(users: ArrayList<UserDB>): Flow<BaseResponse<Boolean>>
+    suspend fun getContactsListDB(): ArrayList<UserDB>
+    suspend fun deleteUsersNotIn(users: List<String>)
+    suspend fun updateState(id: String, state: Boolean)
     fun deleteUserTable(): Flow<BaseResponse<Boolean>>
+    fun getUsersDb(): Flow<BaseResponse<ArrayList<UserDB>>>
 
     //Chat Database
     fun insertChats(chats: ArrayList<ChatDB>): Flow<BaseResponse<Boolean>>

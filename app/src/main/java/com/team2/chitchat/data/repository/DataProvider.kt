@@ -73,8 +73,24 @@ class DataProvider @Inject constructor(
         return localDataSource.insertUsers(users)
     }
 
+    override suspend fun getContactsListDB(): ArrayList<UserDB> {
+        return localDataSource.getContactsListDB()
+    }
+
+    override suspend fun deleteUsersNotIn(users: List<String>) {
+        return localDataSource.deleteUsersNotIn(users)
+    }
+
+    override suspend fun updateState(id: String, state: Boolean) {
+        return localDataSource.updateState(id, state)
+    }
+
     override fun deleteUserTable(): Flow<BaseResponse<Boolean>> {
         return localDataSource.deleteUserTable()
+    }
+
+    override fun getUsersDb(): Flow<BaseResponse<ArrayList<UserDB>>> {
+        return localDataSource.getUsersDb()
     }
 
     //Chat Database

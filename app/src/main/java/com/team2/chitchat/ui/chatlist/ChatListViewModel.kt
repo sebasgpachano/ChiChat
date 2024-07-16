@@ -7,6 +7,7 @@ import com.team2.chitchat.data.mapper.chats.ListChatsMapper
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.local.GetChatsDbUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesDbUseCase
+import com.team2.chitchat.data.usecase.local.GetUsersDbUseCase
 import com.team2.chitchat.data.usecase.local.UpdateChatViewUseCase
 import com.team2.chitchat.data.usecase.remote.DeleteChatUseCase
 import com.team2.chitchat.hilt.SimpleApplication
@@ -25,6 +26,7 @@ class ChatListViewModel @Inject constructor(
     private val simpleApplication: SimpleApplication,
     private val getChatsDbUseCase: GetChatsDbUseCase,
     private val getMessagesDbUseCase: GetMessagesDbUseCase,
+    private val getUsersDbUseCase: GetUsersDbUseCase,
     private val deleteChatUseCase: DeleteChatUseCase,
     private val updateChatViewUseCase: UpdateChatViewUseCase
 ) :
@@ -41,8 +43,22 @@ class ChatListViewModel @Inject constructor(
 
             val chatsFlow = getChatsDbUseCase()
             val messagesFlow = getMessagesDbUseCase()
+            val usersFlow = getUsersDbUseCase()
 
-            combine(chatsFlow, messagesFlow) { chatsResponse, messagesResponse ->
+            combine(
+                usersFlow,
+                chatsFlow,
+                messagesFlow
+            ) { usersResponse, chatsResponse, messagesResponse ->
+                val listUsers = when (usersResponse) {
+                    is BaseResponse.Error -> {
+                        errorMutableSharedFlow.emit(usersResponse.error)
+                        ArrayList()
+                    }
+
+                    is BaseResponse.Success -> usersResponse.data
+                }
+
                 val listChats = when (chatsResponse) {
                     is BaseResponse.Error -> {
                         errorMutableSharedFlow.emit(chatsResponse.error)
@@ -60,12 +76,13 @@ class ChatListViewModel @Inject constructor(
 
                     is BaseResponse.Success -> messagesResponse.data
                 }
-                Pair(listChats, listMessages)
-            }.collect { (chats, messages) ->
+                Triple(listUsers, listChats, listMessages)
+            }.collect { (users, chats, messages) ->
                 loadingMutableSharedFlow.emit(false)
                 val listChatsMapper =
                     ListChatsMapper(
                         simpleApplication.getUserID(),
+                        users,
                         chats,
                         messages
                     )
