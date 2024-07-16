@@ -107,6 +107,10 @@ class DataProvider @Inject constructor(
         return localDataSource.insertMessages(messages)
     }
 
+    override suspend fun deleteMessagesNotIn(messages: List<String>) {
+        return localDataSource.deleteMessagesNotIn(messages)
+    }
+
     override fun deleteMessageTable(): Flow<BaseResponse<Boolean>> {
         return localDataSource.deleteMessageTable()
     }

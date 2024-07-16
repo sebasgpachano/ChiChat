@@ -128,6 +128,10 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    suspend fun deleteMessagesNotIn(listIds: List<String>) {
+        return appDatabaseManager.db.messagesDAO().deleteMessagesNotIn(listIds)
+    }
+
     fun deleteMessageTable(): Flow<BaseResponse<Boolean>> = flow {
         try {
             appDatabaseManager.db.messagesDAO().deleteMessageTable()
