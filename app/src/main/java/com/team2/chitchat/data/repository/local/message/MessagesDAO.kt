@@ -19,4 +19,7 @@ interface MessagesDAO {
 
     @Query("SELECT * FROM message WHERE chatId = :chatId ORDER BY date ASC")
     fun getMessagesForChat(chatId: String): Flow<List<MessageDB>>
+
+    @Query("DELETE FROM message WHERE id NOT IN (:messagesIds)")
+    suspend fun deleteMessagesNotIn(messagesIds: List<String>)
 }

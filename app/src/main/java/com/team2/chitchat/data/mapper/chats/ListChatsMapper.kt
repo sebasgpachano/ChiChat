@@ -3,12 +3,14 @@ package com.team2.chitchat.data.mapper.chats
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
+import com.team2.chitchat.data.repository.local.user.UserDB
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class ListChatsMapper(
     private val userId: String,
+    private val users: ArrayList<UserDB>,
     private val arrayChats: ArrayList<ChatDB>,
     private val arrayMessages: ArrayList<MessageDB>
 ) {
@@ -19,11 +21,12 @@ class ListChatsMapper(
             val message: MessageDB? = arrayMessages
                 .sortedByDescending { it.date }
                 .find { it.chatId == chat.id }
+            val state = users.find { it.id == chat.idOtherUser }?.online ?: false
             val listChatsModel = ListChatsModel(
                 id = chat.id,
                 name = chat.otherUserName,
                 image = chat.otherUserImg,
-                state = chat.otherUserOnline,
+                state = state,
                 notification = getNotifications(chat),
                 lastMessage = message?.message ?: "",
                 date = getDate(message),

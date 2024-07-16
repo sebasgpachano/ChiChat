@@ -28,10 +28,46 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    suspend fun getContactsListDB(): ArrayList<UserDB> {
+        return ArrayList(appDatabaseManager.db.userDAO().getContactsListDB())
+    }
+
+    suspend fun deleteUsersNotIn(listIds: List<String>) {
+        return appDatabaseManager.db.userDAO().deleteUsersNotIn(listIds)
+    }
+
+    suspend fun updateState(id: String, state: Boolean) {
+        return appDatabaseManager.db.userDAO().updateState(id, state)
+    }
+
     fun deleteUserTable(): Flow<BaseResponse<Boolean>> = flow {
         try {
             appDatabaseManager.db.userDAO().deleteUserTable()
             emit(BaseResponse.Success(true))
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
+    fun getUsersDb(): Flow<BaseResponse<ArrayList<UserDB>>> = flow {
+        try {
+            appDatabaseManager.db.userDAO().getUsersDb().collect { users ->
+                if (users.isNotEmpty()) {
+                    emit(BaseResponse.Success(ArrayList(users)))
+                } else {
+                    emit(
+                        BaseResponse.Error(
+                            ErrorModel(
+                                "",
+                                "",
+                                context.getString(R.string.empty_list)
+                            )
+                        )
+                    )
+                }
+            }
         } catch (e: Exception) {
             val errorModel =
                 ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
@@ -126,6 +162,10 @@ class LocalDataSource @Inject constructor(
                 ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
             emit(BaseResponse.Error(errorModel))
         }
+    }
+
+    suspend fun deleteMessagesNotIn(listIds: List<String>) {
+        return appDatabaseManager.db.messagesDAO().deleteMessagesNotIn(listIds)
     }
 
     fun deleteMessageTable(): Flow<BaseResponse<Boolean>> = flow {
