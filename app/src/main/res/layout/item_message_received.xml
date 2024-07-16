@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:paddingEnd="100dp"
+    tools:ignore="RtlSymmetry">
 
     <TextView
         android:id="@+id/tvMessageReceived"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/message_received"
+        android:gravity="center|start"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
         android:paddingRight="16dp"
@@ -19,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="Mensaje recibido" />
+        tools:text="Mensaje recibido oasnfiouas aisfnhijasbnfusa oiasnfoijansf oiasinfoi oaiesnfjiouasnhfiuoanf" />
 
     <TextView
         android:id="@+id/tvTimeMessageReceived"
