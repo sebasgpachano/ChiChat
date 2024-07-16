@@ -12,4 +12,7 @@ interface UserDAO {
 
     @Query("DELETE FROM user")
     suspend fun deleteUserTable()
+
+    @Query("SELECT * FROM user WHERE id = :userId")
+    suspend fun getUserById(userId: String): UserDB?
 }

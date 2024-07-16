@@ -104,10 +104,39 @@ class LocalDataSource @Inject constructor(
     }
 
 
-    fun getChat(chatId: String): Flow<BaseResponse<ChatDB>> = flow {
+    //Refactor sebas
+    fun getChat(chatId: String, userId: String): Flow<BaseResponse<ChatDB>> = flow {
         try {
             appDatabaseManager.db.chatDAO().getChat(chatId).collect { chat ->
-                emit(BaseResponse.Success(chat))
+                if (chat != null) {
+                    emit(BaseResponse.Success(chat))
+                } else {
+                    val user = appDatabaseManager.db.userDAO().getUserById(userId)
+                    if (user != null) {
+                        val newChat = ChatDB(
+                            id = chatId,
+                            idOtherUser = user.id,
+                            otherUserName = user.nick,
+                            view = false,
+                            otherUserOnline = false,
+                            otherUserImg = "",
+                            dateLastMessageSend = ""
+                        )
+                        val result = appDatabaseManager.db.chatDAO().insertChat(newChat)
+                        if (result != -1L) {
+                            appDatabaseManager.db.chatDAO().getChat(chatId).collect {
+                                emit(BaseResponse.Success(it))
+                            }
+                        } else {
+                            val errorModel = ErrorModel("", "", "Failed to create new chat")
+                            emit(BaseResponse.Error(errorModel))
+                        }
+                    } else {
+                        val errorModel = ErrorModel("", "", "User not found")
+                        emit(BaseResponse.Error(errorModel))
+                    }
+
+                }
             }
         } catch (e: Exception) {
             val errorModel =

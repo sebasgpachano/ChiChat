@@ -9,7 +9,8 @@ class PostNewChatMapper : ResponseMapper<PostNewChatResponse, PostNewChatModel> 
         return PostNewChatModel(
             success = response.success ?: false,
             created = response.created ?: false,
-            idChat = response.chat?.id ?: ""
+            idChat = response.chat?.id ?: "",
+            idUser = response.chat?.target ?: ""
         )
     }
 }

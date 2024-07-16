@@ -17,7 +17,7 @@ class MessagesMapper @Inject constructor() {
                 sourceId = message.sourceId,
                 message = message.message,
                 date = formatDate(message.date),
-                view = true
+                view = message.view
             )
         }
     }

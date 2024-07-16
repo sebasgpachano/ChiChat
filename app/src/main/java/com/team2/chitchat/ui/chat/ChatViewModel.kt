@@ -2,6 +2,7 @@ package com.team2.chitchat.ui.chat
 
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.GetChatModel
+import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.mapper.chats.GetChatMapper
 import com.team2.chitchat.data.mapper.messages.MessagesMapper
@@ -55,17 +56,19 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    fun getChat(chatId: String) {
+    fun getChat(chatId: String, userId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            getChatUseCase(chatId).collect {
-                when (it) {
+            getChatUseCase(chatId, userId).collect { response ->
+                when (response) {
                     is BaseResponse.Error -> {
-                        errorMutableSharedFlow.emit(it.error)
+                        errorMutableSharedFlow.emit(response.error)
                     }
 
                     is BaseResponse.Success -> {
-                        val chat = getChatMapper.getChat(it.data)
-                        chatMutableStateFlow.value = chat
+                        response.data.let {
+                            val chat = getChatMapper.getChat(it)
+                            chatMutableStateFlow.value = chat
+                        }
                     }
                 }
             }

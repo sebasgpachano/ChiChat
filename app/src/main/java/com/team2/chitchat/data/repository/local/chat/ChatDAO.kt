@@ -11,6 +11,9 @@ interface ChatDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertChats(chats: List<ChatDB>)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertChat(chat: ChatDB): Long
+
     @Query("DELETE FROM chat")
     suspend fun deleteChatTable()
 

@@ -48,7 +48,7 @@ interface DataSource {
     suspend fun deleteChatsNotIn(chats: List<String>)
     fun deleteChatTable(): Flow<BaseResponse<Boolean>>
     fun getChatsDb(): Flow<BaseResponse<ArrayList<ChatDB>>>
-    fun getChat(chatId: String): Flow<BaseResponse<ChatDB>>
+    fun getChat(chatId: String, userId: String): Flow<BaseResponse<ChatDB>>
     fun updateChatView(id: String, view: Boolean): Flow<BaseResponse<Boolean>>
 
     //Message Database

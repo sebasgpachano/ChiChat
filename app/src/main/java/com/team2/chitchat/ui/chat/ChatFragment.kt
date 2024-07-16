@@ -41,7 +41,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         setUpListeners()
         configRecyclerView()
         setUpKeyboardListener()
-        chatViewModel.getChat(args.idChat)
+        chatViewModel.getChat(args.idChat, args.idUser)
     }
 
     private fun configRecyclerView() {
@@ -76,7 +76,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
 
         lifecycleScope.launch {
             chatViewModel.errorFlow.collect {
-                requireContext().toastLong(it.error)
+                requireContext().toastLong(it.message)
             }
         }
     }
