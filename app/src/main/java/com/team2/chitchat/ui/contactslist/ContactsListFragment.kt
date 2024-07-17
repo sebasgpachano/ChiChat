@@ -145,7 +145,7 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
             contactsListViewModel.newChatSharedFlow.collect { newChat ->
                 findNavController().navigate(
                     ContactsListFragmentDirections.actionContactsListFragmentToChatFragment(
-                        newChat.idChat, newChat.idUser
+                        newChat.idChat
                     )
                 )
             }
