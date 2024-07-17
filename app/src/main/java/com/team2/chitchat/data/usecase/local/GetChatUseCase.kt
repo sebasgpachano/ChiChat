@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetChatUseCase @Inject constructor(private val dataProvider: DataProvider) {
-    operator fun invoke(chatId: String): Flow<BaseResponse<ChatDB>> {
+    operator fun invoke(chatId: String): Flow<BaseResponse<ChatDB?>> {
         return dataProvider.getChat(chatId)
     }
 }

@@ -17,7 +17,7 @@ class MessagesMapper @Inject constructor() {
                 sourceId = message.sourceId,
                 message = message.message,
                 date = formatDate(message.date),
-                view = true
+                view = message.view
             )
         }
     }
@@ -25,11 +25,18 @@ class MessagesMapper @Inject constructor() {
     private fun formatDate(date: String): String {
         return try {
             val formatter = DateTimeFormatter.ISO_DATE_TIME
-            val zonedDateTime = ZonedDateTime.parse(date, formatter)
+            val zonedDateTime = ZonedDateTime.parse(fixedServerHour(date), formatter)
             val localDateTime = zonedDateTime.withZoneSameInstant(ZoneId.systemDefault())
             localDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
         } catch (e: DateTimeParseException) {
             ""
         }
+    }
+
+    private fun fixedServerHour(messageTime: String?): String {
+        val formatter = DateTimeFormatter.ISO_DATE_TIME
+        val zonedDateTime = ZonedDateTime.parse(messageTime, formatter)
+        val updatedZonedDateTime = zonedDateTime.plusHours(2)
+        return updatedZonedDateTime.format(formatter)
     }
 }

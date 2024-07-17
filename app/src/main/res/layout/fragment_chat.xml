@@ -29,14 +29,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tbChat" />
 
-    <ImageButton
-        android:id="@+id/ibProfile"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivProfile"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:background="@drawable/profile_button"
-        android:contentDescription="@string/toolbar_description_profile_button"
-        android:src="@mipmap/ic_launcher_round"
-        android:scaleType="centerCrop"
+        android:contentDescription="@string/list_contacts_profile_img"
+        android:src="@drawable/baseline_person_24"
+        android:layout_marginEnd="10dp"
+        app:shapeAppearanceOverlay="@style/RoundImage"
         app:layout_constraintBottom_toBottomOf="@id/tbChat"
         app:layout_constraintEnd_toStartOf="@id/tvUsername"
         app:layout_constraintTop_toTopOf="parent" />

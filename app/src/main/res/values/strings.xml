@@ -85,4 +85,5 @@
 
     <string name="empty_list">Empty list</string>
     <string name="send_button">Botón enviar</string>
+    <string name="online">En línea</string>
 </resources>

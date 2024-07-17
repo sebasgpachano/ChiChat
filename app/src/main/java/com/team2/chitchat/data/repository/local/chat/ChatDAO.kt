@@ -11,6 +11,9 @@ interface ChatDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertChats(chats: List<ChatDB>)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertChat(chat: ChatDB): Long
+
     @Query("DELETE FROM chat")
     suspend fun deleteChatTable()
 
@@ -18,7 +21,7 @@ interface ChatDAO {
     fun getChatsDb(): Flow<List<ChatDB>>
 
     @Query("SELECT * FROM chat WHERE id = :chatId")
-    fun getChat(chatId: String): Flow<ChatDB>
+    fun getChat(chatId: String): Flow<ChatDB?>
 
     @Query("DELETE FROM chat WHERE id NOT IN (:chatIds)")
     suspend fun deleteChatsNotIn(chatIds: List<String>)
