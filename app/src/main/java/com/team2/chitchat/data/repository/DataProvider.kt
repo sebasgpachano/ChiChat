@@ -94,8 +94,8 @@ class DataProvider @Inject constructor(
         return localDataSource.getChatsDb()
     }
 
-    override fun getChat(chatId: String, userId: String): Flow<BaseResponse<ChatDB>> {
-        return localDataSource.getChat(chatId, userId)
+    override fun getChat(chatId: String): Flow<BaseResponse<ChatDB?>> {
+        return localDataSource.getChat(chatId)
     }
 
     override fun updateChatView(id: String, view: Boolean): Flow<BaseResponse<Boolean>> {

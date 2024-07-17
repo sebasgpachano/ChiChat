@@ -41,7 +41,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         setUpListeners()
         configRecyclerView()
         setUpKeyboardListener()
-        chatViewModel.getChat(args.idChat, args.idUser)
+        chatViewModel.getChat(args.idChat)
     }
 
     private fun configRecyclerView() {
@@ -88,7 +88,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     private fun getUser(chat: GetChatModel) {
         binding?.tvUsername?.text = chat.name
         if (chat.online) {
-            binding?.tvStatus?.text = "En línea"
+            binding?.tvStatus?.text = getString(R.string.online)
         } else {
             binding?.tvStatus?.invisible()
         }

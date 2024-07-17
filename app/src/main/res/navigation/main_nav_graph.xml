@@ -69,9 +69,6 @@
             <action
                 android:id="@+id/action_chatFragment_to_profileFragment"
                 app:destination="@id/profileFragment" />
-            <argument
-                android:name="idUser"
-                app:argType="string" />
 
         </fragment>
 

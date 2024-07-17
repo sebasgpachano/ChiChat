@@ -8,5 +8,4 @@ data class PostNewChatModel(
     val success: Boolean,
     val created: Boolean,
     val idChat: String,
-    val idUser: String
 ) : BaseModel()

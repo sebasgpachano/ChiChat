@@ -56,17 +56,20 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    fun getChat(chatId: String, userId: String) {
+    fun getChat(chatId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            getChatUseCase(chatId, userId).collect { response ->
+            loadingMutableSharedFlow.emit(true)
+            getChatUseCase(chatId).collect { response ->
                 when (response) {
                     is BaseResponse.Error -> {
                         errorMutableSharedFlow.emit(response.error)
+                        loadingMutableSharedFlow.emit(false)
                     }
 
                     is BaseResponse.Success -> {
-                        response.data.let {
-                            val chat = getChatMapper.getChat(it)
+                        loadingMutableSharedFlow.emit(false)
+                        if (response.data != null) {
+                            val chat = getChatMapper.getChat(response.data)
                             chatMutableStateFlow.value = chat
                         }
                     }
