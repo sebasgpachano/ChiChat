@@ -51,13 +51,16 @@ class ChatViewModel @Inject constructor(
 
     fun getMessagesForChat(chatId: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            loadingMutableSharedFlow.emit(true)
             getMessagesForChatUseCase(chatId).collect {
                 when (it) {
                     is BaseResponse.Error -> {
                         errorMutableSharedFlow.emit(it.error)
+                        loadingMutableSharedFlow.emit(false)
                     }
 
                     is BaseResponse.Success -> {
+                        loadingMutableSharedFlow.emit(false)
                         val messages = messagesMapper.getMessages(it.data)
                         messagesMutableStateFlow.value = messages
                         resetMessageView(messages)
@@ -96,7 +99,6 @@ class ChatViewModel @Inject constructor(
     fun getChat(chatId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
-
             val chatFlow = getChatUseCase(chatId)
             val usersFlow = getUsersDbUseCase()
 
