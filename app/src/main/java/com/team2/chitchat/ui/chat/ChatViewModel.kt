@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.chat
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.GetChatModel
 import com.team2.chitchat.data.domain.model.error.ErrorModel
@@ -10,9 +11,11 @@ import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequ
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.local.GetChatUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesForChatUseCase
+import com.team2.chitchat.data.usecase.local.UpdateMessageViewUseCase
 import com.team2.chitchat.data.usecase.remote.PostNewMessageUseCase
 import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
+import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +30,8 @@ class ChatViewModel @Inject constructor(
     private val simpleApplication: SimpleApplication,
     private val postNewMessageUseCase: PostNewMessageUseCase,
     private val getChatUseCase: GetChatUseCase,
-    private val getChatMapper: GetChatMapper
+    private val getChatMapper: GetChatMapper,
+    private val updateMessageViewUseCase: UpdateMessageViewUseCase
 ) :
     BaseViewModel() {
     private val messagesMutableStateFlow: MutableStateFlow<List<GetMessagesModel>> =
@@ -50,6 +54,34 @@ class ChatViewModel @Inject constructor(
                     is BaseResponse.Success -> {
                         val messages = messagesMapper.getMessages(it.data)
                         messagesMutableStateFlow.value = messages
+                        resetView(messages)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun resetView(messages: List<GetMessagesModel>) {
+        for (message in messages) {
+            if (!message.view) {
+                updateChatView(message.id, true)
+            }
+        }
+    }
+
+    private fun updateChatView(id: String, view: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            loadingMutableSharedFlow.emit(true)
+            updateMessageViewUseCase(id, view).collect {
+                when (it) {
+                    is BaseResponse.Error -> {
+                        loadingMutableSharedFlow.emit(false)
+                        Log.d(TAG, "chats> Update chat viewModel${it.error.message}")
+                        errorMutableSharedFlow.emit(it.error)
+                    }
+
+                    is BaseResponse.Success -> {
+                        loadingMutableSharedFlow.emit(false)
                     }
                 }
             }

@@ -119,4 +119,8 @@ class DataProvider @Inject constructor(
         return localDataSource.getMessagesForChat(chatId)
     }
 
+    override fun updateMessageView(id: String, view: Boolean): Flow<BaseResponse<Boolean>> {
+        return localDataSource.updateMessageView(id, view)
+    }
+
 }

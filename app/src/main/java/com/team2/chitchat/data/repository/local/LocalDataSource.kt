@@ -185,4 +185,17 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    fun updateMessageView(id: String, view: Boolean): Flow<BaseResponse<Boolean>> = flow {
+        try {
+            val rowsUpdated = appDatabaseManager.db.messagesDAO().updateMessageView(id, view)
+            if (rowsUpdated > 0) {
+                emit(BaseResponse.Success(true))
+            }
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
 }
