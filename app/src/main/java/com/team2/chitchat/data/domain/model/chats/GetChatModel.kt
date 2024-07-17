@@ -8,5 +8,6 @@ data class GetChatModel(
     val id: String,
     val userId: String,
     val name: String,
-    val online: Boolean
+    val online: Boolean,
+    val view: Boolean
 ) : BaseModel()

@@ -15,8 +15,10 @@ import com.team2.chitchat.data.domain.model.chats.GetChatModel
 import com.team2.chitchat.databinding.FragmentChatBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chat.adapter.ChatAdapter
+import com.team2.chitchat.ui.extensions.TAG
 import com.team2.chitchat.ui.extensions.invisible
 import com.team2.chitchat.ui.extensions.toastLong
+import com.team2.chitchat.ui.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -88,6 +90,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     private fun getUser(chat: GetChatModel) {
         binding?.tvUsername?.text = chat.name
         if (chat.online) {
+            binding?.tvStatus?.visible()
             binding?.tvStatus?.text = getString(R.string.online)
         } else {
             binding?.tvStatus?.invisible()
