@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.bundles.coroutines)
     // CryptoSharedPreference
     implementation(libs.androidxCryptoSharedPreferences)
+    // Kotlin
+    implementation(libs.androidx.biometric)
 }
 
 kapt {

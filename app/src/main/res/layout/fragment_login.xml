@@ -78,7 +78,7 @@
         style="@style/errorTextView"
         app:layout_constraintStart_toStartOf="@id/editTPasswordLoginFragment"
         app:layout_constraintTop_toBottomOf="@id/editTPasswordLoginFragment" />
-    <androidx.appcompat.widget.SwitchCompat
+    <Switch
         android:id="@+id/switchBiometric"
         android:layout_width="0dp"
         android:layout_height="48dp"

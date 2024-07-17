@@ -1,5 +1,6 @@
 [versions]
 agp = "8.4.1"
+biometric = "1.1.0"
 kotlin = "1.9.23"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -49,6 +50,7 @@ kotlinxCoroutinesAndroid = "1.8.0"
 kotlinxCoroutinesCore = "1.7.3"
 
 [libraries]
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
