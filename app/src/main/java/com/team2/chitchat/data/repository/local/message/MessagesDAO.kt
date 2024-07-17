@@ -22,4 +22,7 @@ interface MessagesDAO {
 
     @Query("UPDATE message SET `view` = :view WHERE id = :id")
     fun updateMessageView(id: String, view: Boolean): Int
+
+    @Query("DELETE FROM message WHERE id NOT IN (:messagesIds)")
+    suspend fun deleteMessagesNotIn(messagesIds: List<String>)
 }

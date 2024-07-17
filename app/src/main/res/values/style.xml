@@ -73,6 +73,17 @@
         <item name="font">@style/poppinsRegular16</item>
     </style>
 
+    <style name="searchEditText" parent="poppinsW500Medium18h24w500">
+        <item name="android:background">@drawable/edittext_ios_background</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">text</item>
+        <item name="android:drawableRight">@drawable/icon_search</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- Button-->
     <style name="buttonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_width">150dp</item>
