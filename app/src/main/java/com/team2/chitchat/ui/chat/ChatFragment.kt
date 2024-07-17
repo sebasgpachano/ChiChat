@@ -1,6 +1,7 @@
 package com.team2.chitchat.ui.chat
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +79,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
 
         lifecycleScope.launch {
             chatViewModel.errorFlow.collect {
-                requireContext().toastLong(it.message)
+                Log.d(TAG, "Error: ${it.message}")
             }
         }
     }
