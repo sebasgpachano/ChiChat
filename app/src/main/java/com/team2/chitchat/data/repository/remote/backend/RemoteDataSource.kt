@@ -19,6 +19,7 @@ import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequ
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.hilt.SimpleApplication
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -26,7 +27,7 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
     private val callApiService: CallApiService,
-    private val simpleApplication: SimpleApplication,
+    private val dataUserSession: DataUserSession
 ) : BaseService() {
 
     //RegisterUser
@@ -35,9 +36,9 @@ class RemoteDataSource @Inject constructor(
             val apiResult = callApiService.callPostRegisterUser(registerUserRequest)
             if (apiResult is BaseResponse.Success) {
                 apiResult.data.let { response ->
-                    simpleApplication.apply {
-                        saveAuthToken(response.user?.token ?: "")
-                        saveUserID(response.user?.id ?: "")
+                    dataUserSession.apply {
+                        tokenIb = response.user?.token ?: ""
+                        userId = response.user?.id ?: ""
                     }
                 }
                 emit(BaseResponse.Success(PostRegisterMapper().fromResponse(apiResult.data)))
@@ -52,9 +53,9 @@ class RemoteDataSource @Inject constructor(
             val apiResult = callApiService.callPostLoginUser(loginUserRequest)
             if (apiResult is BaseResponse.Success) {
                 apiResult.data.let { response ->
-                    simpleApplication.apply {
-                        saveAuthToken(response.token ?: "")
-                        saveUserID(response.user?.id ?: "")
+                    dataUserSession.apply {
+                        tokenIb = response.token ?: ""
+                        userId = response.user?.id ?: ""
                     }
                 }
                 emit(BaseResponse.Success(true))
@@ -77,7 +78,7 @@ class RemoteDataSource @Inject constructor(
     fun getChats(): Flow<BaseResponse<ArrayList<ChatDB>>> = flow {
         val apiResult = callApiService.callGetChats()
         if (apiResult is BaseResponse.Success) {
-            emit(BaseResponse.Success(GetChatsMapper(simpleApplication).fromResponse(apiResult.data)))
+            emit(BaseResponse.Success(GetChatsMapper(dataUserSession).fromResponse(apiResult.data)))
         } else if (apiResult is BaseResponse.Error) {
             emit(BaseResponse.Error(apiResult.error))
         }
@@ -136,7 +137,7 @@ class RemoteDataSource @Inject constructor(
     fun putLogOut(): Flow<BaseResponse<Boolean>> = flow {
         val apiResult = callApiService.callLogout()
         if (apiResult is BaseResponse.Success) {
-            simpleApplication.saveAuthToken("")
+            dataUserSession.tokenIb = ""
             emit(BaseResponse.Success(true))
         } else if (apiResult is BaseResponse.Error) {
             emit(BaseResponse.Error(apiResult.error))

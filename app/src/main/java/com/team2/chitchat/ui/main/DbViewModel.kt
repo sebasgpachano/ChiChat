@@ -6,6 +6,7 @@ import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.data.usecase.local.SetChatsDatabaseUseCase
 import com.team2.chitchat.data.usecase.local.SetMessagesDatabaseUseCase
 import com.team2.chitchat.data.usecase.local.SetUsersDatabaseUseCase
@@ -25,7 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DbViewModel @Inject constructor(
-    private val simpleApplication: SimpleApplication,
+    private val dataUserSession: DataUserSession,
     private val getContactsUseCase: GetContactsUseCase,
     private val setUsersDatabaseUseCase: SetUsersDatabaseUseCase,
     private val getChatsUseCase: GetChatsUseCase,
@@ -37,7 +38,7 @@ class DbViewModel @Inject constructor(
     val initDbSharedFlow: SharedFlow<Boolean> = initDbMutableSharedFlow
 
     fun startDataBase() {
-        val idUser = simpleApplication.getUserID()
+        val idUser = dataUserSession.userId
         Log.d(TAG, "%> Iniciando base de datos del usuario: $idUser...")
 
         viewModelScope.launch(Dispatchers.IO) {

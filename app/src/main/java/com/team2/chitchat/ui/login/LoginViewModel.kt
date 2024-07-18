@@ -1,12 +1,15 @@
 package com.team2.chitchat.ui.login
 
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyProperties
-import android.util.Base64
+
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.team2.chitchat.data.repository.crypto.BiometricCryptoManager
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.usecase.preferences.AccessBiometricUseCase
+import com.team2.chitchat.data.usecase.preferences.GetPasswordLoginUseCase
+import com.team2.chitchat.data.usecase.preferences.PutAccessBiometricUseCase
+import com.team2.chitchat.data.usecase.preferences.SavePasswordLoginUseCase
 import com.team2.chitchat.data.usecase.remote.PostLoginUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
@@ -15,27 +18,33 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.nio.charset.Charset
-import java.security.KeyStore
 import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
-import javax.crypto.spec.IvParameterSpec
 import javax.inject.Inject
 
-private const val KEY_NAME = "my_key"
-private const val SEPARATOR = "-"
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val postLoginUseCase: PostLoginUseCase
-): BaseViewModel(
-
-) {
+    private val postLoginUseCase: PostLoginUseCase,
+    private val getPasswordLoginUseCase: GetPasswordLoginUseCase,
+    private val savePasswordLoginUseCase: SavePasswordLoginUseCase,
+    private val accessBiometricUseCase: AccessBiometricUseCase,
+    private val putAccessBiometricUseCase: PutAccessBiometricUseCase,
+    private val biometricCryptoManager: BiometricCryptoManager
+): BaseViewModel() {
 
     private val loginMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val loginStateFlow: StateFlow<Boolean> = loginMutableStateFlow
 
-    fun getAuthenticationUser(loginUserRequest: LoginUserRequest) {
+    //passwordLogin
+    private val passwordLoginMutableStateFlow: MutableStateFlow<String> = MutableStateFlow("")
+    val passwordLoginStateFlow: StateFlow<String> = passwordLoginMutableStateFlow
+    //AccessBiometric
+    private val accessBiometricMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val accessBiometricStateFlow: StateFlow<Boolean> = accessBiometricMutableStateFlow
+
+    init {
+        loadAccessBiometric()
+    }
+    fun doLogin(loginUserRequest: LoginUserRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
             postLoginUseCase(loginUserRequest).collect {baseResponse ->
@@ -56,62 +65,52 @@ class LoginViewModel @Inject constructor(
         }
 
     }
-    private fun generateSecretKey(keyGenParameterSpec: KeyGenParameterSpec) {
-        if (isKeyCreated()) return
-        val keyGenerator = KeyGenerator.getInstance(
-            KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
-        keyGenerator.init(keyGenParameterSpec)
-        keyGenerator.generateKey()
+    //passwordLogin
+    fun getPasswordLogin():String {
+        val userPasswordLogin = getPasswordLoginUseCase()
+        return userPasswordLogin
     }
-    private fun isKeyCreated(): Boolean {
-        val keyStore = KeyStore.getInstance("AndroidKeyStore")
-        keyStore.load(null)
-        return keyStore.containsAlias(KEY_NAME)
+    fun savePasswordLogin(cipher: Cipher, loginUserRequest: LoginUserRequest) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val encryptPasswordLogin = biometricCryptoManager.encrypt(cipher,loginUserRequest)
+            Log.d(this@LoginViewModel.TAG, "savePasswordLogin: $encryptPasswordLogin")
+            savePasswordLoginUseCase(encryptPasswordLogin)
+        }
+    }
+    //AccessBiometric
+    fun loadAccessBiometric() {
+        viewModelScope.launch(Dispatchers.IO) {
+            accessBiometricUseCase().collect {baseResponse->
+                when(baseResponse) {
+                    is BaseResponse.Error -> {
+                        Log.d(this@LoginViewModel.TAG, "l> Error: ${baseResponse.error.message}")
+                        errorMutableSharedFlow.emit(baseResponse.error)
+                        }
+                    is BaseResponse.Success -> {
+                        accessBiometricMutableStateFlow.value = baseResponse.data
+                    }
+                    }
+                }
+            }
+    }
+    fun saveAccessBiometric(accessBiometric: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            putAccessBiometricUseCase(accessBiometric)
+            loadAccessBiometric()
+        }
+
+    }
+    fun getCipher(isEncrypt: Boolean): Cipher {
+        return if (!isEncrypt) {
+            biometricCryptoManager.decryptCipher(getPasswordLogin())
+        } else {
+            biometricCryptoManager.encryptedCipher()
+        }
+    }
+    fun getLogin(cipher: Cipher): LoginUserRequest {
+        val decryptPasswordLogin = biometricCryptoManager.decrypt(cipher, getPasswordLogin())
+        Log.d(this@LoginViewModel.TAG, "decryptPasswordLogin: $decryptPasswordLogin")
+        return decryptPasswordLogin
     }
 
-    private fun getSecretKey(): SecretKey {
-        val keyStore = KeyStore.getInstance("AndroidKeyStore")
-
-        // Before the keystore can be accessed, it must be loaded.
-        keyStore.load(null)
-        return keyStore.getKey(KEY_NAME, null) as SecretKey
-    }
-
-    private fun getCipher(): Cipher {
-        return Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
-                + KeyProperties.BLOCK_MODE_CBC + "/"
-                + KeyProperties.ENCRYPTION_PADDING_PKCS7)
-    }
-    fun encryptedCipher(): Cipher {
-        generateSecretKey(
-            KeyGenParameterSpec.Builder(
-            KEY_NAME,
-            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-            .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
-            .setUserAuthenticationRequired(true)
-            // Invalidate the keys if the user has registered a new biometric
-            // credential, such as a new fingerprint. Can call this method only
-            // on Android 7.0 (API level 24) or higher. The variable
-            // "invalidatedByBiometricEnrollment" is true by default.
-            .setInvalidatedByBiometricEnrollment(true)
-            .build())
-        val cipher = getCipher()
-        val secretKey = getSecretKey()
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-        return cipher
-    }
-    fun decryptCipher(iv: ByteArray): Cipher {
-        val cipher = getCipher()
-        val secretKey = getSecretKey()
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, IvParameterSpec(iv))
-        return cipher
-    }
-    fun encrypt(cipher: Cipher,plainText: String): String {
-        return Base64.encodeToString(cipher.doFinal(plainText.toByteArray(Charset.defaultCharset())),Base64.DEFAULT) + SEPARATOR + Base64.encodeToString(cipher.iv, Base64.DEFAULT)
-    }
-    fun decrypt(cipherText: String): String {
-        val cipher = decryptCipher(Base64.decode(cipherText.split(SEPARATOR)[1], Base64.DEFAULT))
-        return String(cipher.doFinal(Base64.decode(cipherText.split(SEPARATOR)[0], Base64.DEFAULT)))
-    }
 }

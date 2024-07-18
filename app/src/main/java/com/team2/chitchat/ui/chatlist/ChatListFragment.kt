@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
+import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.databinding.FragmentChatListBinding
 import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseFragment
@@ -23,6 +24,7 @@ import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
@@ -32,7 +34,8 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
     private var isDialogShowing = false
     private var lastRemovedChatId: String? = null
     private var allChats = ArrayList<ListChatsModel>()
-
+    @Inject
+    lateinit var dataUserSession: DataUserSession
     override fun inflateBinding() {
         binding = FragmentChatListBinding.inflate(layoutInflater)
     }
@@ -44,7 +47,7 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
         setupListeners()
         setupSwipeToDelete()
         setupSearch()
-        if ((context?.applicationContext as SimpleApplication).getAuthToken().isBlank()) {
+        if (dataUserSession.tokenIb.isBlank()) {
             findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
         }
     }

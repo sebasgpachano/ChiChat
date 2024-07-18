@@ -5,12 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.mapper.chats.ListChatsMapper
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.data.usecase.local.GetChatsDbUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesDbUseCase
 import com.team2.chitchat.data.usecase.local.GetUsersDbUseCase
 import com.team2.chitchat.data.usecase.local.UpdateChatViewUseCase
 import com.team2.chitchat.data.usecase.remote.DeleteChatUseCase
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
-    private val simpleApplication: SimpleApplication,
+    private val dataUserSession: DataUserSession,
     private val getChatsDbUseCase: GetChatsDbUseCase,
     private val getMessagesDbUseCase: GetMessagesDbUseCase,
     private val getUsersDbUseCase: GetUsersDbUseCase,
@@ -81,7 +81,7 @@ class ChatListViewModel @Inject constructor(
                 loadingMutableSharedFlow.emit(false)
                 val listChatsMapper =
                     ListChatsMapper(
-                        simpleApplication.getUserID(),
+                        dataUserSession.userId,
                         users,
                         chats,
                         messages
