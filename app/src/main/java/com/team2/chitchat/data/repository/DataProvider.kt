@@ -68,6 +68,15 @@ class DataProvider @Inject constructor(
         return remoteDataSource.putLogOut()
     }
 
+    //State
+    override fun putOnline(): Flow<BaseResponse<Boolean>> {
+        return remoteDataSource.putOnline()
+    }
+
+    override fun putOffline(): Flow<BaseResponse<Boolean>> {
+        return remoteDataSource.putOffline()
+    }
+
     //User Database
     override fun insertUsers(users: ArrayList<UserDB>): Flow<BaseResponse<Boolean>> {
         return localDataSource.insertUsers(users)

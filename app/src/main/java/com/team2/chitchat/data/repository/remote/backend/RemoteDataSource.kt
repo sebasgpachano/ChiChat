@@ -143,4 +143,23 @@ class RemoteDataSource @Inject constructor(
         }
     }
 
+    //State
+    fun putOnline(): Flow<BaseResponse<Boolean>> = flow {
+        val apiResult = callApiService.callPutOnline()
+        if (apiResult is BaseResponse.Success) {
+            emit(BaseResponse.Success(true))
+        } else if (apiResult is BaseResponse.Error) {
+            emit(BaseResponse.Error(apiResult.error))
+        }
+    }
+
+    fun putOffline(): Flow<BaseResponse<Boolean>> = flow {
+        val apiResult = callApiService.callLogout()
+        if (apiResult is BaseResponse.Success) {
+            emit(BaseResponse.Success(true))
+        } else if (apiResult is BaseResponse.Error) {
+            emit(BaseResponse.Error(apiResult.error))
+        }
+    }
+
 }

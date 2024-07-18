@@ -5,7 +5,6 @@ import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequ
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.repository.remote.response.LogOutResponse
 import com.team2.chitchat.data.repository.remote.response.chats.DeleteResponse
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
 import com.team2.chitchat.data.repository.remote.response.chats.PostNewChatResponse
@@ -14,6 +13,7 @@ import com.team2.chitchat.data.repository.remote.response.messages.PostNewMessag
 import com.team2.chitchat.data.repository.remote.response.users.GetUserResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostLoginResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostRegisterResponse
+import com.team2.chitchat.data.repository.remote.response.users.PutStateResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -62,7 +62,12 @@ class CallApiService @Inject constructor(private val apiService: ApiService) : B
         return apiCall { apiService.getProfile() }
     }
 
-    suspend fun callLogout(): BaseResponse<LogOutResponse> {
+    suspend fun callLogout(): BaseResponse<PutStateResponse> {
         return apiCall { apiService.putLogOut() }
+    }
+
+    //State
+    suspend fun callPutOnline(): BaseResponse<PutStateResponse> {
+        return apiCall { apiService.putOnline() }
     }
 }

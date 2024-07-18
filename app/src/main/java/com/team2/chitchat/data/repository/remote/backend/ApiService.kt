@@ -4,7 +4,6 @@ import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
-import com.team2.chitchat.data.repository.remote.response.LogOutResponse
 import com.team2.chitchat.data.repository.remote.response.chats.DeleteResponse
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
 import com.team2.chitchat.data.repository.remote.response.chats.PostNewChatResponse
@@ -13,11 +12,13 @@ import com.team2.chitchat.data.repository.remote.response.messages.PostNewMessag
 import com.team2.chitchat.data.repository.remote.response.users.GetUserResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostLoginResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostRegisterResponse
+import com.team2.chitchat.data.repository.remote.response.users.PutStateResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -35,7 +36,7 @@ interface ApiService {
 
     // Log Out
     @POST("api/users/logout")
-    suspend fun putLogOut(): Response<LogOutResponse>
+    suspend fun putLogOut(): Response<PutStateResponse>
 
     //ContactsList
     @GET("api/users")
@@ -69,4 +70,8 @@ interface ApiService {
     suspend fun getProfile(
 
     ): Response<GetUserResponse>
+
+    //State
+    @PUT("api/users/online/true")
+    suspend fun putOnline(): Response<PutStateResponse>
 }
