@@ -5,7 +5,7 @@
     android:id="@+id/chatList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="12dp">
+    android:paddingHorizontal="9dp">
 
     <TextView
         android:id="@+id/tvSubtitle"
@@ -14,9 +14,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/chat_list_subtitle"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etSearchUser"
+        style="@style/searchEditText"
+        android:layout_marginTop="12dp"
+        android:autofillHints="name"
+        android:hint="@string/chat_list_et_hint_search_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChatList"
@@ -27,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        app:layout_constraintTop_toBottomOf="@id/etSearchUser"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_recyclerview_list_chats" />
 
@@ -35,13 +44,13 @@
         android:id="@+id/btnAddChat"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/circle_notification"
         android:layout_marginEnd="29dp"
         android:layout_marginBottom="52dp"
+        android:background="@drawable/circle_notification"
         android:contentDescription="@string/chat_list_add_chat"
         android:padding="10dp"
-        app:srcCompat="@drawable/add_chat"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/add_chat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

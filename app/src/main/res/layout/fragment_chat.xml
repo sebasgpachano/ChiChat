@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/ibToolbarBack"
+        android:id="@+id/ibBack"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -29,13 +29,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tbChat" />
 
-    <ImageButton
-        android:id="@+id/ibProfile"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivProfile"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:background="@drawable/profile_button"
-        android:src="@mipmap/ic_launcher_round"
-        android:scaleType="centerCrop"
+        android:contentDescription="@string/list_contacts_profile_img"
+        android:src="@drawable/baseline_person_24"
+        android:layout_marginEnd="10dp"
+        app:shapeAppearanceOverlay="@style/RoundImage"
         app:layout_constraintBottom_toBottomOf="@id/tbChat"
         app:layout_constraintEnd_toStartOf="@id/tvUsername"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,6 +66,7 @@
         tools:text="En línea" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/etSend"
@@ -74,14 +76,16 @@
 
     <EditText
         android:id="@+id/etSend"
-        android:layout_width="304dp"
+        android:layout_width="350dp"
         android:layout_height="35dp"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="30dp"
         android:gravity="start"
         android:hint="@string/send_message"
         android:background="@drawable/edittext_chat"
+        android:importantForAutofill="no"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -90,10 +94,12 @@
         android:id="@+id/ibSend"
         android:layout_width="49dp"
         android:layout_height="43dp"
-        android:layout_marginStart="17dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/send_button"
         android:src="@drawable/icon_send"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/etSend" />
 

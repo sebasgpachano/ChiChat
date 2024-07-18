@@ -14,9 +14,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/list_contacts_subtitle"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etSearchUser"
+        style="@style/searchEditText"
+        android:layout_marginTop="12dp"
+        android:autofillHints="name"
+        android:hint="@string/list_contacts_et_hint_search_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srContacts"
@@ -27,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        app:layout_constraintTop_toBottomOf="@id/etSearchUser"
         app:layout_constraintVertical_bias="0.918">
 
         <androidx.recyclerview.widget.RecyclerView

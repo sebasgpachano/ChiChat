@@ -1,6 +1,7 @@
 package com.team2.chitchat.ui.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.team2.chitchat.R
 import com.team2.chitchat.databinding.ActivityMainBinding
@@ -13,6 +14,8 @@ import javax.inject.Inject
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     @Inject
     lateinit var simpleApplication: SimpleApplication
+    private val mainViewModel: MainViewModel by viewModels()
+
     override fun inflateBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
     }
@@ -37,4 +40,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         navController.navigate(R.id.action_global_profileFragment)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mainViewModel.logOut()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainViewModel.logOut()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.putOnline()
+    }
 }

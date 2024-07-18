@@ -7,6 +7,7 @@ import android.util.Log
 import com.team2.chitchat.data.repository.DataProvider
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
+import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,10 +42,75 @@ class ChatService : Service() {
         serviceScope.launch {
             while (true) {
                 Log.d(TAG, "%> loadData")
+                addUsers()
                 addChats()
                 addMessages()
                 delay(2000)
             }
+        }
+    }
+
+    private suspend fun getUsersDB(): ArrayList<UserDB> = withContext(Dispatchers.IO) {
+        val listUsers = ArrayList<UserDB>()
+        try {
+            listUsers.addAll(dataProvider.getContactsListDB())
+        } catch (e: Exception) {
+            Log.e(TAG, "%> Exception in getUsers: ${e.message}", e)
+        }
+        return@withContext listUsers
+    }
+
+    private suspend fun getUsers(): ArrayList<UserDB> = withContext(Dispatchers.IO) {
+        val listUsers = ArrayList<UserDB>()
+        try {
+            val usersDB = getUsersDB()
+            dataProvider.getContactsList().collect { response ->
+                when (response) {
+                    is BaseResponse.Error -> {
+                        Log.e(TAG, "%> Error fetching users: ${response.error}")
+                    }
+
+                    is BaseResponse.Success -> {
+                        val apiUsers = response.data
+
+                        for (apiUser in apiUsers) {
+                            val matchingUser = usersDB.find { it.id == apiUser.id }
+                            if (matchingUser != null && matchingUser.online != apiUser.online) {
+                                dataProvider.updateState(matchingUser.id, apiUser.online)
+                            }
+                        }
+                        listUsers.addAll(response.data)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "%> Exception in getUsers: ${e.message}", e)
+        }
+        return@withContext listUsers
+    }
+
+    private suspend fun addUsers(): Boolean = withContext(Dispatchers.IO) {
+        try {
+            Log.d(TAG, "%> Insert users...")
+            val users = getUsers()
+            var response = false
+            dataProvider.insertUsers(users).collect { result ->
+                response = when (result) {
+                    is BaseResponse.Error -> {
+                        Log.e(TAG, "%> Error inserting users: ${result.error}")
+                        false
+                    }
+
+                    is BaseResponse.Success -> {
+                        dataProvider.deleteUsersNotIn(users.map { it.id })
+                        result.data
+                    }
+                }
+            }
+            return@withContext response
+        } catch (e: Exception) {
+            Log.e(TAG, "%> Exception in addUsers: ${e.message}", e)
+            return@withContext false
         }
     }
 
@@ -80,7 +146,10 @@ class ChatService : Service() {
                         false
                     }
 
-                    is BaseResponse.Success -> result.data
+                    is BaseResponse.Success -> {
+                        dataProvider.deleteChatsNotIn(chats.map { it.id })
+                        result.data
+                    }
                 }
             }
             return@withContext response
@@ -127,7 +196,10 @@ class ChatService : Service() {
                         false
                     }
 
-                    is BaseResponse.Success -> result.data
+                    is BaseResponse.Success -> {
+                        dataProvider.deleteMessagesNotIn(messages.map { it.id })
+                        result.data
+                    }
                 }
             }
             return@withContext response

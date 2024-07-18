@@ -1,16 +1,19 @@
 package com.team2.chitchat.data.repository.remote.backend
 
 import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
+import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.repository.remote.response.LogOutResponse
+import com.team2.chitchat.data.repository.remote.response.chats.DeleteResponse
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
 import com.team2.chitchat.data.repository.remote.response.chats.PostNewChatResponse
 import com.team2.chitchat.data.repository.remote.response.messages.GetMessagesResponse
+import com.team2.chitchat.data.repository.remote.response.messages.PostNewMessageResponse
 import com.team2.chitchat.data.repository.remote.response.users.GetUserResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostLoginResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostRegisterResponse
+import com.team2.chitchat.data.repository.remote.response.users.PutStateResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,9 +44,17 @@ class CallApiService @Inject constructor(private val apiService: ApiService) : B
         return apiCall { apiService.postNewChat(newChatRequest) }
     }
 
+    suspend fun callDeleteChat(id: String): BaseResponse<DeleteResponse> {
+        return apiCall { apiService.deleteChat(id) }
+    }
+
     //Messages
     suspend fun callGetMessages(): BaseResponse<ArrayList<GetMessagesResponse>> {
         return apiCall { apiService.getMessages() }
+    }
+
+    suspend fun callPostNewMessage(newMessageRequest: NewMessageRequest): BaseResponse<PostNewMessageResponse> {
+        return apiCall { apiService.postNewMessage(newMessageRequest) }
     }
 
     // Get Profile
@@ -51,7 +62,12 @@ class CallApiService @Inject constructor(private val apiService: ApiService) : B
         return apiCall { apiService.getProfile() }
     }
 
-    suspend fun callLogout(): BaseResponse<LogOutResponse> {
+    suspend fun callLogout(): BaseResponse<PutStateResponse> {
         return apiCall { apiService.putLogOut() }
+    }
+
+    //State
+    suspend fun callPutOnline(): BaseResponse<PutStateResponse> {
+        return apiCall { apiService.putOnline() }
     }
 }

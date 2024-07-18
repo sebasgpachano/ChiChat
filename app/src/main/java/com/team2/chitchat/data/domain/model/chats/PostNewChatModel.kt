@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class PostNewChatModel(
     val success: Boolean,
     val created: Boolean,
-    val idChat: String
+    val idChat: String,
 ) : BaseModel()
