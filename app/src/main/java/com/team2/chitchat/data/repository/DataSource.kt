@@ -39,6 +39,10 @@ interface DataSource {
     //LogOut
     fun putLogOut(): Flow<BaseResponse<Boolean>>
 
+    //State
+    fun putOnline(): Flow<BaseResponse<Boolean>>
+    fun putOffline(): Flow<BaseResponse<Boolean>>
+
     //User Database
     fun insertUsers(users: ArrayList<UserDB>): Flow<BaseResponse<Boolean>>
     suspend fun getContactsListDB(): ArrayList<UserDB>
