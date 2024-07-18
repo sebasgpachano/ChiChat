@@ -105,26 +105,26 @@
 
     <TextView
         android:id="@+id/textVRegisterLoginF"
+        style="@style/poppinsRegular14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="106dp"
-        android:text="@string/textRegisterQuestionLoginF"
         android:padding="8dp"
-        style="@style/poppinsRegular14"
+        android:text="@string/textRegisterQuestionLoginF"
+        app:layout_constraintBottom_toTopOf="@+id/textButtonRegisterLoginF"
         app:layout_constraintEnd_toEndOf="@+id/textButtonRegisterLoginF"
-        app:layout_constraintStart_toStartOf="@id/textButtonRegisterLoginF"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+        app:layout_constraintStart_toStartOf="@id/textButtonRegisterLoginF" />
 
     <TextView
         android:id="@+id/textButtonRegisterLoginF"
+        style="@style/poppinsBold14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/poppinsBold14"
-        android:text="@string/textRegisterLoginF"
+        android:layout_marginBottom="50dp"
         android:padding="8dp"
+        android:text="@string/textRegisterLoginF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/buttonLogin"
-        app:layout_constraintStart_toStartOf="@id/buttonLogin"
-        app:layout_constraintTop_toBottomOf="@+id/textVRegisterLoginF" />
+        app:layout_constraintStart_toStartOf="@id/buttonLogin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
