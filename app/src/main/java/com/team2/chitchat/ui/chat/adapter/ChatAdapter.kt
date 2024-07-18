@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.chat.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -8,27 +9,29 @@ import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.databinding.ItemMessageReceivedBinding
 import com.team2.chitchat.databinding.ItemMessageSentBinding
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.chat.adapter.viewholder.ChatViewHolder
+import com.team2.chitchat.ui.extensions.TAG
 import javax.inject.Inject
 
 class ChatAdapter @Inject constructor(
-    private val chatAdapterListener: ChatAdapterListener
+    private val dataUserSession: DataUserSession
 ) : ListAdapter<GetMessagesModel, ChatViewHolder>(ChatDiffCallback()) {
-    @Inject
-    lateinit var dataUserSession: DataUserSession
+    private lateinit var chatAdapterListener: ChatAdapterListener
 
     companion object {
         private const val VIEW_TYPE_RECEIVED = 1
         private const val VIEW_TYPE_SENT = 2
     }
-
+    fun setListener(listener: ChatAdapterListener) {
+        chatAdapterListener = listener
+    }
     interface ChatAdapterListener {
         fun onItemClick(messageId: String)
     }
 
     override fun getItemViewType(position: Int): Int {
         val message = getItem(position)
+        Log.d(TAG, "DataUserSession: $dataUserSession")
         return if (message.sourceId == dataUserSession.userId) {
             VIEW_TYPE_SENT
         } else {
