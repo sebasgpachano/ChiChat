@@ -11,6 +11,7 @@ activity = "1.9.0"
 pluginNavigationSafeArgs = "2.7.7"
 pluginDaggerHilt = "2.48"
 pluginKotlin = "1.9.23"
+pluginCrashlytics = "2.9.9"
 
 #Android
 coreKtx = "1.13.1"
@@ -48,6 +49,11 @@ roomRuntime = "2.6.1"
 #Coroutines
 kotlinxCoroutinesAndroid = "1.8.0"
 kotlinxCoroutinesCore = "1.7.3"
+
+#Firebase
+firebaseCrashlytics = "19.0.2"
+firebaseBom = "33.1.2"
+firebaseAnalitics = "22.0.2"
 
 [libraries]
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
@@ -104,6 +110,11 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 
+#Firebase
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalitics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+
 [bundles]
 android = ["androidxCoreKtx", "androidxCoreSplash", "androidxAppcompat", "androidxConstraitLayout", "androidxSwipeRefresh", "androidMaterial", "androidPlayServicesMaps"]
 navigation = ["androidxNavigationFragment", "androidxNavigationUI", "androidxNavigationDynamicFragment", "androidxNavigationCompose"]
@@ -111,6 +122,7 @@ lifecycle = ["androidxLivecycleLivedata", "androidxLivecycleRuntime", "androidxL
 retrofit = ["retrofit", "retrofitGson"]
 room = ["androidx-room-runtime", "androidx-room-ktx"]
 coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
+firebase = ["firebase-analytics", "firebase-bom", "firebase-crashlytics"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -118,4 +130,4 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 pluginNavigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "pluginNavigationSafeArgs" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 pluginDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "pluginDaggerHilt" }
-
+pluginCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "pluginCrashlytics" }
