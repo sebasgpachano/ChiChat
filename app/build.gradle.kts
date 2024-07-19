@@ -1,3 +1,7 @@
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 plugins {
     kotlin("kapt")
     alias(libs.plugins.android.application)
@@ -19,18 +23,37 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://mock-movilidad.vass.es/chatvass/\"")
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+
+        getByName("debug") {
+            isDebuggable = true
         }
     }
+
+    flavorDimensions.add("version")
+    productFlavors {
+        create("Dev") {
+            dimension = "version"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "Dev-ChitChat")
+            buildConfigField("String", "BASE_URL", "\"https://mock-movilidad.vass.es/chatvass/\"")
+        }
+
+        create("Pro") {
+            dimension = "version"
+            resValue("string", "app_name", "ChitChat")
+            buildConfigField("String", "BASE_URL", "\"https://mock-movilidad.vass.es/chatvass/\"")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
