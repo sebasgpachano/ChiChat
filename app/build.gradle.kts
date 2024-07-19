@@ -1,3 +1,7 @@
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 plugins {
     kotlin("kapt")
     alias(libs.plugins.android.application)
@@ -5,6 +9,7 @@ plugins {
     alias(libs.plugins.pluginNavigationSafeArgs)
     alias(libs.plugins.pluginDaggerHilt)
     alias(libs.plugins.kotlin.parcelize)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -19,18 +24,37 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://mock-movilidad.vass.es/chatvass/\"")
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+
+        getByName("debug") {
+            isDebuggable = true
         }
     }
+
+    flavorDimensions.add("version")
+    productFlavors {
+        create("Dev") {
+            dimension = "version"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "Dev-ChitChat")
+            buildConfigField("String", "BASE_URL", "\"https://mock-movilidad.vass.es/chatvass/\"")
+        }
+
+        create("Pro") {
+            dimension = "version"
+            resValue("string", "app_name", "ChitChat")
+            buildConfigField("String", "BASE_URL", "\"https://mock-movilidad.vass.es/chatvass/\"")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -73,6 +97,13 @@ dependencies {
     implementation(libs.bundles.coroutines)
     // CryptoSharedPreference
     implementation(libs.androidxCryptoSharedPreferences)
+    // Kotlin
+    implementation(libs.androidx.biometric)
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation("com.google.firebase:firebase-analytics")
+
 }
 
 kapt {

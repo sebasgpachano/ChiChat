@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.BASE_URL
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.RETROFIT_TIMEOUT_IN_SECOND
-import com.team2.chitchat.hilt.SimpleApplication
+import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.ui.extensions.TAG
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
@@ -21,7 +21,7 @@ import javax.net.ssl.HostnameVerifier
 
 @Singleton
 class RetrofitClient @Inject constructor(
-    private val simpleApplication: SimpleApplication
+    private val preferencesDataSource: PreferencesDataSource
 ) {
     companion object {
         const val HEADER_KEY_TOKEN = "Authorization"
@@ -41,7 +41,7 @@ class RetrofitClient @Inject constructor(
         val hostnamesAllow = listOf(
             "mock-movilidad.vass.es",
         )
-        val hostnameVerifier = HostnameVerifier { hostname, session ->
+        val hostnameVerifier = HostnameVerifier { hostname, _ ->
             hostname in hostnamesAllow
         }
         httpClient.hostnameVerifier(hostnameVerifier)
@@ -65,7 +65,7 @@ class RetrofitClient @Inject constructor(
             })
             .interceptors().add(Interceptor { chain ->
             val original = chain.request()
-            val token = simpleApplication.getAuthToken().ifEmpty { "null" }
+            val token = preferencesDataSource.getAuthToken()
             Log.d(TAG, "%> token: $token")
             val request = when {
                 needAddBearer(chain.request()) -> {
@@ -101,7 +101,7 @@ class RetrofitClient @Inject constructor(
         request.body?.writeTo(buffer)
 
         return when {
-            simpleApplication.getAuthToken().isNotBlank() -> {
+            preferencesDataSource.getAuthToken().isNotBlank() -> {
                 Log.d(TAG, "%> NeedAddBearer")
                 true
             }

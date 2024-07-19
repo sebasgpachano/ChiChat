@@ -3,16 +3,14 @@ package com.team2.chitchat.data.mapper.chats
 import com.team2.chitchat.data.mapper.ResponseMapper
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
-import com.team2.chitchat.hilt.SimpleApplication
 
-class GetChatsMapper(
-    private val simpleApplication: SimpleApplication
+class GetChatsMapper (
+    private val userId: String,
 ) : ResponseMapper<ArrayList<GetChatsResponse>, ArrayList<ChatDB>> {
     override fun fromResponse(response: ArrayList<GetChatsResponse>): ArrayList<ChatDB> {
-        val currentUserID = simpleApplication.getUserID()
         val chatList = ArrayList<ChatDB>()
         for (chatsResponse in response) {
-            val isCurrentUserSource = chatsResponse.source == currentUserID
+            val isCurrentUserSource = chatsResponse.source == userId
             val otherUserResponseId = if (isCurrentUserSource) chatsResponse.target
             else chatsResponse.source
             val otherUserResponseName = if (isCurrentUserSource) chatsResponse.targetNick

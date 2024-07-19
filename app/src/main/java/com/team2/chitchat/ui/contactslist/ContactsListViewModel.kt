@@ -5,6 +5,7 @@ import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
 import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
 import com.team2.chitchat.data.usecase.remote.PostNewChatUseCase
 import com.team2.chitchat.hilt.SimpleApplication
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContactsListViewModel @Inject constructor(
-    private val simpleApplication: SimpleApplication,
+    private val dataUserSession: DataUserSession,
     private val getContactsUseCase: GetContactsUseCase,
     private val postNewChatUseCase: PostNewChatUseCase
 ) : BaseViewModel() {
@@ -50,7 +51,7 @@ class ContactsListViewModel @Inject constructor(
     fun postNewChat(target: String) {
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
-            val newChat = NewChatRequest(simpleApplication.getUserID(), target)
+            val newChat = NewChatRequest(dataUserSession.userId, target)
             postNewChatUseCase(newChat).collect {
                 when (it) {
                     is BaseResponse.Error -> {

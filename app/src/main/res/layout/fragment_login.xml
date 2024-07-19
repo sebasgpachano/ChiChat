@@ -78,7 +78,7 @@
         style="@style/errorTextView"
         app:layout_constraintStart_toStartOf="@id/editTPasswordLoginFragment"
         app:layout_constraintTop_toBottomOf="@id/editTPasswordLoginFragment" />
-    <androidx.appcompat.widget.SwitchCompat
+    <Switch
         android:id="@+id/switchBiometric"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -105,25 +105,27 @@
 
     <TextView
         android:id="@+id/textVRegisterLoginF"
+        style="@style/poppinsRegular14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="106dp"
-        android:text="@string/textRegisterQuestionLoginF"
+        android:layout_marginTop="150dp"
         android:padding="8dp"
-        style="@style/poppinsRegular14"
-        app:layout_constraintEnd_toEndOf="@+id/textButtonRegisterLoginF"
-        app:layout_constraintStart_toStartOf="@id/textButtonRegisterLoginF"
+        android:text="@string/textRegisterQuestionLoginF"
+        app:layout_constraintEnd_toEndOf="@+id/buttonLogin"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="@+id/buttonLogin"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 
     <TextView
         android:id="@+id/textButtonRegisterLoginF"
+        style="@style/poppinsBold14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/poppinsBold14"
-        android:text="@string/textRegisterLoginF"
         android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="@id/buttonLogin"
-        app:layout_constraintStart_toStartOf="@id/buttonLogin"
+        android:text="@string/textRegisterLoginF"
+        app:layout_constraintEnd_toEndOf="@+id/textVRegisterLoginF"
+        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintStart_toStartOf="@+id/textVRegisterLoginF"
         app:layout_constraintTop_toBottomOf="@+id/textVRegisterLoginF" />
 
 
