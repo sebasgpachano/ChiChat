@@ -21,7 +21,6 @@ import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.session.DataUserSession
-import com.team2.chitchat.hilt.SimpleApplication
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

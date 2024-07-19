@@ -270,9 +270,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         executor = ContextCompat.getMainExecutor(requireContext())
         biometricPrompt = BiometricPrompt(this, executor,biometricCallback)
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric login for my app")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
+            .setTitle(resources.getString(R.string.title_biometric_dialog))
+            .setSubtitle(resources.getString(R.string.subtitle_biometric_dialog))
+            .setNegativeButtonText(resources.getString(R.string.cancel_biometric_dialog))
             .build()
         biometricPrompt.authenticate(promptInfo,
             BiometricPrompt.CryptoObject(cipher))
