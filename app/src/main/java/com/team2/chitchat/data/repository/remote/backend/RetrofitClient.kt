@@ -4,8 +4,7 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.BASE_URL
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.RETROFIT_TIMEOUT_IN_SECOND
-import com.team2.chitchat.data.session.DataUserSession
-import com.team2.chitchat.hilt.SimpleApplication
+import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.ui.extensions.TAG
 import okhttp3.CertificatePinner
 import okhttp3.Interceptor
@@ -22,7 +21,7 @@ import javax.net.ssl.HostnameVerifier
 
 @Singleton
 class RetrofitClient @Inject constructor(
-    private val dataUserSession: DataUserSession
+    private val preferencesDataSource: PreferencesDataSource
 ) {
     companion object {
         const val HEADER_KEY_TOKEN = "Authorization"
@@ -66,7 +65,7 @@ class RetrofitClient @Inject constructor(
             })
             .interceptors().add(Interceptor { chain ->
             val original = chain.request()
-            val token = dataUserSession.tokenIb
+            val token = preferencesDataSource.getAuthToken()
             Log.d(TAG, "%> token: $token")
             val request = when {
                 needAddBearer(chain.request()) -> {
@@ -102,7 +101,7 @@ class RetrofitClient @Inject constructor(
         request.body?.writeTo(buffer)
 
         return when {
-            dataUserSession.tokenIb.isNotBlank() -> {
+            preferencesDataSource.getAuthToken().isNotBlank() -> {
                 Log.d(TAG, "%> NeedAddBearer")
                 true
             }

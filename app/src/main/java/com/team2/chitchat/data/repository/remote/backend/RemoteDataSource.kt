@@ -14,6 +14,7 @@ import com.team2.chitchat.data.mapper.users.PostRegisterMapper
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
+import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
@@ -27,7 +28,8 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
     private val callApiService: CallApiService,
-    private val dataUserSession: DataUserSession
+    private val dataUserSession: DataUserSession,
+    private val preferencesDataSource: PreferencesDataSource
 ) : BaseService() {
 
     //RegisterUser
@@ -39,6 +41,10 @@ class RemoteDataSource @Inject constructor(
                     dataUserSession.apply {
                         tokenIb = response.user?.token ?: ""
                         userId = response.user?.id ?: ""
+                    }
+                    preferencesDataSource.apply {
+                        saveAuthToken(response.user?.token ?: "")
+                        saveUserID(response.user?.id ?: "")
                     }
                 }
                 emit(BaseResponse.Success(PostRegisterMapper().fromResponse(apiResult.data)))
@@ -56,6 +62,10 @@ class RemoteDataSource @Inject constructor(
                     dataUserSession.apply {
                         tokenIb = response.token ?: ""
                         userId = response.user?.id ?: ""
+                    }
+                    preferencesDataSource.apply {
+                        saveAuthToken(response.token ?: "")
+                        saveUserID(response.user?.id ?: "")
                     }
                 }
                 emit(BaseResponse.Success(true))
@@ -78,7 +88,7 @@ class RemoteDataSource @Inject constructor(
     fun getChats(): Flow<BaseResponse<ArrayList<ChatDB>>> = flow {
         val apiResult = callApiService.callGetChats()
         if (apiResult is BaseResponse.Success) {
-            emit(BaseResponse.Success(GetChatsMapper(dataUserSession).fromResponse(apiResult.data)))
+            emit(BaseResponse.Success(GetChatsMapper(dataUserSession.userId).fromResponse(apiResult.data)))
         } else if (apiResult is BaseResponse.Error) {
             emit(BaseResponse.Error(apiResult.error))
         }
@@ -138,6 +148,13 @@ class RemoteDataSource @Inject constructor(
         val apiResult = callApiService.callLogout()
         if (apiResult is BaseResponse.Success) {
             dataUserSession.tokenIb = ""
+            dataUserSession.userId = ""
+            preferencesDataSource.apply {
+                saveAuthToken("")
+                saveUserID("")
+            }
+            preferencesDataSource.setUserPassword("")
+            preferencesDataSource.saveAccessBiometric(false)
             emit(BaseResponse.Success(true))
         } else if (apiResult is BaseResponse.Error) {
             emit(BaseResponse.Error(apiResult.error))
