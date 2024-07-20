@@ -103,6 +103,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvNick" />
 
+    <TextView
+        android:id="@+id/tvSelectedAvatar"
+        style="@style/poppinsBold14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/selected_avatar"
+        app:layout_constraintTop_toBottomOf="@id/etNick"
+        app:layout_constraintStart_toStartOf="@id/etNick" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivSelectedAvatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/avatar"
+        android:src="@drawable/avatar_lobster"
+        app:layout_constraintStart_toEndOf="@id/tvSelectedAvatar"
+        app:layout_constraintTop_toBottomOf="@id/etNick" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/ivSelectedAvatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btRegister"
         style="@style/buttonStyle"
@@ -111,7 +142,7 @@
         android:text="@string/register"
         app:layout_constraintEnd_toEndOf="@id/etNick"
         app:layout_constraintStart_toStartOf="@id/etNick"
-        app:layout_constraintTop_toBottomOf="@id/tvNickError" />
+        app:layout_constraintTop_toBottomOf="@id/vpAvatar" />
 
     <TextView
         android:id="@+id/tvUserError"

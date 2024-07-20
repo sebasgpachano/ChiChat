@@ -55,6 +55,8 @@
     <string name="repeat_pass">Repite la contraseña</string>
     <string name="nick">Nick</string>
     <string name="enter_nick">Ingresa el nick</string>
+    <string name="selected_avatar">Avatar seleccionado:</string>
+    <string name="avatar">avatar</string>
     <string name="register">Registrarse</string>
     <string name="registration_title">Registro</string>
     <string name="user_error">Usuario ya existe</string>

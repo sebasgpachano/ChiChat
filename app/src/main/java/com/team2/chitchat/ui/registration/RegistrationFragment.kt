@@ -16,14 +16,17 @@ import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.extensions.toastLong
 import com.team2.chitchat.ui.main.DbViewModel
+import com.team2.chitchat.ui.registration.adapter.AvatarPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.team2.chitchat.data.repository.preferences.SharedPreferencesManager
 
 @AndroidEntryPoint
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener {
 
     private val registrationViewModel: RegistrationViewModel by viewModels()
     private val dbViewModel: DbViewModel by viewModels()
+    private var selectedAvatarResId: Int = -1
 
     override fun inflateBinding() {
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
@@ -35,10 +38,27 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         savedInstanceState: Bundle?
     ) {
         setupListeners()
+        setUpViewPager()
     }
 
     private fun setupListeners() {
         binding?.btRegister?.setOnClickListener(this)
+    }
+
+    private fun setUpViewPager() {
+        val avatarList = listOf(
+            R.drawable.avatar_lobster,
+            R.drawable.avatar_cat,
+            R.drawable.avatar_monkey,
+            R.drawable.avatar_crab,
+            R.drawable.avatar_girl,
+            R.drawable.avatar_boy
+        )
+        val adapter = AvatarPagerAdapter(avatarList) { avatarResId ->
+            selectedAvatarResId = avatarResId
+            binding?.ivSelectedAvatar?.setImageResource(selectedAvatarResId)
+        }
+        binding?.vpAvatar?.adapter = adapter
     }
 
     override fun configureToolbarAndConfigScreenSections() {
@@ -92,6 +112,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                             binding?.etPassword?.text.toString(),
                             binding?.etNick?.text.toString()
                         )
+                        saveProfilePicture()
                     } else {
                         binding?.tvRepeatPasswordError?.text = getString(R.string.password_error)
                         binding?.etRepeatPass?.setErrorBorder(
@@ -145,6 +166,13 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                 textView?.text = getString(R.string.required_field)
                 editText?.setErrorBorder(true, requireContext(), textView)
             }
+        }
+    }
+
+    private fun saveProfilePicture() {
+        val imageView = binding?.ivSelectedAvatar
+        if (imageView != null) {
+            SharedPreferencesManager.saveProfilePicture(requireContext(), imageView)
         }
     }
 }

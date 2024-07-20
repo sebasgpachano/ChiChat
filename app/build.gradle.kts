@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.bundles.coroutines)
     // CryptoSharedPreference
     implementation(libs.androidxCryptoSharedPreferences)
+    //Circle image view
+    implementation(libs.circleimageview)
 }
 
 kapt {
