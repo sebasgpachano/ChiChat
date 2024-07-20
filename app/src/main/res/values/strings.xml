@@ -88,4 +88,8 @@
     <string name="empty_list">Empty list</string>
     <string name="send_button">Botón enviar</string>
     <string name="online">En línea</string>
+
+    <!-- Shared preferences-->
+    <string name="profile_shared_preferences">app_prefs</string>
+    <string name="profile_picture">profile_picture</string>
 </resources>

@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.util.Base64
+import com.team2.chitchat.R
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
@@ -13,7 +14,10 @@ import javax.inject.Inject
 class SharedPreferencesManager @Inject constructor(context: Context) {
 
     private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        context.getSharedPreferences(
+            context.getString(R.string.profile_shared_preferences),
+            Context.MODE_PRIVATE
+        )
 
     companion object {
         private const val PROFILE_PICTURE_KEY = "profile_picture"
