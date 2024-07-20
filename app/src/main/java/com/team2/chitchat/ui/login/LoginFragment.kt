@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
@@ -26,6 +29,7 @@ import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.databinding.FragmentLoginBinding
 import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseFragment
+import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.main.DbViewModel
@@ -52,6 +56,25 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
+
+    //Activity Result
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ resultLauncher->
+        if(resultLauncher.resultCode == Activity.RESULT_OK) {
+            val data = resultLauncher.data
+            Log.d(TAG,"resultLauncher: ${resultLauncher.data}")
+        } else {
+            showErrorMessage(
+                message = getString(R.string.not_registered_biometric_access),
+                object : MessageDialogFragment.MessageDialogListener{
+                    override fun positiveButtonOnclick(view: View) {
+                        viewModel.saveAccessBiometric(false)
+                    }
+
+                }
+            )
+        }
+    }
 
     override fun inflateBinding() {
         binding = FragmentLoginBinding.inflate(layoutInflater)
@@ -261,7 +284,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                         Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
                         BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
                 }
-                startActivityForResult(enrollIntent, 11)
+                resultLauncher.launch(enrollIntent)
             }
         }
     }
