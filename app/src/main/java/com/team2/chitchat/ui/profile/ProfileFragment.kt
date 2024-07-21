@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
-import com.team2.chitchat.data.repository.preferences.SharedPreferencesManager
 import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.databinding.FragmentProfileBinding
 import com.team2.chitchat.ui.base.BaseFragment
@@ -39,7 +38,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         savedInstanceState: Bundle?
     ) {
         initializeListeners()
-        loadProfilePicture()
     }
 
     override fun configureToolbarAndConfigScreenSections() {
@@ -83,6 +81,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.profilePictureStateFlow.collect { bitmap ->
+                bitmap?.let {
+                    binding?.imageVProfileFragment?.setImageBitmap(bitmap)
+                }
+            }
+        }
     }
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
@@ -110,13 +116,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     }
                 )
             }
-        }
-    }
-
-    private fun loadProfilePicture() {
-        val profilePicture = SharedPreferencesManager.loadProfilePicture(requireContext())
-        if (profilePicture != null) {
-            binding?.imageVProfileFragment?.setImageBitmap(profilePicture)
         }
     }
 }

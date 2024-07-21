@@ -20,7 +20,6 @@ import com.team2.chitchat.ui.main.DbViewModel
 import com.team2.chitchat.ui.registration.adapter.AvatarPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import com.team2.chitchat.data.repository.preferences.SharedPreferencesManager
 import com.team2.chitchat.ui.registration.adapter.SpaceItemDecoration
 
 @AndroidEntryPoint
@@ -123,7 +122,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                             binding?.etPassword?.text.toString(),
                             binding?.etNick?.text.toString()
                         )
-                        saveProfilePicture()
+                        registrationViewModel.saveProfilePicture(binding?.ivSelectedAvatar)
                     } else {
                         binding?.tvRepeatPasswordError?.text = getString(R.string.password_error)
                         binding?.etRepeatPass?.setErrorBorder(
@@ -177,13 +176,6 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                 textView?.text = getString(R.string.required_field)
                 editText?.setErrorBorder(true, requireContext(), textView)
             }
-        }
-    }
-
-    private fun saveProfilePicture() {
-        val imageView = binding?.ivSelectedAvatar
-        if (imageView != null) {
-            SharedPreferencesManager.saveProfilePicture(requireContext(), imageView)
         }
     }
 }

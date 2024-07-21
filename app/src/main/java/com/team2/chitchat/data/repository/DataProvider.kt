@@ -1,5 +1,6 @@
 package com.team2.chitchat.data.repository
 
+import android.graphics.Bitmap
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
 import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
@@ -15,6 +16,7 @@ import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequ
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -171,5 +173,13 @@ class DataProvider @Inject constructor(
 
     override fun getAccessBiometric(): Flow<BaseResponse<Boolean>> {
         return preferencesDataSource.getAccessBiometric()
+    }
+
+    override fun saveProfilePicture(imageView: CircleImageView?) {
+        preferencesDataSource.saveProfilePicture(imageView)
+    }
+
+    override fun loadProfilePicture(): Bitmap? {
+        return preferencesDataSource.loadProfilePicture()
     }
 }

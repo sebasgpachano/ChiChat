@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.profile
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.users.GetUserModel
@@ -7,6 +8,7 @@ import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.local.DeleteChatTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteMessageTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteUserTableUseCase
+import com.team2.chitchat.data.usecase.preferences.LoadProfilePictureUseCase
 import com.team2.chitchat.data.usecase.remote.GetProfileUseCase
 import com.team2.chitchat.data.usecase.remote.PutLogOutUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
@@ -27,7 +29,8 @@ class ProfileViewModel @Inject constructor(
     private val putLogOutUseCase: PutLogOutUseCase,
     private val deleteUserTableUseCase: DeleteUserTableUseCase,
     private val deleteChatTableUseCase: DeleteChatTableUseCase,
-    private val deleteMessageTableUseCase: DeleteMessageTableUseCase
+    private val deleteMessageTableUseCase: DeleteMessageTableUseCase,
+    private val loadProfilePictureUseCase: LoadProfilePictureUseCase
 ) : BaseViewModel() {
     private val deleteDbMutableSharedFlow = MutableSharedFlow<Boolean>()
     val deleteDbSharedFlow: SharedFlow<Boolean> = deleteDbMutableSharedFlow
@@ -37,6 +40,9 @@ class ProfileViewModel @Inject constructor(
     val getUserStateFlow: StateFlow<GetUserModel> = _getUserModelMutableStateFlow
     private val _putLogOutMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val putLogOutStateFlow: StateFlow<Boolean> = _putLogOutMutableStateFlow
+
+    private val profilePictureMutableStateFlow: MutableStateFlow<Bitmap?> = MutableStateFlow(null)
+    val profilePictureStateFlow: StateFlow<Bitmap?> = profilePictureMutableStateFlow
 
     init {
         loadUserModel()
@@ -138,6 +144,12 @@ class ProfileViewModel @Inject constructor(
                 }
             }
             response
+        }
+    }
+
+    fun loadPicture() {
+        viewModelScope.launch {
+            profilePictureMutableStateFlow.value = loadProfilePictureUseCase()
         }
     }
 }

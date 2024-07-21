@@ -1,5 +1,6 @@
 package com.team2.chitchat.data.repository
 
+import android.graphics.Bitmap
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
 import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
@@ -12,6 +13,7 @@ import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequ
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.flow.Flow
 
 interface DataSource {
@@ -74,4 +76,6 @@ interface DataSource {
     //Preferences
     fun putAccessBiometric(access: Boolean)
     fun getAccessBiometric(): Flow<BaseResponse<Boolean>>
+    fun saveProfilePicture(imageView: CircleImageView?)
+    fun loadProfilePicture(): Bitmap?
 }
