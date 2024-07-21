@@ -2,6 +2,7 @@ package com.team2.chitchat.ui.registration
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.team2.chitchat.ui.registration.adapter.AvatarPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import com.team2.chitchat.data.repository.preferences.SharedPreferencesManager
+import com.team2.chitchat.ui.registration.adapter.SpaceItemDecoration
 
 @AndroidEntryPoint
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener {
@@ -59,6 +61,15 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
             binding?.ivSelectedAvatar?.setImageResource(selectedAvatarResId)
         }
         binding?.vpAvatar?.adapter = adapter
+
+        val spaceInPixels = dpToPx(10)
+        val itemDecoration = SpaceItemDecoration(spaceInPixels)
+        binding?.vpAvatar?.addItemDecoration(itemDecoration)
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        val metrics = resources.displayMetrics
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), metrics).toInt()
     }
 
     override fun configureToolbarAndConfigScreenSections() {

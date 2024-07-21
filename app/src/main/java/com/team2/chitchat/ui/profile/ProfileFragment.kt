@@ -1,11 +1,6 @@
 package com.team2.chitchat.ui.profile
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapShader
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Shader
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -121,31 +116,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private fun loadProfilePicture() {
         val profilePicture = SharedPreferencesManager.loadProfilePicture(requireContext())
         if (profilePicture != null) {
-            val circularBitmap = getCircularBitmap(profilePicture)
-            binding?.imageVProfileFragment?.setImageBitmap(circularBitmap)
+            binding?.imageVProfileFragment?.setImageBitmap(profilePicture)
         }
-    }
-
-    private fun getCircularBitmap(bitmap: Bitmap): Bitmap {
-        val size = Math.min(bitmap.width, bitmap.height)
-        val x = (bitmap.width - size) / 2
-        val y = (bitmap.height - size) / 2
-
-        val squaredBitmap = Bitmap.createBitmap(bitmap, x, y, size, size)
-        if (squaredBitmap != bitmap) {
-            bitmap.recycle()
-        }
-
-        val circularBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(circularBitmap)
-        val paint = Paint().apply {
-            isAntiAlias = true
-            shader = BitmapShader(squaredBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        }
-
-        val radius = size / 2f
-        canvas.drawCircle(radius, radius, radius, paint)
-
-        return circularBitmap
     }
 }
