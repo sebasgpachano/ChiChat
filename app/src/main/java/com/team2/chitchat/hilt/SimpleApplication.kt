@@ -8,6 +8,7 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class SimpleApplication : Application() {
+
     @Inject
     lateinit var preferencesDataSource: PreferencesDataSource
 

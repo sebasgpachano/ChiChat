@@ -46,6 +46,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         loadUserModel()
+        loadPicture()
     }
 
     private fun loadUserModel() {

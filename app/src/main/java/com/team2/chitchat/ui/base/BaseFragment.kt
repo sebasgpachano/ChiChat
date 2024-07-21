@@ -169,7 +169,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     private fun loadProfilePictureFromSharedPreferences(): Bitmap? {
         val sharedPreferences =
             requireContext().getSharedPreferences(
-                getString(R.string.profile_shared_preferences),
+                "my_preferences",
                 Context.MODE_PRIVATE
             )
         val imageString = sharedPreferences.getString(getString(R.string.profile_picture), null)
