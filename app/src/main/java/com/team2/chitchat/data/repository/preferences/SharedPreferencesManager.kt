@@ -1,11 +1,13 @@
 package com.team2.chitchat.data.repository.preferences
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.util.Base64
+import android.util.Log
 import com.team2.chitchat.R
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayOutputStream
@@ -55,5 +57,44 @@ class SharedPreferencesManager @Inject constructor(context: Context) {
                 null
             }
         }
+    }
+
+    fun <T : Any?> set(key: String, value: T) {
+        setValue(key, value)
+    }
+
+    private fun setValue(key: String, value: Any?) {
+        when (value) {
+            is String? -> edit { it.putString(key, value) }
+            is Int -> edit { it.putInt(key, value) }
+            is Boolean -> edit { it.putBoolean(key, value) }
+            is Float -> edit { it.putFloat(key, value) }
+            is Long -> edit { it.putLong(key, value) }
+            else -> {
+                Log.e(TAG, "l> SharedPrefeExtensions Unsupported Type: $value")
+            }
+        }
+    }
+
+    private fun edit(operation: (SharedPreferences.Editor) -> Unit) {
+        val editor = sharedPreferences.edit()
+        operation(editor)
+        editor.apply()
+    }
+
+    fun saveStringSharedPreferences(key: String, value: String) {
+        set(key, value)
+    }
+
+    fun saveBooleanSharedPreferences(key: String, value: Boolean) {
+        set(key, value)
+    }
+
+    fun getBooleanSharedPreferences(key: String, defaultValue: Boolean = false): Boolean {
+        return sharedPreferences.getBoolean(key, defaultValue)
+    }
+
+    fun getStringSharedPreferences(key: String): String? {
+        return sharedPreferences.getString(key, "")
     }
 }

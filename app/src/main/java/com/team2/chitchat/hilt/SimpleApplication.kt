@@ -1,47 +1,30 @@
 package com.team2.chitchat.hilt
 
 import android.app.Application
-import com.team2.chitchat.data.repository.preferences.EncryptedSharedPreferencesKeys
-import com.team2.chitchat.data.repository.preferences.EncryptedSharedPreferencesManager
+import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
+import com.team2.chitchat.data.session.DataUserSession
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @HiltAndroidApp
 class SimpleApplication : Application() {
     @Inject
-    lateinit var encryptedSharedPreferencesManager: EncryptedSharedPreferencesManager
+    lateinit var preferencesDataSource: PreferencesDataSource
+
+    @Inject
+    lateinit var dataUserSession: DataUserSession
 
     override fun onCreate() {
         super.onCreate()
-        INSTANCE = this
+        initSession()
     }
 
-    fun saveAuthToken(token: String) {
-        encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
-            EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_KEY_LOGIN_AUTH,
-            token
-        )
-    }
-    fun getAuthToken(): String {
-        return encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences(
-            EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_KEY_LOGIN_AUTH
-        )
-    }
-    fun saveUserID(userID: String) {
-        encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
-            EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_USER_ID,
-            userID
-        )
-    }
-    fun getUserID(): String {
-        return encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences(
-            EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_USER_ID
-        )
-    }
-
-    companion object {
-        @get:Synchronized
-        lateinit var INSTANCE: SimpleApplication
-            private set
+    private fun initSession() {
+        if (preferencesDataSource.getAuthToken().isNotBlank()
+            && preferencesDataSource.getAuthToken().isNotEmpty()
+        ) {
+            dataUserSession.userId = preferencesDataSource.getUserID()
+            dataUserSession.tokenIb = preferencesDataSource.getAuthToken()
+        }
     }
 }

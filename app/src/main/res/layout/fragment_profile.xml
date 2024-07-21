@@ -73,25 +73,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textVUserNickNameProfileFragment"/>
 
     <com.team2.chitchat.ui.views.ActionItemViewGroup
-        android:id="@+id/actionIResetPassProfileFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        app:textAction="@string/change_password"
-        app:icon="@drawable/padlock_16x21"
-        android:layout_marginTop="44dp"
-        app:layout_constraintTop_toBottomOf="@id/FrameLImageProfileFragment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <com.team2.chitchat.ui.views.ActionItemViewGroup
         android:id="@+id/actionILogoutProfileFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
         app:textAction="@string/close_session"
         app:icon="@drawable/logout_24"
+        android:layout_marginTop="44dp"
+        app:layout_constraintTop_toBottomOf="@id/FrameLImageProfileFragment"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/actionIResetPassProfileFragment"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import com.team2.chitchat.data.mapper.messages.MessagesMapper
 import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.data.usecase.local.GetChatUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesForChatUseCase
 import com.team2.chitchat.data.usecase.local.GetUsersDbUseCase
@@ -31,7 +32,7 @@ import javax.inject.Inject
 class ChatViewModel @Inject constructor(
     private val getMessagesForChatUseCase: GetMessagesForChatUseCase,
     private val messagesMapper: MessagesMapper,
-    private val simpleApplication: SimpleApplication,
+    private val dataUserSession: DataUserSession,
     private val postNewMessageUseCase: PostNewMessageUseCase,
     private val getChatUseCase: GetChatUseCase,
     private val getChatMapper: GetChatMapper,
@@ -158,7 +159,7 @@ class ChatViewModel @Inject constructor(
 
     fun postNewMessage(message: String, chatId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val newMessage = NewMessageRequest(chatId, simpleApplication.getUserID(), message)
+            val newMessage = NewMessageRequest(chatId, dataUserSession.userId, message)
             postNewMessageUseCase(newMessage).collect {
                 when (it) {
                     is BaseResponse.Error -> {

@@ -8,6 +8,7 @@ import com.team2.chitchat.data.repository.local.LocalDataSource
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
+import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.data.repository.remote.backend.RemoteDataSource
 import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
@@ -16,10 +17,13 @@ import com.team2.chitchat.data.repository.remote.request.users.RegisterUserReque
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class DataProvider @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
+    private val preferencesDataSource: PreferencesDataSource
 ) : DataSource {
     //RegisterUSer
     override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> {
@@ -152,4 +156,20 @@ class DataProvider @Inject constructor(
         return localDataSource.updateMessageView(id, view)
     }
 
+    //EncryptPreferences
+    override fun putPasswordLogin(password: String) {
+        preferencesDataSource.setUserPassword(password)
+    }
+
+    override fun getPasswordLogin(): String {
+        return preferencesDataSource.getUserPassword()
+    }
+
+    override fun putAccessBiometric(access: Boolean) {
+        preferencesDataSource.saveAccessBiometric(access)
+    }
+
+    override fun getAccessBiometric(): Flow<BaseResponse<Boolean>> {
+        return preferencesDataSource.getAccessBiometric()
+    }
 }

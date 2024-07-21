@@ -18,17 +18,19 @@ import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chat.adapter.ChatAdapter
 import com.team2.chitchat.ui.extensions.TAG
 import com.team2.chitchat.ui.extensions.invisible
-import com.team2.chitchat.ui.extensions.toastLong
 import com.team2.chitchat.ui.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     ChatAdapter.ChatAdapterListener {
 
     private val chatViewModel: ChatViewModel by viewModels()
-    private val chatAdapter = ChatAdapter(this)
+
+    @Inject
+    lateinit var chatAdapter: ChatAdapter
     private val args: ChatFragmentArgs by navArgs()
     private lateinit var keyboardListener: ViewTreeObserver.OnGlobalLayoutListener
 
@@ -58,6 +60,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     private fun setUpListeners() {
         binding?.ibBack?.setOnClickListener(this)
         binding?.ibSend?.setOnClickListener(this)
+        chatAdapter.setListener(this)
     }
 
     override fun configureToolbarAndConfigScreenSections() {
