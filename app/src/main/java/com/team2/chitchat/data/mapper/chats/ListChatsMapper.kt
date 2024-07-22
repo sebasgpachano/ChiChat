@@ -5,6 +5,7 @@ import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
 import java.time.LocalDate
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -75,9 +76,11 @@ class ListChatsMapper(
     }
 
     private fun fixedServerHour(messageTime: String?): String {
+        val deviceTime = ZonedDateTime.now()
+        val offsetInHours = deviceTime.offset.totalSeconds / 3600.0.toLong()
         val formatter = DateTimeFormatter.ISO_DATE_TIME
-        val zonedDateTime = ZonedDateTime.parse(messageTime, formatter)
-        val updatedZonedDateTime = zonedDateTime.plusHours(2)
+        val zonedDateTime = ZonedDateTime.parse(messageTime, formatter.withZone(ZoneOffset.UTC))
+        val updatedZonedDateTime = zonedDateTime.plusHours(2 + offsetInHours)
         return updatedZonedDateTime.format(formatter)
     }
 }
