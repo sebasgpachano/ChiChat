@@ -13,6 +13,7 @@ pluginNavigationSafeArgs = "2.7.7"
 pluginDaggerHilt = "2.48"
 pluginKotlin = "1.9.23"
 pluginCrashlytics = "2.9.9"
+pluginGoogleServices = "4.4.2"
 
 #Android
 coreKtx = "1.13.1"
@@ -135,3 +136,4 @@ pluginNavigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 pluginDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "pluginDaggerHilt" }
 pluginCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "pluginCrashlytics" }
+pluginGoogleServices = { id = "com.google.gms.google-services", version.ref = "pluginGoogleServices" }

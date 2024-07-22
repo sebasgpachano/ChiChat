@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.viewbinding.ViewBinding
 import com.team2.chitchat.R
+import com.team2.chitchat.data.analytics.FirebaseAnalyticsManager
 import com.team2.chitchat.ui.dialogfragment.LoadingDialogFragment
 import com.team2.chitchat.ui.dialogfragment.LoadingDialogFragment.Companion.LOADING_DIALOG_FRAGMENT_TAG
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
@@ -34,6 +35,10 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
 
     @Inject
     lateinit var baseActivityControlShowLoading: BaseActivityControlShowLoading
+
+    @Inject
+    lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
+
     override fun onResume() {
         super.onResume()
         configureToolbarAndConfigScreenSections()
@@ -46,6 +51,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalyticsManager.logEventEnterScreen(javaClass.simpleName)
         inflateBinding()
         setContentView(binding.root)
         findViewByIdToolbar()

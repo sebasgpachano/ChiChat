@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.pluginDaggerHilt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.pluginCrashlytics)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.pluginGoogleServices)
 }
 
 android {
