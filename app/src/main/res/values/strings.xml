@@ -55,6 +55,8 @@
     <string name="repeat_pass">Repite la contraseña</string>
     <string name="nick">Nick</string>
     <string name="enter_nick">Ingresa el nick</string>
+    <string name="selected_avatar">Avatar seleccionado:</string>
+    <string name="avatar">avatar</string>
     <string name="register">Registrarse</string>
     <string name="registration_title">Registro</string>
     <string name="user_error">Usuario ya existe</string>
@@ -86,11 +88,16 @@
 
     <!-- Chat fragment-->
     <string name="send_message">Enviar mensaje</string>
-
     <string name="empty_list">Empty list</string>
     <string name="send_button">Botón enviar</string>
     <string name="online">En línea</string>
+
+
     <string name="title_biometric_dialog">Acceso Biometrico</string>
     <string name="subtitle_biometric_dialog">Acceso biometrico accede a tus credenciales</string>
     <string name="cancel_biometric_dialog">Usar contraseña</string>
+
+    <!-- Shared preferences-->
+    <string name="profile_shared_preferences">app_prefs</string>
+    <string name="profile_picture">profile_picture</string>
 </resources>

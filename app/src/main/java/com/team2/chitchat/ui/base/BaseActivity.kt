@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.base
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -109,6 +110,10 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         ibToolbarBack?.setOnClickListener(this)
         ibToolbarProfile?.setOnClickListener(this)
         ibToolbarNotification?.setOnClickListener(this)
+    }
+
+    fun setProfileImage(imageBitmap: Bitmap) {
+        ibToolbarProfile?.setImageBitmap(imageBitmap)
     }
 
     override fun onClick(view: View?) {

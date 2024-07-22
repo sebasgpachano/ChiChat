@@ -94,6 +94,8 @@ dependencies {
     implementation(libs.bundles.coroutines)
     // CryptoSharedPreference
     implementation(libs.androidxCryptoSharedPreferences)
+    //Circle image view
+    implementation(libs.circleimageview)
     // Kotlin
     implementation(libs.androidx.biometric)
     // Firebase

@@ -27,7 +27,6 @@
                 android:id="@+id/imageVProfileFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:tint="@color/grayD9D9D9"
                 android:contentDescription="@string/photoProfileDescription"
                 android:src="@drawable/baseline_person_24" />
 

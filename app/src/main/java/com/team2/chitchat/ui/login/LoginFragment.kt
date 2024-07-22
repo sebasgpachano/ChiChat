@@ -46,8 +46,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     lateinit var simpleApplication: SimpleApplication
     private val viewModel: LoginViewModel by viewModels()
     private val dbViewModel: DbViewModel by viewModels()
+
     @Inject
     lateinit var dataUserSession: DataUserSession
+
     //Biometric
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
@@ -83,7 +85,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             dbViewModel.initDbSharedFlow.collect { isOk ->
                 if (isOk) {
-                    Log.d(TAG, "observeViewModel datauser: ${dataUserSession.userId} - ${dataUserSession.tokenIb}")
+                    Log.d(
+                        TAG,
+                        "observeViewModel datauser: ${dataUserSession.userId} - ${dataUserSession.tokenIb}"
+                    )
                     val intent = Intent(requireContext(), ChatService::class.java)
                     requireContext().startService(intent)
                     findNavController().popBackStack()
@@ -159,17 +164,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 val userPassword = viewModel.getPasswordLogin()
                 if (isOk && userPassword.isNotEmpty()) {
 
-                    declareTypeAuthentication(viewModel.getCipher(false), object : AuthenticationCallback() {
-                        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                            super.onAuthenticationSucceeded(result)
-                            result.cryptoObject?.cipher?.let {
-                                val login = viewModel.getLogin(it)
-                                Log.d(TAG, "onAuthenticationSucceeded: $login")
-                                viewModel.doLogin(login)
-                            }
+                    declareTypeAuthentication(
+                        viewModel.getCipher(false),
+                        object : AuthenticationCallback() {
+                            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                                super.onAuthenticationSucceeded(result)
+                                result.cryptoObject?.cipher?.let {
+                                    val login = viewModel.getLogin(it)
+                                    Log.d(TAG, "onAuthenticationSucceeded: $login")
+                                    viewModel.doLogin(login)
+                                }
 
-                        }
-                    })
+                            }
+                        })
 
                 }
             }
@@ -199,18 +206,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
                 if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
                     if (viewModel.accessBiometricStateFlow.value) {
-                        declareTypeAuthentication(viewModel.getCipher(true),object : AuthenticationCallback() {
-                            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                                super.onAuthenticationSucceeded(result)
-                                result.cryptoObject?.cipher?.let {
+                        declareTypeAuthentication(viewModel.getCipher(true),
+                            object : AuthenticationCallback() {
+                                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                                    super.onAuthenticationSucceeded(result)
+                                    result.cryptoObject?.cipher?.let {
 
-                                    viewModel.savePasswordLogin(it, loginUserRequest = login)
-                                    viewModel.doLogin(login)
+                                        viewModel.savePasswordLogin(it, loginUserRequest = login)
+                                        viewModel.doLogin(login)
+                                    }
+
                                 }
-
-                            }
-                        })
-                    }else {
+                            })
+                    } else {
                         viewModel.doLogin(login)
                     }
 
@@ -241,7 +249,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             }
         }
     }
-    private fun declareTypeAuthentication(cipher: Cipher, biometricCallback: AuthenticationCallback) {
+    private fun declareTypeAuthentication(
+        cipher: Cipher,
+        biometricCallback: AuthenticationCallback
+    ) {
 
         val biometricManager = BiometricManager.from(requireContext())
         when (biometricManager.canAuthenticate(BIOMETRIC_STRONG)) {
@@ -250,16 +261,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
                 showBiometricDialog(cipher, biometricCallback)
             }
+
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
                 Log.e("MY_APP_TAG", "No biometric features available on this device.")
+
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
                 Log.e("MY_APP_TAG", "Biometric features are currently unavailable.")
+
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 // Prompts the user to create credentials that your app accepts.
                 val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                     putExtra(
                         Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                        BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+                        BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+                    )
                 }
                 startActivityForResult(enrollIntent, 11)
             }
@@ -268,14 +283,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun showBiometricDialog(cipher: Cipher, biometricCallback: AuthenticationCallback) {
         executor = ContextCompat.getMainExecutor(requireContext())
-        biometricPrompt = BiometricPrompt(this, executor,biometricCallback)
+        biometricPrompt = BiometricPrompt(this, executor, biometricCallback)
         promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(resources.getString(R.string.title_biometric_dialog))
             .setSubtitle(resources.getString(R.string.subtitle_biometric_dialog))
             .setNegativeButtonText(resources.getString(R.string.cancel_biometric_dialog))
             .build()
-        biometricPrompt.authenticate(promptInfo,
-            BiometricPrompt.CryptoObject(cipher))
+        biometricPrompt.authenticate(
+            promptInfo,
+            BiometricPrompt.CryptoObject(cipher)
+        )
     }
 
 }

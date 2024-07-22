@@ -34,6 +34,7 @@ object AppModuleHilt {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         ) as EncryptedSharedPreferences
     }
+
     @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)

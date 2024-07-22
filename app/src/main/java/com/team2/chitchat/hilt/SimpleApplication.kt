@@ -8,8 +8,10 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class SimpleApplication : Application() {
+
     @Inject
     lateinit var preferencesDataSource: PreferencesDataSource
+
     @Inject
     lateinit var dataUserSession: DataUserSession
 
@@ -20,7 +22,8 @@ class SimpleApplication : Application() {
 
     private fun initSession() {
         if (preferencesDataSource.getAuthToken().isNotBlank()
-            && preferencesDataSource.getAuthToken().isNotEmpty()) {
+            && preferencesDataSource.getAuthToken().isNotEmpty()
+        ) {
             dataUserSession.userId = preferencesDataSource.getUserID()
             dataUserSession.tokenIb = preferencesDataSource.getAuthToken()
         }

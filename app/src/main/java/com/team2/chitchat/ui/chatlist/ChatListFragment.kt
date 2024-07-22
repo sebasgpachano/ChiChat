@@ -34,6 +34,7 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
     private var isDialogShowing = false
     private var lastRemovedChatId: String? = null
     private var allChats = ArrayList<ListChatsModel>()
+
     @Inject
     lateinit var dataUserSession: DataUserSession
     override fun inflateBinding() {

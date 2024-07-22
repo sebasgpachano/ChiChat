@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
     private val accessBiometricUseCase: AccessBiometricUseCase,
     private val putAccessBiometricUseCase: PutAccessBiometricUseCase,
     private val biometricCryptoManager: BiometricCryptoManager
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val loginMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val loginStateFlow: StateFlow<Boolean> = loginMutableStateFlow
@@ -37,6 +37,7 @@ class LoginViewModel @Inject constructor(
     //passwordLogin
     private val passwordLoginMutableStateFlow: MutableStateFlow<String> = MutableStateFlow("")
     val passwordLoginStateFlow: StateFlow<String> = passwordLoginMutableStateFlow
+
     //AccessBiometric
     private val accessBiometricMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val accessBiometricStateFlow: StateFlow<Boolean> = accessBiometricMutableStateFlow
@@ -44,6 +45,7 @@ class LoginViewModel @Inject constructor(
     init {
         loadAccessBiometric()
     }
+
     fun doLogin(loginUserRequest: LoginUserRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
@@ -65,34 +67,39 @@ class LoginViewModel @Inject constructor(
         }
 
     }
+
     //passwordLogin
-    fun getPasswordLogin():String {
+    fun getPasswordLogin(): String {
         val userPasswordLogin = getPasswordLoginUseCase()
         return userPasswordLogin
     }
+
     fun savePasswordLogin(cipher: Cipher, loginUserRequest: LoginUserRequest) {
         viewModelScope.launch(Dispatchers.IO) {
-            val encryptPasswordLogin = biometricCryptoManager.encrypt(cipher,loginUserRequest)
+            val encryptPasswordLogin = biometricCryptoManager.encrypt(cipher, loginUserRequest)
             Log.d(this@LoginViewModel.TAG, "savePasswordLogin: $encryptPasswordLogin")
             savePasswordLoginUseCase(encryptPasswordLogin)
         }
     }
+
     //AccessBiometric
     fun loadAccessBiometric() {
         viewModelScope.launch(Dispatchers.IO) {
-            accessBiometricUseCase().collect {baseResponse->
-                when(baseResponse) {
+            accessBiometricUseCase().collect { baseResponse ->
+                when (baseResponse) {
                     is BaseResponse.Error -> {
                         Log.d(this@LoginViewModel.TAG, "l> Error: ${baseResponse.error.message}")
                         errorMutableSharedFlow.emit(baseResponse.error)
-                        }
+                    }
+
                     is BaseResponse.Success -> {
                         accessBiometricMutableStateFlow.value = baseResponse.data
                     }
-                    }
                 }
             }
+        }
     }
+
     fun saveAccessBiometric(accessBiometric: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             putAccessBiometricUseCase(accessBiometric)
@@ -100,6 +107,7 @@ class LoginViewModel @Inject constructor(
         }
 
     }
+
     fun getCipher(isEncrypt: Boolean): Cipher {
         return if (!isEncrypt) {
             biometricCryptoManager.decryptCipher(getPasswordLogin())
@@ -107,6 +115,7 @@ class LoginViewModel @Inject constructor(
             biometricCryptoManager.encryptedCipher()
         }
     }
+
     fun getLogin(cipher: Cipher): LoginUserRequest {
         val decryptPasswordLogin = biometricCryptoManager.decrypt(cipher, getPasswordLogin())
         Log.d(this@LoginViewModel.TAG, "decryptPasswordLogin: $decryptPasswordLogin")

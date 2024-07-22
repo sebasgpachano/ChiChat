@@ -8,4 +8,4 @@ data class LoginUserRequest(
     var login: String,
     @SerializedName("password")
     var password: String,
-): Serializable
+) : Serializable

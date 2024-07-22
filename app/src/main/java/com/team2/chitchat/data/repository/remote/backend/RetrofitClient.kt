@@ -65,7 +65,7 @@ class RetrofitClient @Inject constructor(
             })
             .interceptors().add(Interceptor { chain ->
             val original = chain.request()
-            val token = preferencesDataSource.getAuthToken()
+                val token = preferencesDataSource.getAuthToken()
             Log.d(TAG, "%> token: $token")
             val request = when {
                 needAddBearer(chain.request()) -> {
