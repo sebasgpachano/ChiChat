@@ -1,12 +1,23 @@
 package com.team2.chitchat.ui.main
 
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.team2.chitchat.R
+import com.team2.chitchat.data.constants.GeneralConstants.Companion.INTENT_KEY_PUSH_NOTIFICATION_BODY
 import com.team2.chitchat.databinding.ActivityMainBinding
 import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseActivity
+import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -14,7 +25,22 @@ import javax.inject.Inject
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     @Inject
     lateinit var simpleApplication: SimpleApplication
+
     private val mainViewModel: MainViewModel by viewModels()
+    private val callRequestPermissionPostNotification =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                Log.d(TAG, "%> Permiso concedido")
+            } else {
+                if (!shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
+                    Log.d(TAG, "%> El usuario pulso en no volver a mostrar")
+                    openAppSettings()
+                } else {
+                    Log.d(TAG, "%> Permiso no concedido")
+                    this.finish()
+                }
+            }
+        }
 
     override fun inflateBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -23,7 +49,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun observeViewModel() = Unit
 
     override fun createAfterInflateBindingSetupObserverViewModel(savedInstanceState: Bundle?) {
+        askPermissionNotification()
         configNavigation()
+    }
+
+    private fun askPermissionNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(
+                this,
+                POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            callRequestPermissionPostNotification.launch(POST_NOTIFICATIONS)
+        }
     }
 
     override fun configureToolbarAndConfigScreenSections() = Unit
@@ -53,5 +90,35 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
         mainViewModel.putOnline()
+        Log.d(
+            TAG,
+            "Firebase push notification OnResume ${
+                intent.extras?.getString(
+                    INTENT_KEY_PUSH_NOTIFICATION_BODY
+                )
+            }"
+        )
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        this.intent = intent
+        Log.d(
+            TAG,
+            "Firebase push notification OnNewIntent ${
+                intent.extras?.getString(
+                    INTENT_KEY_PUSH_NOTIFICATION_BODY
+                )
+            }"
+        )
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", this.packageName, null)
+        )
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }
