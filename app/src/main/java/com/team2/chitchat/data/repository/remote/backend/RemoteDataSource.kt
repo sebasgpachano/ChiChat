@@ -20,9 +20,11 @@ import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequ
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.repository.remote.response.users.PostLoginResponse
 import com.team2.chitchat.data.session.DataUserSession
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.crypto.Cipher
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
@@ -66,8 +68,31 @@ class RemoteDataSource @Inject constructor(
                         saveAuthToken(response.token ?: "")
                         saveUserID(response.user?.id ?: "")
                     }
+                    emit(BaseResponse.Success(true))
                 }
-                emit(BaseResponse.Success(true))
+
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    //Access with Biometric
+    fun postRefreshToken(refreshToken: String): Flow<BaseResponse<Boolean>> =
+        flow {
+            val apiResult = callApiService.callPostRefreshToken(refreshToken)
+            if (apiResult is BaseResponse.Success) {
+                apiResult.data.let { response ->
+                    dataUserSession.apply {
+                        tokenIb = response.token ?: ""
+                        userId = response.user?.id ?: ""
+                    }
+                    preferencesDataSource.apply {
+                        saveAuthToken(response.token ?: "")
+                        saveUserID(response.user?.id ?: "")
+                    }
+                    emit(BaseResponse.Success(true))
+                }
+
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }
@@ -152,7 +177,7 @@ class RemoteDataSource @Inject constructor(
                 saveAuthToken("")
                 saveUserID("")
             }
-            preferencesDataSource.setUserPassword("")
+            preferencesDataSource.saveAuthToken("")
             preferencesDataSource.saveAccessBiometric(false)
             emit(BaseResponse.Success(true))
         } else if (apiResult is BaseResponse.Error) {

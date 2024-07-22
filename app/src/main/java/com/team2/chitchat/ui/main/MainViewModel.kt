@@ -2,6 +2,7 @@ package com.team2.chitchat.ui.main
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.remote.PutOfflineUseCase
 import com.team2.chitchat.data.usecase.remote.PutOnlineUseCase
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val putOfflineUseCase: PutOfflineUseCase,
-    private val putOnlineUseCase: PutOnlineUseCase
+    private val putOnlineUseCase: PutOnlineUseCase,
+    private val preferencesDataSource: PreferencesDataSource
 ) : BaseViewModel() {
 
     fun logOut() {
@@ -54,5 +56,9 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun deleteSession() {
+        preferencesDataSource.saveUserID("")
     }
 }

@@ -80,6 +80,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         mainViewModel.logOut()
+        mainViewModel.deleteSession()
     }
 
     override fun onPause() {
