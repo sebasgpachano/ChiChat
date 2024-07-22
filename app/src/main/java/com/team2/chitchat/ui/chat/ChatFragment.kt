@@ -28,6 +28,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
     ChatAdapter.ChatAdapterListener {
 
     private val chatViewModel: ChatViewModel by viewModels()
+
     @Inject
     lateinit var chatAdapter: ChatAdapter
     private val args: ChatFragmentArgs by navArgs()

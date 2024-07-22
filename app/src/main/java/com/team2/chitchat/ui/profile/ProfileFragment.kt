@@ -81,6 +81,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.profilePictureStateFlow.collect { bitmap ->
+                bitmap?.let {
+                    binding?.imageVProfileFragment?.setImageBitmap(bitmap)
+                }
+            }
+        }
     }
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =

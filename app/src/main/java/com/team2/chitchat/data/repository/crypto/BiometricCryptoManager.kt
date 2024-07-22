@@ -21,12 +21,15 @@ class BiometricCryptoManager @Inject constructor() {
         private const val KEY_NAME = "my_key"
         private const val SEPARATOR = "-"
     }
+
     private lateinit var iv: ByteArray
+
     init {
         generateSecretKey(
             KeyGenParameterSpec.Builder(
                 KEY_NAME,
-                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+            )
                 .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
                 .setUserAuthenticationRequired(false)
@@ -35,15 +38,19 @@ class BiometricCryptoManager @Inject constructor() {
                 // on Android 7.0 (API level 24) or higher. The variable
                 // "invalidatedByBiometricEnrollment" is true by default.
                 .setInvalidatedByBiometricEnrollment(true)
-                .build())
+                .build()
+        )
     }
+
     private fun generateSecretKey(keyGenParameterSpec: KeyGenParameterSpec) {
         if (isKeyCreated()) return
         val keyGenerator = KeyGenerator.getInstance(
-            KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
+            KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore"
+        )
         keyGenerator.init(keyGenParameterSpec)
         keyGenerator.generateKey()
     }
+
     private fun isKeyCreated(): Boolean {
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
         keyStore.load(null)
@@ -61,15 +68,18 @@ class BiometricCryptoManager @Inject constructor() {
     private fun getCipher(): Cipher {
         return Cipher.getInstance(
             KeyProperties.KEY_ALGORITHM_AES + "/"
-                + KeyProperties.BLOCK_MODE_CBC + "/"
-                + KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                    + KeyProperties.BLOCK_MODE_CBC + "/"
+                    + KeyProperties.ENCRYPTION_PADDING_PKCS7
+        )
     }
+
     fun encryptedCipher(): Cipher {
         val cipher = getCipher()
         val secretKey = getSecretKey()
         cipher.init(Cipher.ENCRYPT_MODE, secretKey)
         return cipher
     }
+
     fun decryptCipher(iv: String): Cipher {
         val ivString = Base64.decode(iv.split(SEPARATOR)[1], Base64.DEFAULT)
         val ivParameterSpec = IvParameterSpec(ivString)
@@ -78,6 +88,7 @@ class BiometricCryptoManager @Inject constructor() {
         cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec)
         return cipher
     }
+
     fun encrypt(cipher: Cipher, login: LoginUserRequest): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         val objectOutputStream = ObjectOutputStream(byteArrayOutputStream)
@@ -85,10 +96,17 @@ class BiometricCryptoManager @Inject constructor() {
         objectOutputStream.close()
         val myObjectByteArray = byteArrayOutputStream.toByteArray()
         iv = cipher.iv
-        return "${Base64.encodeToString(cipher.doFinal(myObjectByteArray), Base64.DEFAULT)}$SEPARATOR${Base64.encodeToString(iv, Base64.DEFAULT)}"
+        return "${
+            Base64.encodeToString(
+                cipher.doFinal(myObjectByteArray),
+                Base64.DEFAULT
+            )
+        }$SEPARATOR${Base64.encodeToString(iv, Base64.DEFAULT)}"
     }
+
     fun decrypt(cipher: Cipher, cipherText: String): LoginUserRequest {
-        val decodedCipherText = cipher.doFinal(Base64.decode(cipherText.split(SEPARATOR)[0], Base64.DEFAULT))
+        val decodedCipherText =
+            cipher.doFinal(Base64.decode(cipherText.split(SEPARATOR)[0], Base64.DEFAULT))
         val byteArrayInputStream = ByteArrayInputStream(decodedCipherText)
         val objectInputStream = ObjectInputStream(byteArrayInputStream)
         val login = objectInputStream.readObject() as LoginUserRequest

@@ -4,7 +4,7 @@ import com.team2.chitchat.data.mapper.ResponseMapper
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.remote.response.chats.GetChatsResponse
 
-class GetChatsMapper (
+class GetChatsMapper(
     private val userId: String,
 ) : ResponseMapper<ArrayList<GetChatsResponse>, ArrayList<ChatDB>> {
     override fun fromResponse(response: ArrayList<GetChatsResponse>): ArrayList<ChatDB> {

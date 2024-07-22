@@ -1,7 +1,3 @@
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
 plugins {
     kotlin("kapt")
     alias(libs.plugins.android.application)
@@ -9,6 +5,7 @@ plugins {
     alias(libs.plugins.pluginNavigationSafeArgs)
     alias(libs.plugins.pluginDaggerHilt)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.pluginCrashlytics)
     id("com.google.gms.google-services")
 }
 
@@ -97,12 +94,12 @@ dependencies {
     implementation(libs.bundles.coroutines)
     // CryptoSharedPreference
     implementation(libs.androidxCryptoSharedPreferences)
+    //Circle image view
+    implementation(libs.circleimageview)
     // Kotlin
     implementation(libs.androidx.biometric)
-    // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
-    // When using the BoM, don't specify versions in Firebase dependencies
-    implementation("com.google.firebase:firebase-analytics")
+    // Firebase
+    implementation(libs.bundles.firebase)
 
 }
 

@@ -22,6 +22,7 @@ class ChatAdapter @Inject constructor(
         private const val VIEW_TYPE_RECEIVED = 1
         private const val VIEW_TYPE_SENT = 2
     }
+
     fun setListener(listener: ChatAdapterListener) {
         chatAdapterListener = listener
     }
