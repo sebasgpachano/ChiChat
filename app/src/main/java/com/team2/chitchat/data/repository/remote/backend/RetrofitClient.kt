@@ -25,7 +25,7 @@ class RetrofitClient @Inject constructor(
 ) {
     companion object {
         const val HEADER_KEY_TOKEN = "Authorization"
-        private const val SHA256 = "sha256/fZvk9GM++p5HeiWVJ1hY0aJaVFcxROQe8P0EcMOhpeg="
+        private const val SHA256 = "sha256/4a6cPehI7OG6cuDZka5NDZ7FR8a60d3auda+sKfg4Ng="
     }
 
     val retrofit: Retrofit
