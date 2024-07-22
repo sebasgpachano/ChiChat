@@ -91,10 +91,13 @@
     <string name="empty_list">Empty list</string>
     <string name="send_button">Botón enviar</string>
     <string name="online">En línea</string>
+
+    <!--Dialog Biometric-->
     <string name="title_biometric_dialog">Acceso Biometrico</string>
     <string name="subtitle_biometric_dialog">Acceso biometrico accede a tus credenciales</string>
     <string name="cancel_biometric_dialog">Usar contraseña</string>
     <string name="not_registered_biometric_access">Para poder utilizar accesso con Biometria debes añadir una en ajustes del dispositivo.</string>
+    <string name="biometric_unavailable">Acceso Biometrico no disponible.</string>
 
     <!-- Shared preferences-->
     <string name="profile_shared_preferences">app_prefs</string>
