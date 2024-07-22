@@ -30,6 +30,11 @@ class CallApiService @Inject constructor(private val apiService: ApiService) : B
         return apiCall { apiService.postLoginUser(loginUserRequest) }
     }
 
+    //Refresh token with Biometric
+    suspend fun callPostRefreshToken(refreshToken: String): BaseResponse<PostLoginResponse> {
+        return apiCall { apiService.getAccessToken(refreshToken) }
+    }
+
     //ContactsList
     suspend fun callGetContactsList(): BaseResponse<ArrayList<GetUserResponse>> {
         return apiCall { apiService.getContactsList() }
