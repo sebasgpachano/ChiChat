@@ -60,6 +60,7 @@
     <string name="register">Registrarse</string>
     <string name="registration_title">Registro</string>
     <string name="user_error">Usuario ya existe</string>
+    <string name="user_not_exist_error">El usuario no existe</string>
     <string name="password_error">Contraseñas no coinciden</string>
     <string name="password_invalid">Contraseña inválida</string>
     <string name="required_field">Campo vacío</string>

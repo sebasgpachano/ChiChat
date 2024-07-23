@@ -146,7 +146,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                                 requireContext(),
                                 binding?.textVUserErrorLoginFragment
                             )
-                            textVUserErrorLoginFragment.setText(R.string.user_error)
+                            textVUserErrorLoginFragment.setText(R.string.user_not_exist_error)
                         }
                     }
 
@@ -168,7 +168,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                                 requireContext(),
                                 binding?.textVUserErrorLoginFragment
                             )
-                            textVUserErrorLoginFragment.setText(R.string.user_error)
+                            textVUserErrorLoginFragment.setText(R.string.user_not_exist_error)
                         }
                         binding?.apply {
                             editTPasswordLoginFragment.setErrorBorder(
