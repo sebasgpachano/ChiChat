@@ -4,10 +4,12 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import com.team2.chitchat.data.notifications.NotificationHelper
 import com.team2.chitchat.data.repository.DataProvider
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
+import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,12 +19,19 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Duration
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatService : Service() {
     @Inject
     lateinit var dataProvider: DataProvider
+
+    @Inject
+    lateinit var preferencesDataSource: PreferencesDataSource
 
     private val job = Job()
     private val serviceScope = CoroutineScope(Dispatchers.IO + job)
@@ -179,6 +188,24 @@ class ChatService : Service() {
                 listMessage.addAll(listAllMessages.filter { it.chatId in chatIds })
             } catch (e: Exception) {
                 Log.e(TAG, "%> Exception in getMessages: ${e.message}", e)
+            }
+            val deviceTime = ZonedDateTime.now()
+            val offsetInHours = deviceTime.offset.totalSeconds / 3600.0.toLong()
+            val formatter = DateTimeFormatter.ISO_DATE_TIME
+            for (message in listMessage) {
+                val messageDateUTC =
+                    ZonedDateTime.parse(message.date, formatter.withZone(ZoneOffset.UTC))
+                val updatedMessageDate = messageDateUTC.plusHours(offsetInHours)
+                val timeDifferenceMillis =
+                    Duration.between(updatedMessageDate, deviceTime).toMillis()
+                if (timeDifferenceMillis <= 2000 && message.sourceId != preferencesDataSource.getUserID()) {
+                    NotificationHelper.createSimpleNotification(
+                        this@ChatService,
+                        "Nuevo mensaje",
+                        message.message,
+                        null
+                    )
+                }
             }
             return@withContext listMessage
         }
