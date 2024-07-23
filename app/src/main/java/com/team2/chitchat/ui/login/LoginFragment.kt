@@ -81,7 +81,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.loginStateFlow.collect { isOk ->
                 if (isOk) {
-                    firebaseAnalyticsManager.logLoginEvent("password")
+                    if (viewModel.accessBiometricStateFlow.value) {
+                        firebaseAnalyticsManager.logLoginEvent("biometric")
+                    } else {
+                        firebaseAnalyticsManager.logLoginEvent("password")
+                    }
                     dbViewModel.startDataBase()
                 }
             }
@@ -168,7 +172,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 binding?.switchBiometric?.isChecked = isOk
                 val userPassword = viewModel.getPasswordLogin()
                 if (isOk && userPassword.isNotEmpty()) {
-
                     declareTypeAuthentication(
                         viewModel.getCipher(false),
                         object : AuthenticationCallback() {
@@ -178,7 +181,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                                     val login = viewModel.getLogin(it)
                                     Log.d(TAG, "onAuthenticationSucceeded: $login")
                                     viewModel.doLogin(login)
-                                    firebaseAnalyticsManager.logLoginEvent("biometric")
                                 }
 
                             }
