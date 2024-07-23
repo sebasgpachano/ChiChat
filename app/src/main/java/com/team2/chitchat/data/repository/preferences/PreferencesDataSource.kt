@@ -41,11 +41,16 @@ class PreferencesDataSource @Inject constructor(
 
     //SharedPreferences
     fun saveAccessBiometric(access: Boolean) {
-        sharedPreferencesManager.saveBooleanSharedPreferences(EncryptedSharedPreferencesKeys.ACCESS_BIOMETRIC, access)
+        sharedPreferencesManager.saveBooleanSharedPreferences(
+            EncryptedSharedPreferencesKeys.ACCESS_BIOMETRIC,
+            access
+        )
     }
+
     fun getAccessBiometric(): Flow<BaseResponse<Boolean>> = flow {
         try {
-            val isOk = sharedPreferencesManager.getBooleanSharedPreferences(EncryptedSharedPreferencesKeys.ACCESS_BIOMETRIC)
+            val isOk =
+                sharedPreferencesManager.getBooleanSharedPreferences(EncryptedSharedPreferencesKeys.ACCESS_BIOMETRIC)
             emit(BaseResponse.Success(isOk))
         } catch (e: Exception) {
             emit(BaseResponse.Error(error = ErrorModel(message = e.message ?: "")))

@@ -17,7 +17,6 @@ import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.databinding.FragmentChatListBinding
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chatlist.adapter.ChatsListAdapter
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment

@@ -118,8 +118,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
 
     private fun setUpKeyboardListener() {
         keyboardListener = ViewTreeObserver.OnGlobalLayoutListener {
-            val rect = android.graphics.Rect()
             val rootView = binding?.root ?: return@OnGlobalLayoutListener
+            val rect = android.graphics.Rect()
             rootView.getWindowVisibleDisplayFrame(rect)
             val screenHeight = rootView.rootView.height
             val keypadHeight = screenHeight - rect.bottom

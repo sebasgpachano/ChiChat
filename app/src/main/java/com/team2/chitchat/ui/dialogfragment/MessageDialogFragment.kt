@@ -17,17 +17,20 @@ import com.team2.chitchat.R
 import com.team2.chitchat.databinding.FragmentDialogErrorMessageBinding
 import com.team2.chitchat.ui.extensions.TAG
 
-class MessageDialogFragment: DialogFragment(){
+class MessageDialogFragment : DialogFragment() {
     var iconID: Int? = null
-    var title : String? = null
+    var title: String? = null
     var message: String = ""
     var positiveButton: String = ""
     var negativeButton: String? = null
     var listener: MessageDialogListener? = null
-        companion object {
-            const val MESSAGE_DIALOG_TAG = "MESSAGE_DIALOG_TAG"
-        }
+
+    companion object {
+        const val MESSAGE_DIALOG_TAG = "MESSAGE_DIALOG_TAG"
+    }
+
     private lateinit var binding: FragmentDialogErrorMessageBinding
+
     interface MessageDialogListener {
         fun positiveButtonOnclick(view: View)
         fun negativeButtonOnclick(view: View) = Unit
@@ -35,7 +38,7 @@ class MessageDialogFragment: DialogFragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "-> Oncreate")
+        Log.d(TAG, "-> OnCreate")
     }
 
     override fun onStart() {
@@ -47,7 +50,7 @@ class MessageDialogFragment: DialogFragment(){
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         Log.d(TAG, "-> onCreateDialog")
         return activity?.let {
-            val builder = AlertDialog.Builder(it,R.style.backGroundDialog)
+            val builder = AlertDialog.Builder(it, R.style.backGroundDialog)
             // Get the layout inflater.
             val inflater = requireActivity().layoutInflater
             binding = FragmentDialogErrorMessageBinding.inflate(inflater)
@@ -55,23 +58,14 @@ class MessageDialogFragment: DialogFragment(){
             builder.setView(binding.root)
             val dialog = builder.create()
             dialog!!.setOnShowListener {
-                // Obtenemos el objeto Window para acceder a los atributos de la ventana del diálogo
                 val window = dialog.window
                 if (window != null) {
-                    // Creamos un nuevo objeto LayoutParams para definir el ancho y el alto del diálogo
                     val layoutParams = WindowManager.LayoutParams()
-
-                    // Copiamos los atributos actuales en el nuevo objeto LayoutParams
                     layoutParams.copyFrom(window.attributes)
-                    val widthInPixel = convertDpToPx(270)
-                    // Definimos el ancho y el alto del diálogo
+                    val widthInPixel = convertDpToPx()
                     layoutParams.width = widthInPixel
                     layoutParams.height = LayoutParams.WRAP_CONTENT
-
-                    // Centramos el diálogo en la pantalla
                     layoutParams.gravity = Gravity.CENTER
-
-                    // Aplicamos los nuevos atributos a la ventana del diálogo
                     window.attributes = layoutParams
                 }
             }
@@ -81,9 +75,8 @@ class MessageDialogFragment: DialogFragment(){
         } ?: throw IllegalStateException("Activity cannot be null")
 
 
-
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -94,10 +87,12 @@ class MessageDialogFragment: DialogFragment(){
         paintDialog()
         return binding.root
     }
+
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "-> onResume")
     }
+
     fun refreshValues(
         iconID: Int? = null,
         title: String? = null,
@@ -115,16 +110,18 @@ class MessageDialogFragment: DialogFragment(){
         paintDialog()
         initializeListener()
     }
-    private fun convertDpToPx(dp: Int): Int {
+
+    private fun convertDpToPx(): Int {
         val displayMetrics = requireContext().resources.displayMetrics
-        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
+        return Math.round(270 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
     }
+
     private fun paintDialog() {
 
         if (iconID != null) {
             binding.imageVMessageDF.apply {
                 visibility = View.VISIBLE
-                setImageDrawable(AppCompatResources.getDrawable(context,iconID!!))
+                setImageDrawable(AppCompatResources.getDrawable(context, iconID!!))
             }
 
         } else {
@@ -135,26 +132,27 @@ class MessageDialogFragment: DialogFragment(){
 
         binding.textVTitleErrorDF.apply {
             visibility = if (title.isNullOrEmpty()) View.GONE else View.VISIBLE
-            text = title?:""
+            text = title ?: ""
         }
 
         title?.let { binding.textVTitleErrorDF.text = it }
 
         binding.buttonNegativeErrorDF.apply {
             visibility = if (negativeButton.isNullOrEmpty()) View.GONE else View.VISIBLE
-            text = negativeButton?:""
+            text = negativeButton ?: ""
         }
         binding.buttonPositiveErrorDF.text = positiveButton
     }
+
     private fun initializeListener() {
         binding.buttonPositiveErrorDF.setOnClickListener {
-            Log.d("prueba", "Positive initializeListener: ")
+            Log.d("test", "Positive initializeListener: ")
             listener?.positiveButtonOnclick(it)
             dismiss()
         }
         negativeButton?.let {
-            binding.buttonNegativeErrorDF.setOnClickListener {view->
-                Log.d("prueba", "Negative initializeListener: ")
+            binding.buttonNegativeErrorDF.setOnClickListener { view ->
+                Log.d("test", "Negative initializeListener: ")
                 dismiss()
                 listener?.negativeButtonOnclick(view)
             }

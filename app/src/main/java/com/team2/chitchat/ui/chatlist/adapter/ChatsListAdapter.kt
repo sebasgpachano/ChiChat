@@ -27,6 +27,6 @@ class ChatsListAdapter(private val listChatsAdapterListener: ListChatsAdapterLis
     }
 
     override fun onBindViewHolder(holder: ChatsListViewHolder, position: Int) {
-        holder.onBind(getItem(position), position)
+        holder.onBind(getItem(position))
     }
 }

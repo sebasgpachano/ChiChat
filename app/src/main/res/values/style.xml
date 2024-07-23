@@ -9,9 +9,11 @@
     <style name="poppinsW500Medium">
         <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
+
     <style name="poppinsW500Regular">
         <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
+
     <style name="poppinsW500Bold">
         <item name="android:fontFamily">@font/poppins_bold</item>
     </style>
@@ -39,18 +41,20 @@
     <style name="poppinsRegular16" parent="poppinsW500Regular">
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="poppinsRegular14" parent="poppinsW500Regular">
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="poppinsBold14" parent="poppinsW500Bold">
         <item name="android:textSize">14sp</item>
     </style>
-  
+
     <!--Toolbar-->
     <style name="toolbarHeader" parent="poppinsW500Medium20h24w500">
         <item name="android:ellipsize">end</item>
     </style>
-  
+
     <!--Subtitle-->
     <style name="subtitleFramework" parent="poppinsW500Medium18h24w500">
         <item name="android:ellipsize">end</item>
@@ -61,7 +65,7 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
-  
+
     <!--Custom  EditText -->
     <style name="customEditText" parent="Widget.AppCompat.EditText">
         <item name="android:paddingVertical">8dp</item>
@@ -94,6 +98,7 @@
         <item name="android:background">@drawable/button</item>
         <item name="android:font">@style/poppinsW500Regular</item>
     </style>
+
     <style name="buttonStyleGrayDialog" parent="buttonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -105,6 +110,7 @@
         <item name="backgroundTint">@color/grayBackGround</item>
         <item name="android:font">@style/poppinsRegular14</item>
     </style>
+
     <style name="buttonStyleBlueDialog" parent="buttonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -129,6 +135,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
 
     </style>
+
     <style name="customDialog">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

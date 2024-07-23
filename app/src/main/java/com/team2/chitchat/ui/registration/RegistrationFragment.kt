@@ -18,9 +18,9 @@ import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.extensions.toastLong
 import com.team2.chitchat.ui.main.DbViewModel
 import com.team2.chitchat.ui.registration.adapter.AvatarPagerAdapter
+import com.team2.chitchat.ui.registration.adapter.SpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import com.team2.chitchat.ui.registration.adapter.SpaceItemDecoration
 
 @AndroidEntryPoint
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener {
@@ -61,14 +61,14 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         }
         binding?.vpAvatar?.adapter = adapter
 
-        val spaceInPixels = dpToPx(10)
+        val spaceInPixels = dpToPx()
         val itemDecoration = SpaceItemDecoration(spaceInPixels)
         binding?.vpAvatar?.addItemDecoration(itemDecoration)
     }
 
-    private fun dpToPx(dp: Int): Int {
+    private fun dpToPx(): Int {
         val metrics = resources.displayMetrics
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), metrics).toInt()
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10.toFloat(), metrics).toInt()
     }
 
     override fun configureToolbarAndConfigScreenSections() {

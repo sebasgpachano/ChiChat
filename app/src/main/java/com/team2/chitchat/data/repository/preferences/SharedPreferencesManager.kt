@@ -22,6 +22,7 @@ class SharedPreferencesManager @Inject constructor(
     fun <T : Any?> set(key: String, value: T) {
         setValue(key, value)
     }
+
     private fun setValue(key: String, value: Any?) {
         when (value) {
             is String? -> edit { it.putString(key, value) }
@@ -30,29 +31,24 @@ class SharedPreferencesManager @Inject constructor(
             is Float -> edit { it.putFloat(key, value.toFloat()) }
             is Long -> edit { it.putLong(key, value.toLong()) }
             else -> {
-                Log.e(TAG, "l> SharedPrefeExtensions Unsupported Type: $value")
+                Log.e(TAG, "l> SharedPreferenceExtensions Unsupported Type: $value")
             }
         }
     }
+
     private fun edit(operation: (SharedPreferences.Editor) -> Unit) {
         val editor = this.sharedPreferences.edit()
         operation(editor)
         editor.apply()
     }
-    fun saveStringSharedPreferences(key: String, value: String) {
-        set(key, value)
-    }
+
     fun saveBooleanSharedPreferences(key: String, value: Boolean) {
         set(key, value)
     }
+
     fun getBooleanSharedPreferences(key: String, defaultValue: Boolean = false): Boolean {
         val boolean = sharedPreferences.getBoolean(key, defaultValue)
         return boolean
-    }
-
-    fun getStringSharedPreferences(userLogin: String): String {
-        val string = sharedPreferences.getString(userLogin, "")
-        return string!!
     }
 
     fun saveProfilePicture(imageView: CircleImageView?) {

@@ -3,8 +3,6 @@ package com.team2.chitchat.ui.login
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.team2.chitchat.data.domain.model.users.PostLoginModel
-import com.team2.chitchat.data.repository.crypto.BiometricCryptoManager
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.GetRefreshTokenUseCase
@@ -19,7 +17,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.crypto.Cipher
 import javax.inject.Inject
 
 @HiltViewModel
@@ -82,7 +79,7 @@ class LoginViewModel @Inject constructor(
         }
     }
     //AccessBiometric
-    fun loadAccessBiometric() {
+    private fun loadAccessBiometric() {
         viewModelScope.launch(Dispatchers.IO) {
             isBiometricStateUseCase().collect { baseResponse->
                 when(baseResponse) {

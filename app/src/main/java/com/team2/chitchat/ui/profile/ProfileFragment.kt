@@ -52,7 +52,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun observeViewModel() {
         lifecycleScope.launch {
-            viewModel.errorFlow.collect{errorModel->
+            viewModel.errorFlow.collect { errorModel ->
                 showDialogError(errorModel.errorCode) {}
             }
         }
@@ -66,7 +66,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
 
         lifecycleScope.launch {
-            viewModel.getUserStateFlow.collect {user->
+            viewModel.getUserStateFlow.collect { user ->
                 binding?.apply {
                     textVUserNameProfileFragment.text = user.login
                     textVUserNickNameProfileFragment.text = user.nick
@@ -74,7 +74,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             }
         }
         lifecycleScope.launch {
-            viewModel.putLogOutStateFlow.collect {logOutIsOk->
+            viewModel.putLogOutStateFlow.collect { logOutIsOk ->
                 if (logOutIsOk) {
                     Log.d(TAG, "l> observeViewModel: logOutIsOk")
                     findNavController().navigate(R.id.action_profileFragment_to_chatListFragment)
@@ -103,11 +103,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 Log.d(TAG, "l> initializeListeners: actionILogoutProfileFragment")
                 showMessageDialog(
                     iconID = R.drawable.logout_24,
-                    title = "¿${context?.getString(R.string.close_session)}?",
-                    message = context?.getString(R.string.question_close_session)?: "",
-                    textPositiveButton = context?.getString(R.string.accept)?: "Aceptar",
-                    textNegativeButton = context?.getString(R.string.cancel)?: "Cancelar",
-                    listener = object : MessageDialogFragment.MessageDialogListener{
+                    title = "¿${requireContext().getString(R.string.close_session)}?",
+                    message = requireContext().getString(R.string.question_close_session),
+                    textPositiveButton = requireContext().getString(R.string.accept),
+                    textNegativeButton = requireContext().getString(R.string.cancel),
+                    listener = object : MessageDialogFragment.MessageDialogListener {
                         override fun positiveButtonOnclick(view: View) {
                             val intent = Intent(requireContext(), ChatService::class.java)
                             requireContext().stopService(intent)

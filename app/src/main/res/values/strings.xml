@@ -15,7 +15,7 @@
     <string name="list_contacts_update_list">Actualizar la lista de contactos</string>
     <string name="list_contacts_btn_search">Boton para filtrar contactos</string>
     <string name="list_contacts_btn_quit_search">Boton para cancelar la busqueda de contactos</string>
-    <string name="list_contacts_et_hint_search_user">Bucar contacto...</string>
+    <string name="list_contacts_et_hint_search_user">Buscar contacto...</string>
 
     <!-- Chat list fragment -->
     <string name="chat_list_title_toolbar">ChitChat</string>
@@ -25,7 +25,7 @@
     <string name="chat_list_add_chat">Añadir persona para hablar</string>
     <string name="chat_list_btn_search">Boton para filtrar conversaciones</string>
     <string name="chat_list_btn_quit_search">Boton para cancelar la busqueda de conversaciones</string>
-    <string name="chat_list_et_hint_search_user">Bucar conversación...</string>
+    <string name="chat_list_et_hint_search_user">Buscar conversación...</string>
     <string name="chat_list_delete_chat">¿Eliminar chat?</string>
     <string name="chat_list_delete_chat_question">Al no ser el creador de la conversación no puedes borrarla de la base de datos, ¿quieres eliminarla de tus lista de conversaciones?</string>
     <string name="chat_list_warning_notification_chat">No puedes eliminar el chat si tienes notificaciones por leer</string>
@@ -34,6 +34,9 @@
     <string name="error">Error</string>
     <string name="error_session_expired">Su sesión ha expirado</string>
     <string name="error_unknown_error">Unknown Error</string>
+    <string name="error_connection">Lo sentimos, estamos presentando problemas de conexión</string>
+    <string name="error_connection_message">Vuelve a intentarlo más tarde.</string>
+
 
     <!-- Login -->
     <string name="textUser">Usuario</string>
@@ -60,6 +63,7 @@
     <string name="register">Registrarse</string>
     <string name="registration_title">Registro</string>
     <string name="user_error">Usuario ya existe</string>
+    <string name="user_not_exist_error">El usuario no existe</string>
     <string name="password_error">Contraseñas no coinciden</string>
     <string name="password_invalid">Contraseña inválida</string>
     <string name="required_field">Campo vacío</string>
