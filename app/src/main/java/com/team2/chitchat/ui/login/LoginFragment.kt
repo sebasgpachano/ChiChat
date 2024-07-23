@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.team2.chitchat.R
 import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
@@ -55,6 +56,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     override fun inflateBinding() {
         binding = FragmentLoginBinding.inflate(layoutInflater)
     }
@@ -77,6 +80,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.loginStateFlow.collect { isOk ->
                 if (isOk) {
+                    //logLoginEvent("user")
                     dbViewModel.startDataBase()
                 }
             }
@@ -295,4 +299,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         )
     }
 
+    private fun logLoginEvent(method: String) {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.METHOD, method)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+    }
 }
