@@ -81,7 +81,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.loginStateFlow.collect { isOk ->
                 if (isOk) {
-                    firebaseAnalyticsManager.logLoginEvent("user")
+                    firebaseAnalyticsManager.logLoginEvent("password")
                     dbViewModel.startDataBase()
                 }
             }
@@ -178,6 +178,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                                     val login = viewModel.getLogin(it)
                                     Log.d(TAG, "onAuthenticationSucceeded: $login")
                                     viewModel.doLogin(login)
+                                    firebaseAnalyticsManager.logLoginEvent("biometric")
                                 }
 
                             }

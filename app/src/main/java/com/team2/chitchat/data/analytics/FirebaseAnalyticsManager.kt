@@ -24,9 +24,9 @@ class FirebaseAnalyticsManager @Inject constructor() {
             val bundle = Bundle()
             bundle.putString(FirebaseAnalytics.Param.METHOD, method)
             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
-            Log.d("FirebaseAnalytics", "Login event logged: $method")
+            Log.d("FirebaseAnalytics", "s> Login event logged: $method")
         } catch (e: Exception) {
-            Log.e("FirebaseAnalytics", "Error logging login event: ${e.message}")
+            Log.e("FirebaseAnalytics", "s> Error logging login event: ${e.message}")
         }
     }
 }
