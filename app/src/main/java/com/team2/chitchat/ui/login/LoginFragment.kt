@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.team2.chitchat.R
+import com.team2.chitchat.data.analytics.FirebaseAnalyticsManager
 import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.session.DataUserSession
@@ -56,7 +57,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    @Inject
+    lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
 
     override fun inflateBinding() {
         binding = FragmentLoginBinding.inflate(layoutInflater)
@@ -68,7 +70,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         savedInstanceState: Bundle?
     ) {
         initListener()
-
     }
 
     override fun configureToolbarAndConfigScreenSections() {
@@ -80,7 +81,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.loginStateFlow.collect { isOk ->
                 if (isOk) {
-                    //logLoginEvent("user")
+                    firebaseAnalyticsManager.logLoginEvent("user")
                     dbViewModel.startDataBase()
                 }
             }
@@ -297,11 +298,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             promptInfo,
             BiometricPrompt.CryptoObject(cipher)
         )
-    }
-
-    private fun logLoginEvent(method: String) {
-        val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.METHOD, method)
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
     }
 }
