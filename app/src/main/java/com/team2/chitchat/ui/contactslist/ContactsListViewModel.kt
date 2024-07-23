@@ -8,7 +8,6 @@ import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
 import com.team2.chitchat.data.usecase.remote.PostNewChatUseCase
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +40,10 @@ class ContactsListViewModel @Inject constructor(
 
                     is BaseResponse.Success -> {
                         loadingMutableSharedFlow.emit(false)
-                        contactsMutableSharedFlow.emit(ArrayList(it.data.sortedBy { user -> user.nick }))
+                        val filteredSortedList = it.data
+                            .filterNot { user -> user.id == dataUserSession.userId }
+                            .sortedBy { user -> user.nick }
+                        contactsMutableSharedFlow.emit(ArrayList(filteredSortedList))
                     }
                 }
             }
