@@ -21,7 +21,7 @@ class EncryptedSharedPreferencesManager @Inject constructor(
             is Float -> edit { it.putFloat(key, value.toFloat()) }
             is Long -> edit { it.putLong(key, value.toLong()) }
             else -> {
-                Log.e(TAG, "l> SharedPrefeExtensions Unsupported Type: $value")
+                Log.e(TAG, "l> SharedPreferenceExtensions Unsupported Type: $value")
             }
         }
     }
@@ -37,8 +37,8 @@ class EncryptedSharedPreferencesManager @Inject constructor(
     }
     fun getStringEncryptedSharedPreferences(key: String, defaultValue: String = ""): String {
         val start = System.currentTimeMillis()
-        val prueba = encryptedSharedPreferences.getString(key, defaultValue) ?: ""
+        val test = encryptedSharedPreferences.getString(key, defaultValue) ?: ""
         Log.d(TAG, "l> time - getStringFromDataStore key: $key, ${System.currentTimeMillis() - start}ms")
-        return prueba
+        return test
     }
 }

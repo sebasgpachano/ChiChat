@@ -1,5 +1,6 @@
 package com.team2.chitchat.data.repository.remote.backend
 
+import android.content.Context
 import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
@@ -14,11 +15,15 @@ import com.team2.chitchat.data.repository.remote.response.users.GetUserResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostLoginResponse
 import com.team2.chitchat.data.repository.remote.response.users.PostRegisterResponse
 import com.team2.chitchat.data.repository.remote.response.users.PutStateResponse
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CallApiService @Inject constructor(private val apiService: ApiService) : BaseService() {
+class CallApiService @Inject constructor(
+    private val apiService: ApiService,
+    @ApplicationContext private val context: Context
+) : BaseService(context) {
 
     //RegisterUser
     suspend fun callPostRegisterUser(registerUserRequest: RegisterUserRequest): BaseResponse<PostRegisterResponse> {

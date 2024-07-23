@@ -3,11 +3,9 @@ package com.team2.chitchat.ui.chat
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.GetChatModel
-import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.domain.model.messages.GetMessagesModel
 import com.team2.chitchat.data.mapper.chats.GetChatMapper
 import com.team2.chitchat.data.mapper.messages.MessagesMapper
-import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.request.messages.NewMessageRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.session.DataUserSession
@@ -17,7 +15,6 @@ import com.team2.chitchat.data.usecase.local.GetUsersDbUseCase
 import com.team2.chitchat.data.usecase.local.UpdateChatViewUseCase
 import com.team2.chitchat.data.usecase.local.UpdateMessageViewUseCase
 import com.team2.chitchat.data.usecase.remote.PostNewMessageUseCase
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +44,7 @@ class ChatViewModel @Inject constructor(
         )
     val messagesStateFlow: StateFlow<List<GetMessagesModel>> = messagesMutableStateFlow
     private val chatMutableStateFlow: MutableStateFlow<GetChatModel> =
-        MutableStateFlow(GetChatModel("", "", "", false, false))
+        MutableStateFlow(GetChatModel("", "", "", online = false, false))
     val chatStateFlow: StateFlow<GetChatModel> = chatMutableStateFlow
 
     fun getMessagesForChat(chatId: String) {
@@ -74,15 +71,15 @@ class ChatViewModel @Inject constructor(
     private fun resetMessageView(messages: List<GetMessagesModel>) {
         for (message in messages) {
             if (!message.view) {
-                updateMessageView(message.id, true)
+                updateMessageView(message.id)
             }
         }
     }
 
-    private fun updateMessageView(id: String, view: Boolean) {
+    private fun updateMessageView(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
-            updateMessageViewUseCase(id, view).collect {
+            updateMessageViewUseCase(id, true).collect {
                 when (it) {
                     is BaseResponse.Error -> {
                         loadingMutableSharedFlow.emit(false)
@@ -131,10 +128,10 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    private fun updateChatView(id: String, view: Boolean) {
+    private fun updateChatView(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
-            updateChatViewUseCase(id, view).collect {
+            updateChatViewUseCase(id, true).collect {
                 when (it) {
                     is BaseResponse.Error -> {
                         loadingMutableSharedFlow.emit(false)
@@ -153,7 +150,7 @@ class ChatViewModel @Inject constructor(
 
     private fun resetChatView(chat: GetChatModel) {
         if (!chat.view) {
-            updateChatView(chat.id, true)
+            updateChatView(chat.id)
         }
     }
 

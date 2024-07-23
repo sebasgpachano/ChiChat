@@ -110,7 +110,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     )
 
-    fun showDialogError(errorCode: String,listener: (view: View) -> Unit) {
+    fun showDialogError(errorCode: String, listener: (view: View) -> Unit) {
         val message = when (errorCode) {
             BaseService.ERROR_UNAUTHORIZED.toString() -> getString(R.string.error_401)
             BaseService.ERROR_FORBIDDEN.toString() -> getString(R.string.error_403)
@@ -119,15 +119,15 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         }
         showErrorMessage(
             message = message,
-            listener = object :MessageDialogFragment.MessageDialogListener{
+            listener = object : MessageDialogFragment.MessageDialogListener {
                 override fun positiveButtonOnclick(view: View) {
                     listener(view)
-                    //findNavController().navigate(R.id.action_global_loginFragment)
                 }
 
             }
         )
     }
+
     fun showErrorMessage(
         message: String,
         listener: MessageDialogFragment.MessageDialogListener
@@ -140,6 +140,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
             listener = listener
         )
     }
+
     fun showMessageDialog(
         iconID: Int,
         title: String,
@@ -182,7 +183,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
     private fun getCircularBitmap(bitmap: Bitmap): Bitmap {
-        val size = Math.min(bitmap.width, bitmap.height)
+        val size = minOf(bitmap.width, bitmap.height)
         val x = (bitmap.width - size) / 2
         val y = (bitmap.height - size) / 2
 
