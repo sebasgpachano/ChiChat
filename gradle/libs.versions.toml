@@ -52,9 +52,10 @@ kotlinxCoroutinesAndroid = "1.8.0"
 kotlinxCoroutinesCore = "1.7.3"
 
 #Firebase
-firebaseCrashlytics = "19.0.2"
+firebaseCrashlytics = "19.0.3"
 firebaseBom = "33.1.2"
 firebaseAnalitics = "22.0.2"
+firebaseMessaging = "24.0.0"
 
 [libraries]
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
@@ -115,6 +116,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalitics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+firebaseMessaging = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessaging" }
 
 #Circle image view
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
@@ -126,7 +128,7 @@ lifecycle = ["androidxLivecycleLivedata", "androidxLivecycleRuntime", "androidxL
 retrofit = ["retrofit", "retrofitGson"]
 room = ["androidx-room-runtime", "androidx-room-ktx"]
 coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-core"]
-firebase = ["firebase-analytics", "firebase-bom", "firebase-crashlytics"]
+firebase = ["firebase-analytics", "firebase-bom", "firebase-crashlytics", "firebaseMessaging"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
