@@ -124,8 +124,8 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
         contactsListViewModel.getContactsList()
     }
 
-    override fun onItemClick(id: String) {
-        contactsListViewModel.postNewChat(id)
+    override fun onItemClick(idChat: String) {
+        contactsListViewModel.postNewChat(idChat)
     }
 
 }

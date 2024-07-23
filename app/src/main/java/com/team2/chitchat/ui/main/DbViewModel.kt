@@ -13,7 +13,6 @@ import com.team2.chitchat.data.usecase.local.SetUsersDatabaseUseCase
 import com.team2.chitchat.data.usecase.remote.GetChatsUseCase
 import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
 import com.team2.chitchat.data.usecase.remote.GetMessagesUseCase
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +38,7 @@ class DbViewModel @Inject constructor(
 
     fun startDataBase() {
         val idUser = dataUserSession.userId
-        Log.d(TAG, "%> Iniciando base de datos del usuario: $idUser...")
+        Log.d(TAG, "%> Starting db for user: $idUser...")
 
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
@@ -71,7 +70,7 @@ class DbViewModel @Inject constructor(
     }
 
     private suspend fun startContact(): Boolean {
-        Log.d(TAG, "%> Iniciando contactos...")
+        Log.d(TAG, "%> Starting contacts...")
         return withContext(Dispatchers.IO) {
             var response = false
             setUsersDatabaseUseCase(getContacts()).collect {
@@ -102,7 +101,7 @@ class DbViewModel @Inject constructor(
     }
 
     private suspend fun startChats(): Boolean {
-        Log.d(TAG, "%> Iniciando chats...")
+        Log.d(TAG, "%> Starting chats...")
         return withContext(Dispatchers.IO) {
             var response = false
             setChatsDatabaseUseCase(getChats()).collect {
@@ -135,7 +134,7 @@ class DbViewModel @Inject constructor(
     }
 
     private suspend fun startMessages(): Boolean {
-        Log.d(TAG, "%> Iniciando mensajes...")
+        Log.d(TAG, "%> Starting messages...")
         return withContext(Dispatchers.IO) {
             var response = false
             val messages = getMessages(getChats())
