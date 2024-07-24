@@ -130,6 +130,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             dbViewModel.initDbSharedFlow.collect { isOk ->
                 if (isOk) {
+                    val intent = Intent(requireContext(), ChatService::class.java)
+                    requireContext().startService(intent)
                     findNavController().popBackStack()
                 }
             }
