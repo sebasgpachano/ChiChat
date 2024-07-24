@@ -37,6 +37,7 @@ class SimpleApplication : Application() {
     private fun initSession() {
         if (preferencesDataSource.getAuthToken().isNotBlank()
             && preferencesDataSource.getAuthToken().isNotEmpty()
+            && !preferencesDataSource.getAccessBiometric()
         ) {
             dataUserSession.userId = preferencesDataSource.getUserID()
             dataUserSession.tokenIb = preferencesDataSource.getAuthToken()

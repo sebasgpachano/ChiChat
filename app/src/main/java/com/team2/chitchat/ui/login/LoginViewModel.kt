@@ -37,9 +37,11 @@ class LoginViewModel @Inject constructor(
     //Get Api RefreshToken
     private val getRefreshTokenMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val getRefreshTokenStateFlow = getRefreshTokenMutableStateFlow.asStateFlow()
+
     init {
         loadAccessBiometric()
     }
+
     fun doLogin(loginUserRequest: LoginUserRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
@@ -79,7 +81,7 @@ class LoginViewModel @Inject constructor(
         }
     }
     //AccessBiometric
-    private fun loadAccessBiometric() {
+    fun loadAccessBiometric() {
         viewModelScope.launch(Dispatchers.IO) {
             isBiometricStateUseCase().collect { baseResponse->
                 when(baseResponse) {
@@ -97,9 +99,7 @@ class LoginViewModel @Inject constructor(
     fun saveAccessBiometric(accessBiometric: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             putBiometricStateUseCase(accessBiometric)
-            loadAccessBiometric()
         }
-
     }
 
 }

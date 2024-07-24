@@ -36,10 +36,8 @@ interface ApiService {
     ): Response<PostLoginResponse>
 
     //Access token with refresh token for biometric
-    @GET("api/users/biometric")
-    suspend fun getAccessToken(
-        @Header("Authorization") refreshToken: String
-    ): Response<PostLoginResponse>
+    @POST("api/users/biometric")
+    suspend fun getAccessToken(): Response<PostLoginResponse>
 
     // Log Out
     @POST("api/users/logout")
@@ -81,4 +79,7 @@ interface ApiService {
     //State
     @PUT("api/users/online/true")
     suspend fun putOnline(): Response<PutStateResponse>
+
+    @PUT("api/users/online/false")
+    suspend fun putOffline(): Response<PutStateResponse>
 }

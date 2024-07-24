@@ -23,8 +23,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
-    @Inject
-    lateinit var simpleApplication: SimpleApplication
 
     private val mainViewModel: MainViewModel by viewModels()
     private val callRequestPermissionPostNotification =
@@ -81,7 +79,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         mainViewModel.logOut()
-        mainViewModel.deleteSession()
     }
 
     override fun onPause() {

@@ -4,8 +4,6 @@ import android.graphics.Bitmap
 import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PreferencesDataSource @Inject constructor(
@@ -47,15 +45,8 @@ class PreferencesDataSource @Inject constructor(
         )
     }
 
-    fun getAccessBiometric(): Flow<BaseResponse<Boolean>> = flow {
-        try {
-            val isOk =
-                sharedPreferencesManager.getBooleanSharedPreferences(EncryptedSharedPreferencesKeys.ACCESS_BIOMETRIC)
-            emit(BaseResponse.Success(isOk))
-        } catch (e: Exception) {
-            emit(BaseResponse.Error(error = ErrorModel(message = e.message ?: "")))
-        }
-
+    fun getAccessBiometric(): Boolean {
+        return sharedPreferencesManager.getBooleanSharedPreferences(EncryptedSharedPreferencesKeys.ACCESS_BIOMETRIC)
     }
 
     fun saveProfilePicture(imageView: CircleImageView?) {

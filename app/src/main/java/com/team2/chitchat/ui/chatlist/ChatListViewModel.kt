@@ -10,13 +10,16 @@ import com.team2.chitchat.data.usecase.local.GetChatsDbUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesDbUseCase
 import com.team2.chitchat.data.usecase.local.GetUsersDbUseCase
 import com.team2.chitchat.data.usecase.local.UpdateChatViewUseCase
+import com.team2.chitchat.data.usecase.preferences.IsBiometricStateUseCase
 import com.team2.chitchat.data.usecase.remote.DeleteChatUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,14 +31,18 @@ class ChatListViewModel @Inject constructor(
     private val getMessagesDbUseCase: GetMessagesDbUseCase,
     private val getUsersDbUseCase: GetUsersDbUseCase,
     private val deleteChatUseCase: DeleteChatUseCase,
-    private val updateChatViewUseCase: UpdateChatViewUseCase
-) :
+    private val updateChatViewUseCase: UpdateChatViewUseCase,
+    private val isBiometricStateUseCase: IsBiometricStateUseCase,
+    ) :
     BaseViewModel() {
     private val chatsMutableSharedFlow: MutableSharedFlow<ArrayList<ListChatsModel>> =
         MutableSharedFlow()
     private val deleteChatMutableSharedFlow: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val deleteChatSharedFlow: SharedFlow<Boolean> = deleteChatMutableSharedFlow
     val chatsSharedFlow: SharedFlow<ArrayList<ListChatsModel>> = chatsMutableSharedFlow
+    //AccessBiometric PREFERENCES
+    private val accessBiometricMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val accessBiometricStateFlow: StateFlow<Boolean> = accessBiometricMutableStateFlow
 
     fun getChats() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -136,6 +143,23 @@ class ChatListViewModel @Inject constructor(
                         loadingMutableSharedFlow.emit(false)
                         Log.d(TAG, "chats> Update chat viewModel${it.data}")
                         deleteChatMutableSharedFlow.emit(it.data)
+                    }
+                }
+            }
+        }
+    }
+
+    //AccessBiometric
+    private fun loadAccessBiometric() {
+        viewModelScope.launch(Dispatchers.IO) {
+            isBiometricStateUseCase().collect { baseResponse->
+                when(baseResponse) {
+                    is BaseResponse.Error -> {
+                        Log.d(this@ChatListViewModel.TAG, "l> Error: ${baseResponse.error.message}")
+                        errorMutableSharedFlow.emit(baseResponse.error)
+                    }
+                    is BaseResponse.Success -> {
+                        accessBiometricMutableStateFlow.value = baseResponse.data
                     }
                 }
             }

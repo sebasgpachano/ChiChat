@@ -1,133 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/loginFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.login.LoginFragment">
-    
-    <ImageView
-        android:id="@+id/imageVLoginFragment"
-        android:layout_width="143dp"
-        android:layout_height="123dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/chitchat_logo"
-        android:contentDescription="@string/imageLogoDescription"/>
-    <TextView
-        android:id="@+id/textVUserLoginFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/imageVLoginFragment"
-        app:layout_constraintStart_toStartOf="@id/editTUserLoginFragment"
-        android:layout_marginTop="12dp"
-        android:text="@string/textUser"
-        style="@style/poppinsBold14"/>
-    <EditText
-        android:id="@+id/editTUserLoginFragment"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@id/textVUserLoginFragment"
-        app:layout_constraintStart_toStartOf="@id/imageVLoginFragment"
-        app:layout_constraintEnd_toEndOf="@id/imageVLoginFragment"
-        android:layout_marginTop="4dp"
-        android:hint="@string/hintUser"
-        android:labelFor="@+id/textVUserLoginFragment"
-        style="@style/customEditText"
-        android:importantForAutofill="no" />
-    <TextView
-        android:id="@+id/textVUserErrorLoginFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/errorTextView"
-        app:layout_constraintStart_toStartOf="@id/editTUserLoginFragment"
-        app:layout_constraintTop_toBottomOf="@id/editTUserLoginFragment" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageVLoginFragment"
+            android:layout_width="143dp"
+            android:layout_height="123dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/chitchat_logo"
+            android:contentDescription="@string/imageLogoDescription"/>
+        <TextView
+            android:id="@+id/textVUserLoginFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/imageVLoginFragment"
+            app:layout_constraintStart_toStartOf="@id/editTUserLoginFragment"
+            android:layout_marginTop="12dp"
+            android:text="@string/textUser"
+            style="@style/poppinsBold14"/>
+        <EditText
+            android:id="@+id/editTUserLoginFragment"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:layout_constraintTop_toBottomOf="@id/textVUserLoginFragment"
+            app:layout_constraintStart_toStartOf="@id/imageVLoginFragment"
+            app:layout_constraintEnd_toEndOf="@id/imageVLoginFragment"
+            android:layout_marginTop="4dp"
+            android:hint="@string/hintUser"
+            android:labelFor="@+id/textVUserLoginFragment"
+            style="@style/customEditText"
+            android:importantForAutofill="no" />
+        <TextView
+            android:id="@+id/textVUserErrorLoginFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/errorTextView"
+            app:layout_constraintStart_toStartOf="@id/editTUserLoginFragment"
+            app:layout_constraintTop_toBottomOf="@id/editTUserLoginFragment" />
 
-    <TextView
-        android:id="@+id/textVPasswordLoginFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textVUserErrorLoginFragment"
-        app:layout_constraintStart_toStartOf="@+id/editTPasswordLoginFragment"
-        android:layout_marginTop="13.5dp"
-        android:text="@string/textPassword"
-        style="@style/poppinsBold14"/>
+        <TextView
+            android:id="@+id/textVPasswordLoginFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textVUserErrorLoginFragment"
+            app:layout_constraintStart_toStartOf="@+id/editTPasswordLoginFragment"
+            android:layout_marginTop="13.5dp"
+            android:text="@string/textPassword"
+            style="@style/poppinsBold14"/>
 
-    <EditText
-        android:id="@+id/editTPasswordLoginFragment"
-        style="@style/customEditText"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:hint="@string/hintPassword"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:labelFor="@+id/editTPasswordLoginFragment"
-        app:layout_constraintEnd_toEndOf="@id/imageVLoginFragment"
-        app:layout_constraintStart_toStartOf="@id/imageVLoginFragment"
-        app:layout_constraintTop_toBottomOf="@+id/textVPasswordLoginFragment" />
+        <EditText
+            android:id="@+id/editTPasswordLoginFragment"
+            style="@style/customEditText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="@string/hintPassword"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:labelFor="@+id/editTPasswordLoginFragment"
+            app:layout_constraintEnd_toEndOf="@id/imageVLoginFragment"
+            app:layout_constraintStart_toStartOf="@id/imageVLoginFragment"
+            app:layout_constraintTop_toBottomOf="@+id/textVPasswordLoginFragment" />
 
-    <TextView
-        android:id="@+id/textVPasswordErrorLoginFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/errorTextView"
-        app:layout_constraintStart_toStartOf="@id/editTPasswordLoginFragment"
-        app:layout_constraintTop_toBottomOf="@id/editTPasswordLoginFragment" />
+        <TextView
+            android:id="@+id/textVPasswordErrorLoginFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/errorTextView"
+            app:layout_constraintStart_toStartOf="@id/editTPasswordLoginFragment"
+            app:layout_constraintTop_toBottomOf="@id/editTPasswordLoginFragment" />
 
-    <Switch
-        android:id="@+id/switchBiometric"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/textAccessBiometric"
-        app:layout_constraintEnd_toEndOf="@+id/editTPasswordLoginFragment"
-        app:layout_constraintStart_toStartOf="@+id/editTPasswordLoginFragment"
-        app:layout_constraintTop_toBottomOf="@+id/textVPasswordErrorLoginFragment"
-        android:thumbTint="@color/switch_color"
-        android:trackTint="@color/switch_color"/>
+        <Button
+            android:id="@+id/buttonLogin"
+            style="@style/buttonStyle"
+            android:layout_width="126dp"
+            android:layout_height="wrap_content"
+            android:text="@string/textLogin"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/editTPasswordLoginFragment"
+            app:layout_constraintStart_toStartOf="@+id/editTPasswordLoginFragment"
+            app:layout_constraintTop_toBottomOf="@+id/textVPasswordErrorLoginFragment"
+            android:layout_marginTop="38dp"/>
 
-    <Button
-        android:id="@+id/buttonLogin"
-        style="@style/buttonStyle"
-        android:layout_width="126dp"
-        android:layout_height="wrap_content"
-        android:text="@string/textLogin"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/switchBiometric"
-        app:layout_constraintStart_toStartOf="@+id/switchBiometric"
-        app:layout_constraintTop_toBottomOf="@+id/switchBiometric"
-        android:layout_marginTop="38dp"/>
+        <ImageView
+            android:id="@+id/imageVFingerprintLoginF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/imageFingerprintDescription"
+            android:src="@drawable/baseline_fingerprint_62"
+            android:visibility="gone"
+            android:layout_marginTop="100dp"
+            app:layout_constraintBottom_toTopOf="@id/textVRegisterLoginF"
+            app:layout_constraintEnd_toEndOf="@id/buttonLogin"
+            app:layout_constraintStart_toStartOf="@id/buttonLogin"
+            app:layout_constraintTop_toBottomOf="@id/buttonLogin"/>
 
-    <TextView
-        android:id="@+id/textVRegisterLoginF"
-        style="@style/poppinsRegular14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:padding="8dp"
-        android:text="@string/textRegisterQuestionLoginF"
-        app:layout_constraintEnd_toEndOf="@+id/buttonLogin"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="@+id/buttonLogin"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+        <TextView
+            android:id="@+id/textVRegisterLoginF"
+            style="@style/poppinsRegular14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/textRegisterQuestionLoginF"
+            android:layout_marginTop="25dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageVFingerprintLoginF"
+            app:layout_constraintStart_toStartOf="@+id/imageVFingerprintLoginF"
+            app:layout_constraintTop_toBottomOf="@id/imageVFingerprintLoginF"
+            app:layout_constraintBottom_toTopOf="@id/textButtonRegisterLoginF"/>
 
-    <TextView
-        android:id="@+id/textButtonRegisterLoginF"
-        style="@style/poppinsBold14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="@string/textRegisterLoginF"
-        app:layout_constraintEnd_toEndOf="@+id/textVRegisterLoginF"
-        app:layout_constraintHorizontal_bias="0.463"
-        app:layout_constraintStart_toStartOf="@+id/textVRegisterLoginF"
-        app:layout_constraintTop_toBottomOf="@+id/textVRegisterLoginF" />
+        <TextView
+            android:id="@+id/textButtonRegisterLoginF"
+            style="@style/poppinsBold14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:padding="8dp"
+            android:text="@string/textRegisterLoginF"
+            app:layout_constraintEnd_toEndOf="@+id/textVRegisterLoginF"
+            app:layout_constraintStart_toStartOf="@+id/textVRegisterLoginF"
+            app:layout_constraintTop_toBottomOf="@+id/textVRegisterLoginF" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

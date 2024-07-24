@@ -43,7 +43,7 @@
     <string name="hintUser">Ingresa tu usuario</string>
     <string name="textPassword">Contraseña</string>
     <string name="hintPassword">Ingresa tu contraseña</string>
-    <string name="textAccessBiometric">Acceso con biometria</string>
+    <string name="textAccessBiometric">Acceso con biometría</string>
     <string name="textLogin">Login</string>
     <string name="imageLogoDescription">Logo ChitChat</string>
     <string name="textRegisterLoginF">Regístrate</string>
@@ -106,4 +106,7 @@
     <!-- Shared preferences-->
     <string name="profile_shared_preferences">app_prefs</string>
     <string name="profile_picture">profile_picture</string>
+    <string name="title_biometric_activated">Accesso Biometrico</string>
+    <string name="mesage_biometric_activated">¿Deseas activar acceso biométrico?</string>
+    <string name="imageFingerprintDescription">Icono de huella dactilar para acceder con biometria.</string>
 </resources>

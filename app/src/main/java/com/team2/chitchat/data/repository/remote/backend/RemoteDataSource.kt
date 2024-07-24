@@ -1,6 +1,7 @@
 package com.team2.chitchat.data.repository.remote.backend
 
 import android.content.Context
+import android.util.Log
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
 import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
@@ -78,9 +79,9 @@ class RemoteDataSource @Inject constructor(
         }
 
     //Access with Biometric
-    fun postRefreshToken(refreshToken: String): Flow<BaseResponse<Boolean>> =
+    fun postRefreshToken(): Flow<BaseResponse<Boolean>> =
         flow {
-            val apiResult = callApiService.callPostRefreshToken(refreshToken)
+            val apiResult = callApiService.callPostRefreshToken()
             if (apiResult is BaseResponse.Success) {
                 apiResult.data.let { response ->
                     dataUserSession.apply {
@@ -171,15 +172,14 @@ class RemoteDataSource @Inject constructor(
     //Log out
     fun putLogOut(): Flow<BaseResponse<Boolean>> = flow {
         val apiResult = callApiService.callLogout()
+        dataUserSession.tokenIb = ""
+        dataUserSession.userId = ""
+        preferencesDataSource.apply {
+            saveAuthToken("")
+            saveUserID("")
+        }
+        preferencesDataSource.saveAccessBiometric(false)
         if (apiResult is BaseResponse.Success) {
-            dataUserSession.tokenIb = ""
-            dataUserSession.userId = ""
-            preferencesDataSource.apply {
-                saveAuthToken("")
-                saveUserID("")
-            }
-            preferencesDataSource.saveAuthToken("")
-            preferencesDataSource.saveAccessBiometric(false)
             emit(BaseResponse.Success(true))
         } else if (apiResult is BaseResponse.Error) {
             emit(BaseResponse.Error(apiResult.error))
@@ -197,7 +197,7 @@ class RemoteDataSource @Inject constructor(
     }
 
     fun putOffline(): Flow<BaseResponse<Boolean>> = flow {
-        val apiResult = callApiService.callLogout()
+        val apiResult = callApiService.callPutOffline()
         if (apiResult is BaseResponse.Success) {
             emit(BaseResponse.Success(true))
         } else if (apiResult is BaseResponse.Error) {
