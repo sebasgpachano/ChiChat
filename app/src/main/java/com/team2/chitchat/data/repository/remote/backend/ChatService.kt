@@ -50,10 +50,10 @@ class ChatService : Service() {
     private fun initLoadData() {
         serviceScope.launch {
             while (true) {
-                Log.d(TAG, "%> loadData")
                 addUsers()
                 addChats()
                 addMessages()
+                notification()
                 delay(2000)
             }
         }
@@ -189,24 +189,6 @@ class ChatService : Service() {
             } catch (e: Exception) {
                 Log.e(TAG, "%> Exception in getMessages: ${e.message}", e)
             }
-            val deviceTime = ZonedDateTime.now()
-            val offsetInHours = deviceTime.offset.totalSeconds / 3600.0.toLong()
-            val formatter = DateTimeFormatter.ISO_DATE_TIME
-            for (message in listMessage) {
-                val messageDateUTC =
-                    ZonedDateTime.parse(message.date, formatter.withZone(ZoneOffset.UTC))
-                val updatedMessageDate = messageDateUTC.plusHours(offsetInHours)
-                val timeDifferenceMillis =
-                    Duration.between(updatedMessageDate, deviceTime).toMillis()
-                if (timeDifferenceMillis <= 2000 && message.sourceId != preferencesDataSource.getUserID()) {
-                    NotificationHelper.createSimpleNotification(
-                        this@ChatService,
-                        "Nuevo mensaje",
-                        message.message,
-                        null
-                    )
-                }
-            }
             return@withContext listMessage
         }
 
@@ -232,6 +214,66 @@ class ChatService : Service() {
             return@withContext response
         } catch (e: Exception) {
             Log.e(TAG, "%> Exception in addMessages: ${e.message}", e)
+            return@withContext false
+        }
+    }
+
+    private suspend fun getMessagesDB(): ArrayList<MessageDB> = withContext(Dispatchers.IO) {
+        val listMessage = ArrayList<MessageDB>()
+        try {
+            dataProvider.getListMessageDb().collect { response ->
+                when (response) {
+                    is BaseResponse.Error -> {
+                        Log.e(TAG, "%> Error fetching chats: ${response.error}")
+                    }
+
+                    is BaseResponse.Success -> {
+                        listMessage.addAll(response.data)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "%> Exception in getMessages: ${e.message}", e)
+        }
+        return@withContext listMessage
+    }
+
+    private suspend fun notification() = withContext(Dispatchers.IO) {
+        try {
+            Log.d(TAG, "%> notifications...")
+            val messages = getMessagesDB()
+            Log.d(TAG, "%> tengo los mensajes...")
+            val deviceTime = ZonedDateTime.now()
+            val offsetInHours = deviceTime.offset.totalSeconds / 3600.0.toLong()
+            val formatter = DateTimeFormatter.ISO_DATE_TIME
+            for (message in messages) {
+                val messageDateUTC =
+                    ZonedDateTime.parse(
+                        message.date,
+                        formatter.withZone(ZoneOffset.UTC)
+                    )
+                val updatedMessageDate = messageDateUTC.plusHours(offsetInHours + 2)
+                val timeDifferenceMillis =
+                    Duration.between(updatedMessageDate, deviceTime).toMillis()
+                if (timeDifferenceMillis < 2000.toLong()
+                    && message.sourceId != preferencesDataSource.getUserID()
+                    && !message.notified
+                ) {
+                    Log.d(
+                        TAG,
+                        "notis> Estoy en notis del mensaje: ${message.id} y noti es ${message.notified}"
+                    )
+                    NotificationHelper.createSimpleNotification(
+                        this@ChatService,
+                        "Nuevo mensaje",
+                        message.message,
+                        null
+                    )
+                    dataProvider.changedNotification(message.id)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "%> Exception in notification: ${e.message}", e)
             return@withContext false
         }
     }

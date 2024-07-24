@@ -15,16 +15,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.team2.chitchat.R
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.INTENT_KEY_PUSH_NOTIFICATION_BODY
 import com.team2.chitchat.databinding.ActivityMainBinding
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseActivity
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
-    @Inject
-    lateinit var simpleApplication: SimpleApplication
 
     private val mainViewModel: MainViewModel by viewModels()
     private val callRequestPermissionPostNotification =
@@ -35,6 +31,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 if (!shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
                     Log.d(TAG, "%> El usuario pulso en no volver a mostrar")
                     openAppSettings()
+                    this.finish()
                 } else {
                     Log.d(TAG, "%> Permiso no concedido")
                     this.finish()
@@ -80,7 +77,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         mainViewModel.logOut()
-        mainViewModel.deleteSession()
     }
 
     override fun onPause() {

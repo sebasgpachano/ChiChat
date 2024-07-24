@@ -17,7 +17,8 @@ class GetMessagesMapper :
                     sourceId = messagesResponse.source ?: "",
                     message = messagesResponse.message ?: "",
                     date = messagesResponse.date ?: "",
-                    view = false
+                    view = false,
+                    notified = false,
                 )
             })
         }

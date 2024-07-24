@@ -39,6 +39,7 @@ class SimpleApplication : Application() {
     private fun initSession() {
         if (preferencesDataSource.getAuthToken().isNotBlank()
             && preferencesDataSource.getAuthToken().isNotEmpty()
+            && !preferencesDataSource.getAccessBiometric()
         ) {
             dataUserSession.userId = preferencesDataSource.getUserID()
             dataUserSession.tokenIb = preferencesDataSource.getAuthToken()
@@ -58,20 +59,20 @@ class SimpleApplication : Application() {
                     ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_UUID,
                     uuid
                 )
-                Log.d(TAG, "%> configFirebase uuid: $uuid")
+                Log.d(TAG, "firebase> configFirebase uuid: $uuid")
             }
         }
         FirebaseMessaging.getInstance().subscribeToTopic("all")
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val messagingToken = task.result
-                Log.d(TAG, "%> firebase token: $messagingToken")
+                Log.d(TAG, "firebase> token: $messagingToken")
                 encryptedSharedPreferencesManager.putString(
                     ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_MESSAGING_TOKEN,
                     messagingToken
                 )
             } else {
-                Log.w(TAG, "%> fallo en obtener el token")
+                Log.w(TAG, "firebase> fallo en obtener el token")
             }
         }
         Firebase.analytics

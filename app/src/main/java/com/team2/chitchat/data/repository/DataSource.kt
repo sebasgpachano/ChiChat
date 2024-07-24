@@ -69,8 +69,10 @@ interface DataSource {
     suspend fun deleteMessagesNotIn(messages: List<String>)
     fun deleteMessageTable(): Flow<BaseResponse<Boolean>>
     fun getMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>>
+    fun getListMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>>
     fun getMessagesForChat(chatId: String): Flow<BaseResponse<List<MessageDB>>>
     fun updateMessageView(id: String, view: Boolean): Flow<BaseResponse<Boolean>>
+    suspend fun changedNotification(id: String)
 
     //Preferences
     fun putAccessBiometric(access: Boolean)

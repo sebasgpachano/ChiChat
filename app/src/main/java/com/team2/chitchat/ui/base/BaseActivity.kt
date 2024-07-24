@@ -61,7 +61,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         setListenersClickToolbarButtons()
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (supportFragmentManager.backStackEntryCount == 1) {
+                if (supportFragmentManager.backStackEntryCount == 0) {
                     finish()
                 } else {
                     supportFragmentManager.popBackStack()

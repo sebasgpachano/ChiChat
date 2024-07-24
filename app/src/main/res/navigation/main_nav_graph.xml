@@ -14,7 +14,8 @@
             android:id="@+id/action_splashFragment_to_mainNavigation"
             app:destination="@id/mainNavigation"
             app:launchSingleTop="false"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 

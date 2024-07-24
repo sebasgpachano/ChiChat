@@ -8,7 +8,9 @@ import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.local.DeleteChatTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteMessageTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteUserTableUseCase
+import com.team2.chitchat.data.usecase.preferences.IsBiometricStateUseCase
 import com.team2.chitchat.data.usecase.preferences.LoadProfilePictureUseCase
+import com.team2.chitchat.data.usecase.preferences.PutBiometricStateUseCase
 import com.team2.chitchat.data.usecase.remote.GetProfileUseCase
 import com.team2.chitchat.data.usecase.remote.PutLogOutUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
@@ -30,7 +32,9 @@ class ProfileViewModel @Inject constructor(
     private val deleteUserTableUseCase: DeleteUserTableUseCase,
     private val deleteChatTableUseCase: DeleteChatTableUseCase,
     private val deleteMessageTableUseCase: DeleteMessageTableUseCase,
-    private val loadProfilePictureUseCase: LoadProfilePictureUseCase
+    private val loadProfilePictureUseCase: LoadProfilePictureUseCase,
+    private val isBiometricStateUseCase: IsBiometricStateUseCase,
+    private val putBiometricStateUseCase: PutBiometricStateUseCase,
 ) : BaseViewModel() {
     private val deleteDbMutableSharedFlow = MutableSharedFlow<Boolean>()
     val deleteDbSharedFlow: SharedFlow<Boolean> = deleteDbMutableSharedFlow
@@ -44,9 +48,14 @@ class ProfileViewModel @Inject constructor(
     private val profilePictureMutableStateFlow: MutableStateFlow<Bitmap?> = MutableStateFlow(null)
     val profilePictureStateFlow: StateFlow<Bitmap?> = profilePictureMutableStateFlow
 
+    //AccessBiometric PREFERENCES
+    private val accessBiometricMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val accessBiometricStateFlow: StateFlow<Boolean> = accessBiometricMutableStateFlow
+
     init {
         loadUserModel()
         loadPicture()
+        loadAccessBiometric()
     }
 
     private fun loadUserModel() {
@@ -82,6 +91,7 @@ class ProfileViewModel @Inject constructor(
 
                     is BaseResponse.Error -> {
                         Log.d(TAG, "l> Error: ${response.error.message}")
+                        _putLogOutMutableStateFlow.value = true
                         errorMutableSharedFlow.emit(response.error)
                     }
                 }
@@ -152,5 +162,29 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             profilePictureMutableStateFlow.value = loadProfilePictureUseCase()
         }
+    }
+
+    //AccessBiometric
+    private fun loadAccessBiometric() {
+        viewModelScope.launch(Dispatchers.IO) {
+            isBiometricStateUseCase().collect { baseResponse->
+                when(baseResponse) {
+                    is BaseResponse.Error -> {
+                        Log.d(this@ProfileViewModel.TAG, "l> Error: ${baseResponse.error.message}")
+                        errorMutableSharedFlow.emit(baseResponse.error)
+                    }
+                    is BaseResponse.Success -> {
+                        accessBiometricMutableStateFlow.value = baseResponse.data
+                    }
+                }
+            }
+        }
+    }
+    fun saveAccessBiometric(accessBiometric: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            putBiometricStateUseCase(accessBiometric)
+            loadAccessBiometric()
+        }
+
     }
 }

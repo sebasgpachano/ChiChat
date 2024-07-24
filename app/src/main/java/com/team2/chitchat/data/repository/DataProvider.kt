@@ -2,6 +2,7 @@ package com.team2.chitchat.data.repository
 
 import android.graphics.Bitmap
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
+import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
@@ -18,6 +19,7 @@ import com.team2.chitchat.data.repository.remote.request.users.RegisterUserReque
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,7 +41,7 @@ class DataProvider @Inject constructor(
 
     // Refresh Token Access with Biometric
     override fun postRefreshToken(): Flow<BaseResponse<Boolean>> {
-        return remoteDataSource.postRefreshToken(preferencesDataSource.getAuthToken())
+        return remoteDataSource.postRefreshToken()
     }
 
     //ContactsList
@@ -155,6 +157,10 @@ class DataProvider @Inject constructor(
         return localDataSource.getMessagesDb()
     }
 
+    override fun getListMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>> {
+        return localDataSource.getListMessageDb()
+    }
+
     override fun getMessagesForChat(chatId: String): Flow<BaseResponse<List<MessageDB>>> {
         return localDataSource.getMessagesForChat(chatId)
     }
@@ -163,13 +169,22 @@ class DataProvider @Inject constructor(
         return localDataSource.updateMessageView(id, view)
     }
 
+    override suspend fun changedNotification(id: String) {
+        localDataSource.changedNotification(id)
+    }
 
+    //Preferences
     override fun putAccessBiometric(access: Boolean) {
         preferencesDataSource.saveAccessBiometric(access)
     }
 
-    override fun getAccessBiometric(): Flow<BaseResponse<Boolean>> {
-        return preferencesDataSource.getAccessBiometric()
+    override fun getAccessBiometric(): Flow<BaseResponse<Boolean>> = flow{
+        try {
+            val access = preferencesDataSource.getAccessBiometric()
+            emit(BaseResponse.Success(access))
+        }catch (e: Exception){
+            emit(BaseResponse.Error(ErrorModel(message = e.message ?: "")))
+        }
     }
 
     override fun saveProfilePicture(imageView: CircleImageView?) {
