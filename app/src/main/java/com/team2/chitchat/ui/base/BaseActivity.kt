@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.viewbinding.ViewBinding
 import com.team2.chitchat.R
 import com.team2.chitchat.ui.dialogfragment.LoadingDialogFragment
@@ -53,9 +54,12 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         observeViewModel()
         createAfterInflateBindingSetupObserverViewModel(savedInstanceState)
         setListenersClickToolbarButtons()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
+        navController = navHostFragment.navController
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (supportFragmentManager.backStackEntryCount == 0) {
+                if (navController.currentDestination?.id == R.id.chatListFragment) {
                     finish()
                 } else {
                     supportFragmentManager.popBackStack()
@@ -71,7 +75,10 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
                     LOADING_DIALOG_FRAGMENT_TAG
                 )
             ) {
-                loadingDialogFragment.show(supportFragmentManager, LOADING_DIALOG_FRAGMENT_TAG)
+                loadingDialogFragment.show(
+                    supportFragmentManager,
+                    LOADING_DIALOG_FRAGMENT_TAG
+                )
             }
         } else {
             if (baseActivityControlShowLoading.canHideLoading(
