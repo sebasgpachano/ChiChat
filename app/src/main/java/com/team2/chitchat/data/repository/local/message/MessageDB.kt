@@ -31,5 +31,6 @@ data class MessageDB(
     val sourceId: String,
     val message: String,
     val date: String,
-    var view: Boolean
+    var view: Boolean,
+    var notified: Boolean
 )
