@@ -129,6 +129,9 @@ class DbViewModel @Inject constructor(
             }
             val chatIds = chats.map { it.id }.toSet()
             val listMessage = listAllMessage.filter { it.chatId in chatIds }
+            for (message in listMessage) {
+                message.notified = true
+            }
             ArrayList(listMessage)
         }
     }
