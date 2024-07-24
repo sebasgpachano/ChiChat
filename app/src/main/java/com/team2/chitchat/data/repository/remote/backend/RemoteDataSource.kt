@@ -1,5 +1,6 @@
 package com.team2.chitchat.data.repository.remote.backend
 
+import android.content.Context
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
 import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
@@ -21,6 +22,7 @@ import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.session.DataUserSession
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -28,8 +30,9 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor(
     private val callApiService: CallApiService,
     private val dataUserSession: DataUserSession,
-    private val preferencesDataSource: PreferencesDataSource
-) : BaseService() {
+    private val preferencesDataSource: PreferencesDataSource,
+    @ApplicationContext private val context: Context
+) : BaseService(context) {
 
     //RegisterUser
     fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> =
@@ -66,8 +69,31 @@ class RemoteDataSource @Inject constructor(
                         saveAuthToken(response.token ?: "")
                         saveUserID(response.user?.id ?: "")
                     }
+                    emit(BaseResponse.Success(true))
                 }
-                emit(BaseResponse.Success(true))
+
+            } else if (apiResult is BaseResponse.Error) {
+                emit(BaseResponse.Error(apiResult.error))
+            }
+        }
+
+    //Access with Biometric
+    fun postRefreshToken(refreshToken: String): Flow<BaseResponse<Boolean>> =
+        flow {
+            val apiResult = callApiService.callPostRefreshToken(refreshToken)
+            if (apiResult is BaseResponse.Success) {
+                apiResult.data.let { response ->
+                    dataUserSession.apply {
+                        tokenIb = response.token ?: ""
+                        userId = response.user?.id ?: ""
+                    }
+                    preferencesDataSource.apply {
+                        saveAuthToken(response.token ?: "")
+                        saveUserID(response.user?.id ?: "")
+                    }
+                    emit(BaseResponse.Success(true))
+                }
+
             } else if (apiResult is BaseResponse.Error) {
                 emit(BaseResponse.Error(apiResult.error))
             }
@@ -152,7 +178,7 @@ class RemoteDataSource @Inject constructor(
                 saveAuthToken("")
                 saveUserID("")
             }
-            preferencesDataSource.setUserPassword("")
+            preferencesDataSource.saveAuthToken("")
             preferencesDataSource.saveAccessBiometric(false)
             emit(BaseResponse.Success(true))
         } else if (apiResult is BaseResponse.Error) {

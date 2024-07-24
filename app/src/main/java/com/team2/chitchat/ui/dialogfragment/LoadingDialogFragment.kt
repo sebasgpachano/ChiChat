@@ -30,7 +30,6 @@ class LoadingDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-//        binding = FragmentDialogLoadingBinding.inflate(LayoutInflater.from(context))
         binding =
             FragmentDialogLoadingBinding.inflate(context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
         dialog.setContentView(binding.root)

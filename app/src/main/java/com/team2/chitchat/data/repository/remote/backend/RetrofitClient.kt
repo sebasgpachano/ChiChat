@@ -25,6 +25,7 @@ class RetrofitClient @Inject constructor(
 ) {
     companion object {
         const val HEADER_KEY_TOKEN = "Authorization"
+        const val URL = "mock-movilidad.vass.es"
         private const val SHA256 = "sha256/4a6cPehI7OG6cuDZka5NDZ7FR8a60d3auda+sKfg4Ng="
     }
 
@@ -34,12 +35,12 @@ class RetrofitClient @Inject constructor(
         val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
 
         val certificatePinner = CertificatePinner.Builder()
-            .add("mock-movilidad.vass.es", SHA256)
+            .add(URL, SHA256)
             .build()
         httpClient.certificatePinner(certificatePinner)
 
         val hostnamesAllow = listOf(
-            "mock-movilidad.vass.es",
+            URL,
         )
         val hostnameVerifier = HostnameVerifier { hostname, _ ->
             hostname in hostnamesAllow
@@ -64,27 +65,27 @@ class RetrofitClient @Inject constructor(
                 chain.proceed(newRequest)
             })
             .interceptors().add(Interceptor { chain ->
-            val original = chain.request()
+                val original = chain.request()
                 val token = preferencesDataSource.getAuthToken()
-            Log.d(TAG, "%> token: $token")
-            val request = when {
-                needAddBearer(chain.request()) -> {
-                    val build = original.newBuilder()
-                        .header(HEADER_KEY_TOKEN, token)
-                        .method(original.method, original.body)
-                        .build()
-                    build
+                Log.d(TAG, "%> token: $token")
+                val request = when {
+                    needAddBearer(chain.request()) -> {
+                        val build = original.newBuilder()
+                            .header(HEADER_KEY_TOKEN, token)
+                            .method(original.method, original.body)
+                            .build()
+                        build
+                    }
+
+                    else -> {
+                        original.newBuilder()
+                            .method(original.method, original.body)
+                            .build()
+                    }
                 }
 
-                else -> {
-                    original.newBuilder()
-                        .method(original.method, original.body)
-                        .build()
-                }
-            }
-
-            chain.proceed(request)
-        })
+                chain.proceed(request)
+            })
 
         val gson = GsonBuilder().setLenient().create()
 

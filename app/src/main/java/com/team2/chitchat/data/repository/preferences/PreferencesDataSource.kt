@@ -39,37 +39,6 @@ class PreferencesDataSource @Inject constructor(
         )
     }
 
-    fun setUserLogin(userLogin: String) {
-        encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
-            EncryptedSharedPreferencesKeys.USER_LOGIN,
-            userLogin
-        )
-    }
-
-    fun getUserLogin(): String {
-        return encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences(
-            EncryptedSharedPreferencesKeys.USER_LOGIN
-        )
-    }
-
-    fun setUserPassword(userPassword: String) {
-        encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
-            EncryptedSharedPreferencesKeys.USER_PASSWORD,
-            userPassword
-        )
-    }
-
-    fun getUserPassword(): String {
-        return try {
-            encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences(
-                EncryptedSharedPreferencesKeys.USER_PASSWORD
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-            ""
-        }
-    }
-
     //SharedPreferences
     fun saveAccessBiometric(access: Boolean) {
         sharedPreferencesManager.saveBooleanSharedPreferences(

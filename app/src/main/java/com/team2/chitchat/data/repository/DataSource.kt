@@ -23,6 +23,9 @@ interface DataSource {
     //LoginUser
     fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>>
 
+    // Access with Biometric
+    fun postRefreshToken(): Flow<BaseResponse<Boolean>>
+
     //ContactsList
     fun getContactsList(): Flow<BaseResponse<ArrayList<UserDB>>>
 
@@ -68,10 +71,6 @@ interface DataSource {
     fun getMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>>
     fun getMessagesForChat(chatId: String): Flow<BaseResponse<List<MessageDB>>>
     fun updateMessageView(id: String, view: Boolean): Flow<BaseResponse<Boolean>>
-
-    //EncryptPreferences
-    fun putPasswordLogin(password: String)
-    fun getPasswordLogin(): String
 
     //Preferences
     fun putAccessBiometric(access: Boolean)

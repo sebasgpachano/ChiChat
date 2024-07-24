@@ -14,7 +14,7 @@ class ChatsListViewHolder(
     private val listChatsAdapterListener: ChatsListAdapter.ListChatsAdapterListener
 ) :
     RecyclerView.ViewHolder(binding.root) {
-    fun onBind(chatList: ListChatsModel, position: Int) {
+    fun onBind(chatList: ListChatsModel) {
         binding.apply {
             tvName.text = chatList.name
             tvMsg.text = chatList.lastMessage

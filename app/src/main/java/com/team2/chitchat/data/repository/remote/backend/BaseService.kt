@@ -1,15 +1,17 @@
 package com.team2.chitchat.data.repository.remote.backend
 
+import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.team2.chitchat.BuildConfig
+import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.repository.remote.response.error.ErrorResponse
 import com.team2.chitchat.ui.extensions.TAG
 import retrofit2.Response
 
-abstract class BaseService {
+abstract class BaseService(private val context: Context) {
     companion object {
         const val ERROR_USER_EXIST = 400
         const val ERROR_USER_NOT_FOUND = 404
@@ -18,6 +20,7 @@ abstract class BaseService {
         const val ERROR_FORBIDDEN = 403
         const val ERROR_INTERNAL_SERVER = 500
     }
+
     suspend fun <T : Any> apiCall(call: suspend () -> Response<T>): BaseResponse<T> {
         val response: Response<T>
         try {
@@ -49,22 +52,27 @@ abstract class BaseService {
                     parsedData.errorCode = ERROR_USER_EXIST.toString()
                     parsedData.error = response.message()
                 }
+
                 401 -> {
                     parsedData.errorCode = ERROR_UNAUTHORIZED.toString()
                     parsedData.error = response.message()
                 }
+
                 402 -> {
                     parsedData.errorCode = ERROR_PASSWORD_INCORRECT.toString()
                     parsedData.error = response.message()
                 }
+
                 403 -> {
                     parsedData.errorCode = ERROR_FORBIDDEN.toString()
                     parsedData.error = response.message()
                 }
+
                 404 -> {
                     parsedData.errorCode = ERROR_USER_NOT_FOUND.toString()
                     parsedData.error = response.message()
                 }
+
                 500 -> {
                     parsedData.errorCode = ERROR_INTERNAL_SERVER.toString()
                     parsedData.error = response.message()
@@ -85,12 +93,12 @@ abstract class BaseService {
 
     private fun mapErrorResponse(throwable: Throwable): ErrorModel {
         return if (BuildConfig.DEBUG) {
-            ErrorModel("UNKNOW", "UNKNOW", throwable.message ?: "UNKNOW")
+            ErrorModel("UNKNOWN", "UNKNOWN", throwable.message ?: "UNKNOWN")
         } else {
             ErrorModel(
-                "Lo sentimos, estamos presentando problemas de conexión.",
+                context.getString(R.string.error_connection),
                 "0",
-                "Vuelve a intentarlo más tarde."
+                context.getString(R.string.error_connection_message)
             )
         }
     }

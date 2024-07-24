@@ -5,10 +5,8 @@ import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetPasswordLoginUseCase @Inject constructor(
+class IsBiometricStateUseCase @Inject constructor(
     private val dataProvider: DataProvider
 ) {
-    operator fun invoke(): String {
-        return dataProvider.getPasswordLogin()
-    }
+    operator fun invoke(): Flow<BaseResponse<Boolean>> = dataProvider.getAccessBiometric()
 }

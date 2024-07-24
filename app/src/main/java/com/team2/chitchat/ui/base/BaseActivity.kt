@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -58,6 +59,15 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         observeViewModel()
         createAfterInflateBindingSetupObserverViewModel(savedInstanceState)
         setListenersClickToolbarButtons()
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (supportFragmentManager.backStackEntryCount == 1) {
+                    finish()
+                } else {
+                    supportFragmentManager.popBackStack()
+                }
+            }
+        })
     }
 
     fun showLoading(show: Boolean) {
@@ -130,16 +140,8 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         }
     }
 
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1) {
-            finish()
-        } else {
-            super.onBackPressed()
-        }
-    }
-
     protected open fun clickToolbarBack() {
-        onBackPressed()
+        onBackPressedDispatcher.onBackPressed()
     }
 
     protected open fun clickToolbarNotification() {
@@ -213,6 +215,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
             tvToolbarTitle?.gone()
         }
     }
+
     fun showMessageWithOneButton(
         iconID: Int,
         title: String? = null,
@@ -223,12 +226,15 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         if (supportFragmentManager.findFragmentByTag(MessageDialogFragment.MESSAGE_DIALOG_TAG) == null) {
             messageDialogFragment.apply {
                 this.iconID = iconID
-                this.title =  title
+                this.title = title
                 this.message = message
                 this.positiveButton = textPositiveButton
                 this.listener = listener
             }
-            messageDialogFragment.show(supportFragmentManager,MessageDialogFragment.MESSAGE_DIALOG_TAG)
+            messageDialogFragment.show(
+                supportFragmentManager,
+                MessageDialogFragment.MESSAGE_DIALOG_TAG
+            )
         } else {
             messageDialogFragment.refreshValues(
                 iconID = iconID,
@@ -240,6 +246,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         }
 
     }
+
     fun showMessageWithTwoButton(
         iconID: Int,
         title: String? = null,
@@ -247,17 +254,20 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         textPositiveButton: String,
         textNegativeButton: String,
         listener: MessageDialogFragment.MessageDialogListener
-        ) {
+    ) {
         if (supportFragmentManager.findFragmentByTag(MessageDialogFragment.MESSAGE_DIALOG_TAG) == null) {
             messageDialogFragment.apply {
                 this.iconID = iconID
-                this.title =  title
+                this.title = title
                 this.message = message
                 this.positiveButton = textPositiveButton
                 this.negativeButton = textNegativeButton
                 this.listener = listener
             }
-            messageDialogFragment.show(supportFragmentManager,MessageDialogFragment.MESSAGE_DIALOG_TAG)
+            messageDialogFragment.show(
+                supportFragmentManager,
+                MessageDialogFragment.MESSAGE_DIALOG_TAG
+            )
         } else {
             messageDialogFragment.refreshValues(
                 title = title,
@@ -268,6 +278,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
             )
         }
     }
+
     protected open fun callViewModelSaveData() = Unit
     abstract fun inflateBinding()
     abstract fun observeViewModel()

@@ -37,6 +37,11 @@ class DataProvider @Inject constructor(
         return remoteDataSource.postLoginUser(loginUserRequest)
     }
 
+    // Refresh Token Access with Biometric
+    override fun postRefreshToken(): Flow<BaseResponse<Boolean>> {
+        return remoteDataSource.postRefreshToken(preferencesDataSource.getAuthToken())
+    }
+
     //ContactsList
     override fun getContactsList(): Flow<BaseResponse<ArrayList<UserDB>>> {
         return remoteDataSource.getContactsList()
@@ -158,14 +163,6 @@ class DataProvider @Inject constructor(
         return localDataSource.updateMessageView(id, view)
     }
 
-    //EncryptPreferences
-    override fun putPasswordLogin(password: String) {
-        preferencesDataSource.setUserPassword(password)
-    }
-
-    override fun getPasswordLogin(): String {
-        return preferencesDataSource.getUserPassword()
-    }
 
     override fun putAccessBiometric(access: Boolean) {
         preferencesDataSource.saveAccessBiometric(access)

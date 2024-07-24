@@ -31,25 +31,6 @@
                 android:src="@drawable/baseline_person_24" />
 
         </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:elevation="12dp"
-            app:cardCornerRadius="40dp"
-            android:innerRadius="0dp"
-            android:shape="ring"
-            android:thicknessRatio="1.9"
-            android:layout_gravity="bottom|end"
-            android:backgroundTint="@color/azul31b1cd">
-            <ImageView
-                android:id="@+id/ImageVEditProfileFragment"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:contentDescription="@string/editProfileDescription"
-                android:src="@drawable/mdi_camera_outline"
-                android:layout_gravity="center"
-                android:elevation="14dp"/>
-        </androidx.cardview.widget.CardView>
 
     </FrameLayout>
 

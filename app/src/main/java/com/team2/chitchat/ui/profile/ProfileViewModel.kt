@@ -92,7 +92,7 @@ class ProfileViewModel @Inject constructor(
     fun deleteDb() {
         Log.d(
             TAG,
-            "%> Borrando bases de datos..."
+            "%> Delete DB..."
         )
         viewModelScope.launch(Dispatchers.IO) {
             loadingMutableSharedFlow.emit(true)
@@ -107,7 +107,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun deleteUserTable(): Boolean {
-        Log.d(TAG, "%> Borrando contactos...")
+        Log.d(TAG, "%> Delete contacts...")
         return withContext(Dispatchers.IO) {
             var response = false
             deleteUserTableUseCase().collect {
@@ -121,7 +121,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun deleteChatTable(): Boolean {
-        Log.d(TAG, "%> Borrando chats...")
+        Log.d(TAG, "%> Delete chats...")
         return withContext(Dispatchers.IO) {
             var response = false
             deleteChatTableUseCase().collect {
@@ -135,7 +135,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun deleteMessageTable(): Boolean {
-        Log.d(TAG, "%> Borrando mensajes...")
+        Log.d(TAG, "%> Delete messages...")
         return withContext(Dispatchers.IO) {
             var response = false
             deleteMessageTableUseCase().collect {
@@ -148,7 +148,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun loadPicture() {
+    private fun loadPicture() {
         viewModelScope.launch {
             profilePictureMutableStateFlow.value = loadProfilePictureUseCase()
         }

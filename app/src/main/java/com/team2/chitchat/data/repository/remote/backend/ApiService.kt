@@ -17,6 +17,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -32,6 +33,12 @@ interface ApiService {
     @POST("api/users/login")
     suspend fun postLoginUser(
         @Body loginUserRequest: LoginUserRequest
+    ): Response<PostLoginResponse>
+
+    //Access token with refresh token for biometric
+    @GET("api/users/biometric")
+    suspend fun getAccessToken(
+        @Header("Authorization") refreshToken: String
     ): Response<PostLoginResponse>
 
     // Log Out
