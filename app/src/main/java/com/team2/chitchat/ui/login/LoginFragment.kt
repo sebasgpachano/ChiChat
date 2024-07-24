@@ -1,6 +1,8 @@
 package com.team2.chitchat.ui.login
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -20,7 +22,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.team2.chitchat.R
 import com.team2.chitchat.data.analytics.FirebaseAnalyticsManager
 import com.team2.chitchat.data.repository.remote.backend.ChatService
@@ -104,6 +105,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                     } else {
                         firebaseAnalyticsManager.logLoginEvent("password")
                     }
+                }
                 startDataBase(isOk)
             }
         }
