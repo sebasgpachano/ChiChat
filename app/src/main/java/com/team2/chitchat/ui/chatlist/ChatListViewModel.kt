@@ -10,13 +10,16 @@ import com.team2.chitchat.data.usecase.local.GetChatsDbUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesDbUseCase
 import com.team2.chitchat.data.usecase.local.GetUsersDbUseCase
 import com.team2.chitchat.data.usecase.local.UpdateChatViewUseCase
+import com.team2.chitchat.data.usecase.preferences.IsBiometricStateUseCase
 import com.team2.chitchat.data.usecase.remote.DeleteChatUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,8 +31,8 @@ class ChatListViewModel @Inject constructor(
     private val getMessagesDbUseCase: GetMessagesDbUseCase,
     private val getUsersDbUseCase: GetUsersDbUseCase,
     private val deleteChatUseCase: DeleteChatUseCase,
-    private val updateChatViewUseCase: UpdateChatViewUseCase
-) :
+    private val updateChatViewUseCase: UpdateChatViewUseCase,
+    ) :
     BaseViewModel() {
     private val chatsMutableSharedFlow: MutableSharedFlow<ArrayList<ListChatsModel>> =
         MutableSharedFlow()

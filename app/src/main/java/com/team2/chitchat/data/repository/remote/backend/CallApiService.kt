@@ -36,8 +36,8 @@ class CallApiService @Inject constructor(
     }
 
     //Refresh token with Biometric
-    suspend fun callPostRefreshToken(refreshToken: String): BaseResponse<PostLoginResponse> {
-        return apiCall { apiService.getAccessToken(refreshToken) }
+    suspend fun callPostRefreshToken(): BaseResponse<PostLoginResponse> {
+        return apiCall { apiService.getAccessToken() }
     }
 
     //ContactsList
@@ -79,5 +79,9 @@ class CallApiService @Inject constructor(
     //State
     suspend fun callPutOnline(): BaseResponse<PutStateResponse> {
         return apiCall { apiService.putOnline() }
+    }
+
+    suspend fun callPutOffline(): BaseResponse<PutStateResponse> {
+        return apiCall { apiService.putOffline() }
     }
 }

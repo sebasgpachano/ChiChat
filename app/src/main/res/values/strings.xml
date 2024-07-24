@@ -15,7 +15,7 @@
     <string name="list_contacts_update_list">Actualizar la lista de contactos</string>
     <string name="list_contacts_btn_search">Boton para filtrar contactos</string>
     <string name="list_contacts_btn_quit_search">Boton para cancelar la busqueda de contactos</string>
-    <string name="list_contacts_et_hint_search_user">Buscar contacto...</string>
+    <string name="list_contacts_et_hint_search_user">Buscar contacto…</string>
 
     <!-- Chat list fragment -->
     <string name="chat_list_title_toolbar">ChitChat</string>
@@ -25,7 +25,7 @@
     <string name="chat_list_add_chat">Añadir persona para hablar</string>
     <string name="chat_list_btn_search">Boton para filtrar conversaciones</string>
     <string name="chat_list_btn_quit_search">Boton para cancelar la busqueda de conversaciones</string>
-    <string name="chat_list_et_hint_search_user">Buscar conversación...</string>
+    <string name="chat_list_et_hint_search_user">Buscar conversación…</string>
     <string name="chat_list_delete_chat">¿Eliminar chat?</string>
     <string name="chat_list_delete_chat_question">Al no ser el creador de la conversación no puedes borrarla de la base de datos, ¿quieres eliminarla de tus lista de conversaciones?</string>
     <string name="chat_list_warning_notification_chat">No puedes eliminar el chat si tienes notificaciones por leer</string>
@@ -43,7 +43,7 @@
     <string name="hintUser">Ingresa tu usuario</string>
     <string name="textPassword">Contraseña</string>
     <string name="hintPassword">Ingresa tu contraseña</string>
-    <string name="textAccessBiometric">Acceso con biometria</string>
+    <string name="textAccessBiometric">Acceso con biometría</string>
     <string name="textLogin">Login</string>
     <string name="imageLogoDescription">Logo ChitChat</string>
     <string name="textRegisterLoginF">Regístrate</string>
@@ -106,4 +106,7 @@
     <!-- Shared preferences-->
     <string name="profile_shared_preferences">app_prefs</string>
     <string name="profile_picture">profile_picture</string>
+    <string name="title_biometric_activated">Accesso Biometrico</string>
+    <string name="mesage_biometric_activated">¿Deseas activar acceso biométrico?</string>
+    <string name="imageFingerprintDescription">Icono de huella dactilar para acceder con biometria.</string>
 </resources>

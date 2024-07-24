@@ -43,13 +43,14 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
     override fun createViewAfterInflateBinding(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) {
+        if (!dataUserSession.haveSession()) {
+            findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
+        }
         configRecyclerView()
         setupListeners()
         setupSwipeToDelete()
         setupSearch()
-        if (dataUserSession.tokenIb.isBlank()) {
-            findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
-        }
+
     }
 
     private fun configRecyclerView() {

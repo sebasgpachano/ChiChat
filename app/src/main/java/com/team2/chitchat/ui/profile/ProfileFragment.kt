@@ -89,6 +89,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.accessBiometricStateFlow.collect { isOk ->
+                Log.d(TAG, "observeViewModel: $isOk")
+                binding?.switchBiometric?.isChecked = isOk
+            }
+        }
     }
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
@@ -112,9 +119,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                             val intent = Intent(requireContext(), ChatService::class.java)
                             requireContext().stopService(intent)
                             viewModel.deleteDb()
+
                         }
                     }
                 )
+            }
+
+            switchBiometric.apply {
+                setOnCheckedChangeListener { _, isChecked ->
+                    viewModel.saveAccessBiometric(isChecked)
+                }
             }
         }
     }

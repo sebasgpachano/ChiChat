@@ -145,8 +145,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         iconID: Int,
         title: String,
         message: String,
-        textPositiveButton: String,
-        textNegativeButton: String,
+        textPositiveButton: String = resources.getString(R.string.accept),
+        textNegativeButton: String = resources.getString(R.string.cancel),
         listener: MessageDialogFragment.MessageDialogListener
     ) {
         baseActivity.showMessageWithTwoButton(
