@@ -35,6 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 if (!shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
                     Log.d(TAG, "%> El usuario pulso en no volver a mostrar")
                     openAppSettings()
+                    this.finish()
                 } else {
                     Log.d(TAG, "%> Permiso no concedido")
                     this.finish()
