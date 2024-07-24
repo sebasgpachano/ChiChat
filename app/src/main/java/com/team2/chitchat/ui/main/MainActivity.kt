@@ -15,11 +15,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.team2.chitchat.R
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.INTENT_KEY_PUSH_NOTIFICATION_BODY
 import com.team2.chitchat.databinding.ActivityMainBinding
-import com.team2.chitchat.hilt.SimpleApplication
 import com.team2.chitchat.ui.base.BaseActivity
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {

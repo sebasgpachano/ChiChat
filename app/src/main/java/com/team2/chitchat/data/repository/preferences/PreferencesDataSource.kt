@@ -1,8 +1,6 @@
 package com.team2.chitchat.data.repository.preferences
 
 import android.graphics.Bitmap
-import com.team2.chitchat.data.domain.model.error.ErrorModel
-import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import de.hdodenhof.circleimageview.CircleImageView
 import javax.inject.Inject
 

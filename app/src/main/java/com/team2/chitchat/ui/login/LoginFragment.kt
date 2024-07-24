@@ -30,7 +30,6 @@ import com.team2.chitchat.databinding.FragmentLoginBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
-import com.team2.chitchat.ui.extensions.gone
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.main.DbViewModel
 import dagger.hilt.android.AndroidEntryPoint

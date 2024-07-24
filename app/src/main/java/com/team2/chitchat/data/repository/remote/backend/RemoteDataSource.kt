@@ -1,7 +1,6 @@
 package com.team2.chitchat.data.repository.remote.backend
 
 import android.content.Context
-import android.util.Log
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
 import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel

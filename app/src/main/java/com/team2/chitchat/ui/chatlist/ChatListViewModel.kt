@@ -32,7 +32,6 @@ class ChatListViewModel @Inject constructor(
     private val getUsersDbUseCase: GetUsersDbUseCase,
     private val deleteChatUseCase: DeleteChatUseCase,
     private val updateChatViewUseCase: UpdateChatViewUseCase,
-    private val isBiometricStateUseCase: IsBiometricStateUseCase,
     ) :
     BaseViewModel() {
     private val chatsMutableSharedFlow: MutableSharedFlow<ArrayList<ListChatsModel>> =
@@ -40,9 +39,6 @@ class ChatListViewModel @Inject constructor(
     private val deleteChatMutableSharedFlow: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val deleteChatSharedFlow: SharedFlow<Boolean> = deleteChatMutableSharedFlow
     val chatsSharedFlow: SharedFlow<ArrayList<ListChatsModel>> = chatsMutableSharedFlow
-    //AccessBiometric PREFERENCES
-    private val accessBiometricMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val accessBiometricStateFlow: StateFlow<Boolean> = accessBiometricMutableStateFlow
 
     fun getChats() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -143,23 +139,6 @@ class ChatListViewModel @Inject constructor(
                         loadingMutableSharedFlow.emit(false)
                         Log.d(TAG, "chats> Update chat viewModel${it.data}")
                         deleteChatMutableSharedFlow.emit(it.data)
-                    }
-                }
-            }
-        }
-    }
-
-    //AccessBiometric
-    private fun loadAccessBiometric() {
-        viewModelScope.launch(Dispatchers.IO) {
-            isBiometricStateUseCase().collect { baseResponse->
-                when(baseResponse) {
-                    is BaseResponse.Error -> {
-                        Log.d(this@ChatListViewModel.TAG, "l> Error: ${baseResponse.error.message}")
-                        errorMutableSharedFlow.emit(baseResponse.error)
-                    }
-                    is BaseResponse.Success -> {
-                        accessBiometricMutableStateFlow.value = baseResponse.data
                     }
                 }
             }
