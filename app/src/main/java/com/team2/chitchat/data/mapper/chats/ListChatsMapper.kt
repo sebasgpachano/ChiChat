@@ -1,13 +1,17 @@
 package com.team2.chitchat.data.mapper.chats
 
+import android.util.Log
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
+import com.team2.chitchat.ui.extensions.TAG
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 class ListChatsMapper(
     private val userId: String,
@@ -37,8 +41,7 @@ class ListChatsMapper(
                 mappedList.add(listChatsModel)
             }
         }
-
-        return ArrayList(mappedList.sortedByDescending { it.date })
+        return formaterDate(mappedList.sortedByDescending { it.date })
     }
 
     private fun getNotifications(chat: ChatDB): Int {
@@ -60,18 +63,7 @@ class ListChatsMapper(
         return if (message?.date.isNullOrBlank()) {
             ""
         } else {
-            val localZonedDateTime = ZonedDateTime.parse(fixedServerHour(message?.date))
-            val formattedDate = when {
-                localZonedDateTime.toLocalDate()
-                    .isEqual(LocalDate.now(localZonedDateTime.zone)) -> {
-                    localZonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
-                }
-
-                else -> {
-                    localZonedDateTime.format(DateTimeFormatter.ofPattern("dd/MM/yy"))
-                }
-            }
-            formattedDate
+            fixedServerHour(message?.date)
         }
     }
 
@@ -82,5 +74,49 @@ class ListChatsMapper(
         val zonedDateTime = ZonedDateTime.parse(messageTime, formatter.withZone(ZoneOffset.UTC))
         val updatedZonedDateTime = zonedDateTime.plusHours(2 + offsetInHours)
         return updatedZonedDateTime.format(formatter)
+    }
+
+    private fun formaterDate(list: List<ListChatsModel>): ArrayList<ListChatsModel> {
+        val mappedList = ArrayList<ListChatsModel>()
+        for (chat in list) {
+            if (chat.date.isBlank()) {
+                mappedList.add(chat)
+            } else {
+                val listChatsModel = ListChatsModel(
+                    id = chat.id,
+                    name = chat.name,
+                    image = chat.image,
+                    state = chat.state,
+                    notification = chat.notification,
+                    lastMessage = chat.lastMessage,
+                    date = setFormater(chat.date),
+                    view = chat.view
+                )
+                mappedList.add(listChatsModel)
+            }
+        }
+        return mappedList
+    }
+
+    private fun setFormater(date: String): String {
+        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy")
+        if (date.isBlank()) {
+            return ""
+        }
+        return try {
+            val zonedDateTimeUTC = ZonedDateTime.parse(date)
+            val localZonedDateTime = zonedDateTimeUTC.withZoneSameInstant(ZoneId.systemDefault())
+            val currentDate = LocalDate.now(localZonedDateTime.zone)
+
+            if (localZonedDateTime.toLocalDate().isEqual(currentDate)) {
+                localZonedDateTime.format(timeFormatter)
+            } else {
+                localZonedDateTime.format(dateFormatter)
+            }
+        } catch (e: DateTimeParseException) {
+            Log.e(TAG, "hora> Failed to parse date: $date", e)
+            ""
+        }
     }
 }
