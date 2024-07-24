@@ -8,8 +8,10 @@ import com.google.firebase.messaging.RemoteMessage
 import com.team2.chitchat.data.repository.preferences.EncryptedSharedPreferencesKeys.Companion.ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_MESSAGING_TOKEN
 import com.team2.chitchat.data.repository.preferences.EncryptedSharedPreferencesManager
 import com.team2.chitchat.ui.extensions.TAG
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ChitChatFirebaseMessagingService : FirebaseMessagingService() {
     @Inject
     lateinit var encryptedSharedPreferencesManager: EncryptedSharedPreferencesManager

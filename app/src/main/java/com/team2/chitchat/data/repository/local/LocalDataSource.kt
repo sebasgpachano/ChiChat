@@ -202,6 +202,17 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    fun getListMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>> = flow {
+        try {
+            val messages = appDatabaseManager.db.messagesDAO().getListMessagesDb()
+            emit(BaseResponse.Success(ArrayList(messages)))
+        } catch (e: Exception) {
+            val errorModel =
+                ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
+            emit(BaseResponse.Error(errorModel))
+        }
+    }
+
     fun getMessagesForChat(chatId: String): Flow<BaseResponse<List<MessageDB>>> = flow {
         try {
             appDatabaseManager.db.messagesDAO().getMessagesForChat(chatId).collect { messages ->
@@ -236,6 +247,10 @@ class LocalDataSource @Inject constructor(
                 ErrorModel("", "", e.message ?: context.getString(R.string.error_unknown_error))
             emit(BaseResponse.Error(errorModel))
         }
+    }
+
+    fun changedNotification(id: String) {
+        appDatabaseManager.db.messagesDAO().updateMessageNotification(id, true)
     }
 
 }

@@ -155,6 +155,10 @@ class DataProvider @Inject constructor(
         return localDataSource.getMessagesDb()
     }
 
+    override fun getListMessageDb(): Flow<BaseResponse<ArrayList<MessageDB>>> {
+        return localDataSource.getListMessageDb()
+    }
+
     override fun getMessagesForChat(chatId: String): Flow<BaseResponse<List<MessageDB>>> {
         return localDataSource.getMessagesForChat(chatId)
     }
@@ -163,7 +167,11 @@ class DataProvider @Inject constructor(
         return localDataSource.updateMessageView(id, view)
     }
 
+    override suspend fun changedNotification(id: String) {
+        localDataSource.changedNotification(id)
+    }
 
+    //Preferences
     override fun putAccessBiometric(access: Boolean) {
         preferencesDataSource.saveAccessBiometric(access)
     }
