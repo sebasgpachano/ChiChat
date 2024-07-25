@@ -98,13 +98,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.loginStateFlow.collect { isOk ->
-                if (isOk) {
-                    if (viewModel.accessBiometricStateFlow.value) {
-                        firebaseAnalyticsManager.logLoginEvent("biometric")
-                    } else {
-                        firebaseAnalyticsManager.logLoginEvent("password")
-                    }
-                }
                 startDataBase(isOk)
             }
         }
@@ -212,11 +205,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun startDataBase(isOk: Boolean) {
         if (isOk) {
+            logLoginEvent()
             dbViewModel.startDataBase()
         }
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {}
+    private fun logLoginEvent() {
+        val loginMethod = if (viewModel.accessBiometricStateFlow.value) "biometric" else "password"
+        firebaseAnalyticsManager.logLoginEvent(loginMethod)
+    }
+
+    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
+        Unit
 
     private fun initListener() {
 
