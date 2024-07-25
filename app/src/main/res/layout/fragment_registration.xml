@@ -128,9 +128,9 @@
             app:layout_constraintStart_toEndOf="@id/tvSelectedAvatar"
             app:layout_constraintTop_toBottomOf="@id/etNick" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vpAvatar"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAvatar"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
@@ -146,7 +146,7 @@
             android:text="@string/register"
             app:layout_constraintEnd_toEndOf="@id/etNick"
             app:layout_constraintStart_toStartOf="@id/etNick"
-            app:layout_constraintTop_toBottomOf="@id/vpAvatar" />
+            app:layout_constraintTop_toBottomOf="@id/rvAvatar" />
 
         <TextView
             android:id="@+id/tvUserError"
