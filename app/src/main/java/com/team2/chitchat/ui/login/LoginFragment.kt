@@ -31,7 +31,6 @@ import com.team2.chitchat.databinding.FragmentLoginBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
-import com.team2.chitchat.ui.extensions.hideKeyboard
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.extensions.showKeyboard
 import com.team2.chitchat.ui.main.DbViewModel
@@ -96,6 +95,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             context?.showKeyboard(editTUserLoginFragment)
         }
     }
+
     override fun configureToolbarAndConfigScreenSections() {
         fragmentLayoutWithToolbar()
         hideToolbar()
@@ -276,7 +276,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                     })
                 }
             }
-            editTPasswordLoginFragment.setOnEditorActionListener { v, actionId, event ->
+            editTPasswordLoginFragment.setOnEditorActionListener { _, actionId, _ ->
 
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     buttonLogin.performClick()
