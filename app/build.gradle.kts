@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.pluginCrashlytics)
     alias(libs.plugins.pluginGoogleServices)
+    alias(libs.plugins.sonarQube)
 }
 
 android {

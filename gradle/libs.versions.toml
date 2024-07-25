@@ -14,6 +14,7 @@ pluginDaggerHilt = "2.48"
 pluginKotlin = "1.9.23"
 pluginCrashlytics = "2.9.9"
 pluginGoogleService = "4.4.2"
+pluginSonarQube = "5.0.0.4638"
 
 #Android
 coreKtx = "1.13.1"
@@ -99,7 +100,7 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 #Iterceptor
-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp"}
+interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 #Crypto SharedPreferences
 androidxCryptoSharedPreferences = { group = "androidx.security", name = "security-crypto", version.ref = "cryptoSharedPreferences" }
@@ -139,3 +140,4 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 pluginDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "pluginDaggerHilt" }
 pluginCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "pluginCrashlytics" }
 pluginGoogleServices = { id = "com.google.gms.google-services", version.ref = "pluginGoogleService" }
+sonarQube = { id = "org.sonarqube", version.ref = "pluginSonarQube" }
