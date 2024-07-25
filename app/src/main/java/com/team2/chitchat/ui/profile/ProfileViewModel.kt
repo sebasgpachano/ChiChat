@@ -16,6 +16,7 @@ import com.team2.chitchat.data.usecase.remote.PutLogOutUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +36,7 @@ class ProfileViewModel @Inject constructor(
     private val loadProfilePictureUseCase: LoadProfilePictureUseCase,
     private val isBiometricStateUseCase: IsBiometricStateUseCase,
     private val putBiometricStateUseCase: PutBiometricStateUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel() {
     private val deleteDbMutableSharedFlow = MutableSharedFlow<Boolean>()
     val deleteDbSharedFlow: SharedFlow<Boolean> = deleteDbMutableSharedFlow
@@ -59,7 +61,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun loadUserModel() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             getProfileUseCase().collect { response ->
 
                 when (response) {
@@ -79,7 +81,7 @@ class ProfileViewModel @Inject constructor(
 
     fun putLogOut() {
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             putLogOutUseCase().collect { response ->
                 loadingMutableSharedFlow.emit(false)
@@ -104,7 +106,7 @@ class ProfileViewModel @Inject constructor(
             TAG,
             "%> Delete DB..."
         )
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             loadingMutableSharedFlow.emit(true)
             val deleteUsers = deleteUserTable()
             val deleteChats = deleteChatTable()
@@ -118,7 +120,7 @@ class ProfileViewModel @Inject constructor(
 
     private suspend fun deleteUserTable(): Boolean {
         Log.d(TAG, "%> Delete contacts...")
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var response = false
             deleteUserTableUseCase().collect {
                 response = when (it) {
@@ -132,7 +134,7 @@ class ProfileViewModel @Inject constructor(
 
     private suspend fun deleteChatTable(): Boolean {
         Log.d(TAG, "%> Delete chats...")
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var response = false
             deleteChatTableUseCase().collect {
                 response = when (it) {
@@ -146,7 +148,7 @@ class ProfileViewModel @Inject constructor(
 
     private suspend fun deleteMessageTable(): Boolean {
         Log.d(TAG, "%> Delete messages...")
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var response = false
             deleteMessageTableUseCase().collect {
                 response = when (it) {
@@ -166,7 +168,7 @@ class ProfileViewModel @Inject constructor(
 
     //AccessBiometric
     private fun loadAccessBiometric() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             isBiometricStateUseCase().collect { baseResponse->
                 when(baseResponse) {
                     is BaseResponse.Error -> {
@@ -181,7 +183,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
     fun saveAccessBiometric(accessBiometric: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             putBiometricStateUseCase(accessBiometric)
             loadAccessBiometric()
         }

@@ -8,7 +8,7 @@ import com.team2.chitchat.databinding.ItemRecyclerviewListChatsBinding
 
 class ChatsListAdapter(private val listChatsAdapterListener: ListChatsAdapterListener) :
     ListAdapter<ListChatsModel, ChatsListViewHolder>(ChatsListDiffCallback()) {
-    interface ListChatsAdapterListener {
+    fun interface ListChatsAdapterListener {
         fun onItemClick(idChat: String)
     }
 

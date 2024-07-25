@@ -10,6 +10,7 @@ import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
     private val postRegisterUseCase: PostRegisterUseCase,
-    private val saveProfilePictureUseCase: SaveProfilePictureUseCase
+    private val saveProfilePictureUseCase: SaveProfilePictureUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) :
     BaseViewModel() {
 
@@ -27,7 +29,7 @@ class RegistrationViewModel @Inject constructor(
     val successFlow: SharedFlow<Boolean> = successSharedFlow
 
     fun postUser(user: String, password: String, nick: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             val newUser = RegisterUserRequest(user, password, nick, "", "and", "", false)
             postRegisterUseCase(newUser).collect {

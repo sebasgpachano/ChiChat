@@ -10,16 +10,14 @@ import com.team2.chitchat.data.usecase.local.GetChatsDbUseCase
 import com.team2.chitchat.data.usecase.local.GetMessagesDbUseCase
 import com.team2.chitchat.data.usecase.local.GetUsersDbUseCase
 import com.team2.chitchat.data.usecase.local.UpdateChatViewUseCase
-import com.team2.chitchat.data.usecase.preferences.IsBiometricStateUseCase
 import com.team2.chitchat.data.usecase.remote.DeleteChatUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,8 +30,8 @@ class ChatListViewModel @Inject constructor(
     private val getUsersDbUseCase: GetUsersDbUseCase,
     private val deleteChatUseCase: DeleteChatUseCase,
     private val updateChatViewUseCase: UpdateChatViewUseCase,
-    ) :
-    BaseViewModel() {
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) : BaseViewModel() {
     private val chatsMutableSharedFlow: MutableSharedFlow<ArrayList<ListChatsModel>> =
         MutableSharedFlow()
     private val deleteChatMutableSharedFlow: MutableSharedFlow<Boolean> = MutableSharedFlow()
@@ -41,7 +39,7 @@ class ChatListViewModel @Inject constructor(
     val chatsSharedFlow: SharedFlow<ArrayList<ListChatsModel>> = chatsMutableSharedFlow
 
     fun getChats() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
 
             val chatsFlow = getChatsDbUseCase()
@@ -104,7 +102,7 @@ class ChatListViewModel @Inject constructor(
     }
 
     fun deleteChat(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             deleteChatUseCase(id).collect {
                 when (it) {
@@ -125,7 +123,7 @@ class ChatListViewModel @Inject constructor(
     }
 
     fun updateChatView(id: String, view: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             updateChatViewUseCase(id, view).collect {
                 when (it) {
