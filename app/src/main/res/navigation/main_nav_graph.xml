@@ -5,39 +5,49 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/splashFragment">
 
+    <!-- Splash Fragment -->
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.team2.chitchat.ui.splash.SplashFragment"
         android:label="SplashFragment">
 
+        <!-- Navegación al Main Navigation eliminando SplashFragment de la pila -->
         <action
             android:id="@+id/action_splashFragment_to_mainNavigation"
             app:destination="@id/mainNavigation"
-            app:launchSingleTop="false"
+            app:launchSingleTop="true"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
 
     </fragment>
 
+    <!-- Main Navigation -->
     <navigation
         android:id="@+id/mainNavigation"
         app:startDestination="@id/chatListFragment">
 
+        <!-- Chat List Fragment -->
         <fragment
             android:id="@+id/chatListFragment"
             android:name="com.team2.chitchat.ui.chatlist.ChatListFragment"
             android:label="ChatListFragment">
 
+            <!-- Acción hacia ContactsListFragment -->
             <action
                 android:id="@+id/action_chatListFragment_to_contactsListFragment"
-                app:destination="@id/contactsListFragment" />
+                app:destination="@id/contactsListFragment"
+                app:popUpTo="@id/chatListFragment"
+                app:popUpToInclusive="false" />
 
+            <!-- Acción hacia LoginNavigation -->
             <action
                 android:id="@+id/action_chatListFragment_to_loginNavigation"
                 app:destination="@id/loginNavigation"
                 app:launchSingleTop="false"
+                app:popUpTo="@id/chatListFragment"
                 app:popUpToInclusive="false" />
 
+            <!-- Acción hacia ChatFragment -->
             <action
                 android:id="@+id/action_chatListFragment_to_chatFragment"
                 app:destination="@id/chatFragment"
@@ -46,11 +56,13 @@
 
         </fragment>
 
+        <!-- Contacts List Fragment -->
         <fragment
             android:id="@+id/contactsListFragment"
             android:name="com.team2.chitchat.ui.contactslist.ContactsListFragment"
             android:label="ContactsListFragment">
 
+            <!-- Acción hacia ChatFragment -->
             <action
                 android:id="@+id/action_contactsListFragment_to_chatFragment"
                 app:destination="@id/chatFragment"
@@ -59,27 +71,33 @@
 
         </fragment>
 
+        <!-- Chat Fragment -->
         <fragment
             android:id="@+id/chatFragment"
             android:name="com.team2.chitchat.ui.chat.ChatFragment"
             android:label="ChatFragment">
 
+            <!-- Argumentos para ChatFragment -->
             <argument
                 android:name="idChat"
                 app:argType="string" />
+
+            <!-- Acción hacia ProfileFragment -->
             <action
                 android:id="@+id/action_chatFragment_to_profileFragment"
                 app:destination="@id/profileFragment" />
 
         </fragment>
 
+        <!-- Profile Fragment -->
         <fragment
             android:id="@+id/profileFragment"
             android:name="com.team2.chitchat.ui.profile.ProfileFragment"
-            android:label="fragment_profile"
+            android:label="ProfileFragment"
             tools:layout="@layout/fragment_profile">
 
-        <action
+            <!-- Acción hacia ChatListFragment -->
+            <action
                 android:id="@+id/action_profileFragment_to_chatListFragment"
                 app:destination="@id/chatListFragment"
                 app:popUpTo="@id/chatListFragment"
@@ -87,39 +105,46 @@
 
         </fragment>
 
+        <!-- Acción Global hacia ProfileFragment -->
         <action
             android:id="@+id/action_global_profileFragment"
             app:destination="@id/profileFragment" />
 
     </navigation>
 
+    <!-- Login Navigation -->
     <navigation
         android:id="@+id/loginNavigation"
         app:startDestination="@id/loginFragment">
 
+        <!-- Login Fragment -->
         <fragment
             android:id="@+id/loginFragment"
             android:name="com.team2.chitchat.ui.login.LoginFragment"
-            android:label="ListUsersFragment"
+            android:label="LoginFragment"
             tools:layout="@layout/fragment_login">
 
-        <action
+            <!-- Acción hacia RegistrationFragment -->
+            <action
                 android:id="@+id/action_loginFragment_to_registrationFragment"
                 app:destination="@id/registrationFragment" />
 
         </fragment>
 
+        <!-- Registration Fragment -->
         <fragment
             android:id="@+id/registrationFragment"
             android:name="com.team2.chitchat.ui.registration.RegistrationFragment"
             android:label="RegistrationFragment"
             tools:layout="@layout/fragment_registration">
 
+            <!-- Acción hacia MainNavigation -->
             <action
                 android:id="@+id/action_registrationFragment_to_mainNavigation"
                 app:destination="@id/mainNavigation"
-                app:launchSingleTop="false"
-                app:popUpToInclusive="false" />
+                app:launchSingleTop="true"
+                app:popUpTo="@id/loginNavigation"
+                app:popUpToInclusive="true" />
 
         </fragment>
 
