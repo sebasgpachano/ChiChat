@@ -40,6 +40,7 @@
             android:layout_marginTop="4dp"
             android:hint="@string/hintUser"
             android:labelFor="@+id/textVUserLoginFragment"
+            android:imeOptions="actionNext"
             style="@style/customEditText"
             android:importantForAutofill="no" />
         <TextView
@@ -70,6 +71,7 @@
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:labelFor="@+id/editTPasswordLoginFragment"
+            android:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="@id/imageVLoginFragment"
             app:layout_constraintStart_toStartOf="@id/imageVLoginFragment"
             app:layout_constraintTop_toBottomOf="@+id/textVPasswordLoginFragment" />
