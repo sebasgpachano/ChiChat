@@ -3,19 +3,13 @@ package com.team2.chitchat.ui.dialogfragment
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.DialogFragment
-import androidx.viewpager.widget.ViewPager.LayoutParams
 import com.team2.chitchat.R
 import com.team2.chitchat.databinding.FragmentDialogErrorMessageBinding
-import com.team2.chitchat.ui.extensions.TAG
 
 class MessageDialogFragment : DialogFragment() {
     var iconID: Int? = null
@@ -36,19 +30,7 @@ class MessageDialogFragment : DialogFragment() {
         fun negativeButtonOnclick(view: View) = Unit
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "-> OnCreate")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "-> OnStart")
-    }
-
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        Log.d(TAG, "-> onCreateDialog")
         return activity?.let {
             val builder = AlertDialog.Builder(it, R.style.backGroundDialog)
             // Get the layout inflater.
@@ -57,18 +39,6 @@ class MessageDialogFragment : DialogFragment() {
 
             builder.setView(binding.root)
             val dialog = builder.create()
-            dialog!!.setOnShowListener {
-                val window = dialog.window
-                if (window != null) {
-                    val layoutParams = WindowManager.LayoutParams()
-                    layoutParams.copyFrom(window.attributes)
-                    val widthInPixel = convertDpToPx()
-                    layoutParams.width = widthInPixel
-                    layoutParams.height = LayoutParams.WRAP_CONTENT
-                    layoutParams.gravity = Gravity.CENTER
-                    window.attributes = layoutParams
-                }
-            }
             paintDialog()
             initializeListener()
             dialog
@@ -82,15 +52,9 @@ class MessageDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(TAG, "-> onCreateView")
         binding = FragmentDialogErrorMessageBinding.inflate(inflater)
         paintDialog()
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "-> onResume")
     }
 
     fun refreshValues(
@@ -109,11 +73,6 @@ class MessageDialogFragment : DialogFragment() {
         this.listener = listener
         paintDialog()
         initializeListener()
-    }
-
-    private fun convertDpToPx(): Int {
-        val displayMetrics = requireContext().resources.displayMetrics
-        return Math.round(270 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
     }
 
     private fun paintDialog() {
@@ -146,13 +105,11 @@ class MessageDialogFragment : DialogFragment() {
 
     private fun initializeListener() {
         binding.buttonPositiveErrorDF.setOnClickListener {
-            Log.d("test", "Positive initializeListener: ")
             listener?.positiveButtonOnclick(it)
             dismiss()
         }
         negativeButton?.let {
             binding.buttonNegativeErrorDF.setOnClickListener { view ->
-                Log.d("test", "Negative initializeListener: ")
                 dismiss()
                 listener?.negativeButtonOnclick(view)
             }
