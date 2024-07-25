@@ -2,6 +2,7 @@ package com.team2.chitchat.hilt
 
 import android.app.Application
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.FirebaseApp
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
@@ -30,6 +31,7 @@ class SimpleApplication : Application() {
     lateinit var encryptedSharedPreferencesManager: EncryptedSharedPreferencesManager
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         initSession()
         configFirebase()
     }
@@ -70,7 +72,7 @@ class SimpleApplication : Application() {
                     messagingToken
                 )
             } else {
-                Log.w(TAG, "firebase> fallo en obtener el token")
+                Log.w(TAG, "firebase> fail take token")
             }
         }
     }
