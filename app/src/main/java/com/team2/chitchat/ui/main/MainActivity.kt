@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -50,6 +51,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         configNavigation()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
     private fun askPermissionNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(
                 this,
@@ -66,7 +71,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val currentDestination = navController.currentDestination?.id
+                when (currentDestination) {
+                    R.id.loginFragment -> {
+                        finishAffinity()
+                    }
 
+                    R.id.chatListFragment -> {
+                        mainViewModel.logOut()
+                        finishAffinity()
+                    }
+
+                    else -> {
+                        supportFragmentManager.popBackStack()
+                    }
+                }
+            }
+        })
     }
 
     override fun goToProfileFragment() {
@@ -75,13 +98,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         mainViewModel.logOut()
+        super.onDestroy()
     }
 
     override fun onPause() {
-        super.onPause()
         mainViewModel.logOut()
+        super.onPause()
     }
 
     override fun onResume() {
