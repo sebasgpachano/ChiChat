@@ -205,7 +205,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {}
+    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
+        Unit
 
     private fun initListener() {
 
@@ -226,7 +227,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
                 if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
                     if (!viewModel.accessBiometricStateFlow.value
-                        && !dataUserSession.haveSession()) {
+                        && !dataUserSession.haveSession()
+                    ) {
                         showMessageDialog(
                             iconID = R.drawable.delete_chat_icon,
                             title = getString(R.string.title_biometric_activated),
@@ -295,9 +297,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 showErrorMessage(
                     message = getString(R.string.biometric_unavailable),
                     object : MessageDialogFragment.MessageDialogListener {
-                        override fun positiveButtonOnclick(view: View) {
-                        }
-
+                        override fun positiveButtonOnclick(view: View) = Unit
                     }
                 )
             }
