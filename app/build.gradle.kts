@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.pluginDaggerHilt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.pluginCrashlytics)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.pluginGoogleServices)
 }
 
 android {
@@ -68,9 +68,6 @@ android {
 dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.security.crypto.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     //Android
     implementation(libs.bundles.android)
     //Navigation
@@ -86,10 +83,8 @@ dependencies {
     implementation(libs.gson)
     //Hilt
     implementation(libs.daggerHilt)
-    kapt(libs.daggerHiltCompiler)
     //Rooms
     implementation(libs.bundles.room)
-    kapt(libs.androidx.room.compiler)
     //coroutines
     implementation(libs.bundles.coroutines)
     // CryptoSharedPreference
@@ -100,7 +95,13 @@ dependencies {
     implementation(libs.androidx.biometric)
     // Firebase
     implementation(libs.bundles.firebase)
-
+    //Test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    //Kapt
+    kapt(libs.androidx.room.compiler)
+    kapt(libs.daggerHiltCompiler)
 }
 
 kapt {

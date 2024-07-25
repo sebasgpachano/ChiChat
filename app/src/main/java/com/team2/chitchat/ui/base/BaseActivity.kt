@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -53,15 +52,6 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         observeViewModel()
         createAfterInflateBindingSetupObserverViewModel(savedInstanceState)
         setListenersClickToolbarButtons()
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (supportFragmentManager.backStackEntryCount == 0) {
-                    finish()
-                } else {
-                    supportFragmentManager.popBackStack()
-                }
-            }
-        })
     }
 
     fun showLoading(show: Boolean) {
@@ -71,7 +61,10 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
                     LOADING_DIALOG_FRAGMENT_TAG
                 )
             ) {
-                loadingDialogFragment.show(supportFragmentManager, LOADING_DIALOG_FRAGMENT_TAG)
+                loadingDialogFragment.show(
+                    supportFragmentManager,
+                    LOADING_DIALOG_FRAGMENT_TAG
+                )
             }
         } else {
             if (baseActivityControlShowLoading.canHideLoading(
