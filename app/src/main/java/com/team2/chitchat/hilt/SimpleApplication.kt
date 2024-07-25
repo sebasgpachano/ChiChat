@@ -2,7 +2,9 @@ package com.team2.chitchat.hilt
 
 import android.app.Application
 import android.util.Log
+import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.analytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
 import com.team2.chitchat.data.repository.preferences.EncryptedSharedPreferencesKeys.Companion.ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_MESSAGING_TOKEN
@@ -73,5 +75,6 @@ class SimpleApplication : Application() {
                 Log.w(TAG, "firebase> fallo en obtener el token")
             }
         }
+        Firebase.analytics
     }
 }

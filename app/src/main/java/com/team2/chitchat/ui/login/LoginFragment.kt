@@ -24,6 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
+import com.team2.chitchat.data.analytics.FirebaseAnalyticsManager
 import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.session.DataUserSession
@@ -57,6 +58,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
+
+    @Inject
+    lateinit var firebaseAnalyticsManager: FirebaseAnalyticsManager
 
     //Activity Result
     private val resultLauncher =
@@ -211,11 +215,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun startDataBase(isOk: Boolean) {
         if (isOk) {
+            logLoginEvent()
             dbViewModel.startDataBase()
         }
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {}
+    private fun logLoginEvent() {
+        val loginMethod = if (viewModel.accessBiometricStateFlow.value) "biometric" else "password"
+        firebaseAnalyticsManager.logLoginEvent(loginMethod)
+    }
+
+    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
+        Unit
 
     private fun initListener() {
 
