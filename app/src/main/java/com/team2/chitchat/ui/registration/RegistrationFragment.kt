@@ -23,7 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener {
+class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener,
+    AvatarAdapter.OnItemClickListener {
 
     private val registrationViewModel: RegistrationViewModel by viewModels()
     private val dbViewModel: DbViewModel by viewModels()
@@ -49,7 +50,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
     private fun setupRecyclerView() {
         binding?.rvAvatar?.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        avatarAdapter = AvatarAdapter(getAvatars())
+        avatarAdapter = AvatarAdapter(getAvatars(), this)
         binding?.rvAvatar?.adapter = avatarAdapter
     }
 
@@ -170,5 +171,9 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                 editText?.setErrorBorder(true, requireContext(), textView)
             }
         }
+    }
+
+    override fun onItemClick(avatar: Avatar) {
+        binding?.ivSelectedAvatar?.setImageResource(avatar.imageResId)
     }
 }

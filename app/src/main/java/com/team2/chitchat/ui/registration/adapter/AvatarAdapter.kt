@@ -5,11 +5,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.team2.chitchat.databinding.ItemAvatarBinding
 
-class AvatarAdapter(private val avatars: List<Avatar>) :
+class AvatarAdapter(
+    private val avatars: List<Avatar>,
+    private val itemClickListener: OnItemClickListener
+) :
     RecyclerView.Adapter<AvatarAdapter.AvatarViewHolder>() {
 
+    fun interface OnItemClickListener {
+        fun onItemClick(avatar: Avatar)
+    }
+
     inner class AvatarViewHolder(val binding: ItemAvatarBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    itemClickListener.onItemClick(avatars[position])
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
         val binding = ItemAvatarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
