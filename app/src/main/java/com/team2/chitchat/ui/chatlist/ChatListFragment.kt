@@ -1,8 +1,10 @@
 package com.team2.chitchat.ui.chatlist
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +15,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.security.crypto.EncryptedSharedPreferences
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
+import com.team2.chitchat.data.repository.preferences.EncryptedSharedPreferencesKeys.Companion.ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE
 import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.databinding.FragmentChatListBinding
 import com.team2.chitchat.ui.base.BaseFragment
@@ -36,6 +40,10 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
 
     @Inject
     lateinit var dataUserSession: DataUserSession
+
+    @Inject
+    lateinit var encryptedSharedPreferences: EncryptedSharedPreferences
+
     override fun inflateBinding() {
         binding = FragmentChatListBinding.inflate(layoutInflater)
     }
@@ -46,11 +54,25 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
         if (!dataUserSession.haveSession()) {
             findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
         }
+        setImage()
         configRecyclerView()
         setupListeners()
         setupSwipeToDelete()
         setupSearch()
+    }
 
+    private fun setImage() {
+        val imageBase64 = encryptedSharedPreferences.getString(
+            ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE,
+            null
+        )
+        if (imageBase64.isNullOrBlank()) {
+            updateProfileImage(null)
+        } else {
+            val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            updateProfileImage(bitmap)
+        }
     }
 
     private fun configRecyclerView() {

@@ -194,4 +194,8 @@ class DataProvider @Inject constructor(
     override fun loadProfilePicture(): Bitmap? {
         return preferencesDataSource.loadProfilePicture()
     }
+
+    override fun clearPreferences() {
+        return preferencesDataSource.clearPreferences()
+    }
 }

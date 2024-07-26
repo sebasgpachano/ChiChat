@@ -55,4 +55,8 @@ class PreferencesDataSource @Inject constructor(
         return encryptedSharedPreferencesManager.loadProfilePicture()
     }
 
+    fun clearPreferences() {
+        return encryptedSharedPreferencesManager.clearAllPreferences()
+    }
+
 }

@@ -8,6 +8,7 @@ import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.usecase.local.DeleteChatTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteMessageTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteUserTableUseCase
+import com.team2.chitchat.data.usecase.preferences.ClearPreferencesUseCase
 import com.team2.chitchat.data.usecase.preferences.IsBiometricStateUseCase
 import com.team2.chitchat.data.usecase.preferences.LoadProfilePictureUseCase
 import com.team2.chitchat.data.usecase.preferences.PutBiometricStateUseCase
@@ -36,6 +37,7 @@ class ProfileViewModel @Inject constructor(
     private val loadProfilePictureUseCase: LoadProfilePictureUseCase,
     private val isBiometricStateUseCase: IsBiometricStateUseCase,
     private val putBiometricStateUseCase: PutBiometricStateUseCase,
+    private val clearPreferencesUseCase: ClearPreferencesUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel() {
     private val deleteDbMutableSharedFlow = MutableSharedFlow<Boolean>()
@@ -88,6 +90,7 @@ class ProfileViewModel @Inject constructor(
                 when (response) {
                     is BaseResponse.Success -> {
                         Log.d(TAG, "l>  putLogOut Success: ${response.data}")
+                        deletePreference()
                         _putLogOutMutableStateFlow.value = response.data
                     }
 
@@ -101,6 +104,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    //DataBase
     fun deleteDb() {
         Log.d(
             TAG,
@@ -166,15 +170,21 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    //Preferences
+    private fun deletePreference() {
+        clearPreferencesUseCase()
+    }
+
     //AccessBiometric
     private fun loadAccessBiometric() {
         viewModelScope.launch(dispatcher) {
-            isBiometricStateUseCase().collect { baseResponse->
-                when(baseResponse) {
+            isBiometricStateUseCase().collect { baseResponse ->
+                when (baseResponse) {
                     is BaseResponse.Error -> {
                         Log.d(this@ProfileViewModel.TAG, "l> Error: ${baseResponse.error.message}")
                         errorMutableSharedFlow.emit(baseResponse.error)
                     }
+
                     is BaseResponse.Success -> {
                         accessBiometricMutableStateFlow.value = baseResponse.data
                     }
@@ -182,6 +192,7 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
     fun saveAccessBiometric(accessBiometric: Boolean) {
         viewModelScope.launch(dispatcher) {
             putBiometricStateUseCase(accessBiometric)

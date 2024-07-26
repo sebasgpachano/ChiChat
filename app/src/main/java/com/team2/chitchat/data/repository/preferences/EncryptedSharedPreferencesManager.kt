@@ -84,4 +84,10 @@ class EncryptedSharedPreferencesManager @Inject constructor(
             BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
         }
     }
+
+    fun clearAllPreferences() {
+        val start = System.currentTimeMillis()
+        edit { it.clear() }
+        Log.d(TAG, "l> All preferences cleared, ${System.currentTimeMillis() - start}ms")
+    }
 }

@@ -79,4 +79,5 @@ interface DataSource {
     fun getAccessBiometric(): Flow<BaseResponse<Boolean>>
     fun saveProfilePicture(imageView: CircleImageView?)
     fun loadProfilePicture(): Bitmap?
+    fun clearPreferences()
 }
