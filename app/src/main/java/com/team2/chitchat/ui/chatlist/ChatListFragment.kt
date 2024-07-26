@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.chatlist
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
@@ -62,17 +63,18 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
     }
 
     private fun setImage() {
+        val bitmap: Bitmap
         val imageBase64 = encryptedSharedPreferences.getString(
             ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE,
             null
         )
         if (imageBase64.isNullOrBlank()) {
-            updateProfileImage(null)
+            bitmap = BitmapFactory.decodeResource(resources, R.drawable.baseline_person_24)
         } else {
             val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
-            val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-            updateProfileImage(bitmap)
+            bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
         }
+        updateProfileImage(bitmap)
     }
 
     private fun configRecyclerView() {
