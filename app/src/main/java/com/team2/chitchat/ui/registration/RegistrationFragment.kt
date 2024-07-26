@@ -1,7 +1,9 @@
 package com.team2.chitchat.ui.registration
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +11,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.security.crypto.EncryptedSharedPreferences
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.error.ErrorModel
+import com.team2.chitchat.data.repository.preferences.EncryptedSharedPreferencesKeys.Companion.ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE
 import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.databinding.FragmentRegistrationBinding
 import com.team2.chitchat.ui.base.BaseFragment
@@ -21,6 +25,7 @@ import com.team2.chitchat.ui.registration.adapter.AvatarPagerAdapter
 import com.team2.chitchat.ui.registration.adapter.SpaceItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener {
@@ -28,6 +33,9 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
     private val registrationViewModel: RegistrationViewModel by viewModels()
     private val dbViewModel: DbViewModel by viewModels()
     private var selectedAvatarResId: Int = -1
+
+    @Inject
+    lateinit var encryptedSharedPreferences: EncryptedSharedPreferences
 
     override fun inflateBinding() {
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
@@ -86,6 +94,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         lifecycleScope.launch {
             dbViewModel.initDbSharedFlow.collect { isOk ->
                 if (isOk) {
+                    setImage()
                     val intent = Intent(requireContext(), ChatService::class.java)
                     requireContext().startService(intent)
                     findNavController().navigate(RegistrationFragmentDirections.actionRegistrationFragmentToMainNavigation())
@@ -106,6 +115,16 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                 checkUser(error)
             }
         }
+    }
+
+    private fun setImage() {
+        val imageBase64 = encryptedSharedPreferences.getString(
+            ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE,
+            null
+        )
+        val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
+        val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size) ?: null
+        updateProfileImage(bitmap)
     }
 
     override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =

@@ -57,7 +57,7 @@ class SimpleApplication : Application() {
                 } else {
                     ""
                 }
-                encryptedSharedPreferencesManager.putString(
+                encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
                     ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_UUID,
                     uuid
                 )
@@ -69,7 +69,7 @@ class SimpleApplication : Application() {
             if (task.isSuccessful) {
                 val messagingToken = task.result
                 Log.d(TAG, "firebase> token: $messagingToken")
-                encryptedSharedPreferencesManager.putString(
+                encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
                     ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_MESSAGING_TOKEN,
                     messagingToken
                 )

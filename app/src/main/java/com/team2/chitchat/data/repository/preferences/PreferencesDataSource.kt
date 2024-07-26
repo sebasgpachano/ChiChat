@@ -48,11 +48,11 @@ class PreferencesDataSource @Inject constructor(
     }
 
     fun saveProfilePicture(imageView: CircleImageView?) {
-        sharedPreferencesManager.saveProfilePicture(imageView)
+        encryptedSharedPreferencesManager.saveProfilePicture(imageView)
     }
 
     fun loadProfilePicture(): Bitmap? {
-        return sharedPreferencesManager.loadProfilePicture()
+        return encryptedSharedPreferencesManager.loadProfilePicture()
     }
 
 }

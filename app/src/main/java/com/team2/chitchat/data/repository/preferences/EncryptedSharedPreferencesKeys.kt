@@ -9,5 +9,7 @@ class EncryptedSharedPreferencesKeys {
         const val ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_UUID = "firebase_uuid"
         const val ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_MESSAGING_TOKEN =
             "firebase_messaging_token"
+        const val ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE =
+            "encryptedSharedPreferencesKeyProfileImage"
     }
 }
