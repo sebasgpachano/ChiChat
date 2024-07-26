@@ -19,7 +19,6 @@ import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.AuthenticationCallback
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -32,7 +31,6 @@ import com.team2.chitchat.databinding.FragmentLoginBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
-import com.team2.chitchat.ui.extensions.hideKeyboard
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.extensions.showKeyboard
 import com.team2.chitchat.ui.main.DbViewModel
@@ -41,11 +39,6 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
-
-/**
- * A simple [Fragment] subclass.
- * create an instance of this fragment.
- */
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels()
