@@ -77,8 +77,8 @@
 
     <EditText
         android:id="@+id/etSend"
-        android:layout_width="350dp"
-        android:layout_height="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="30dp"
@@ -93,14 +93,14 @@
 
     <ImageButton
         android:id="@+id/ibSend"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/send_button"
         android:src="@drawable/icon_send"
         android:background="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etSend"
+        app:layout_constraintBottom_toBottomOf="@id/etSend"
         app:layout_constraintStart_toEndOf="@id/etSend" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
