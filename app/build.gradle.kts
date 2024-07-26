@@ -14,6 +14,10 @@ android {
     namespace = "com.team2.chitchat"
     compileSdk = 34
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
     defaultConfig {
         applicationId = "com.team2.chitchat"
         minSdk = 26
@@ -88,8 +92,6 @@ dependencies {
     implementation(libs.bundles.room)
     //coroutines
     implementation(libs.bundles.coroutines)
-    // CryptoSharedPreference
-    implementation(libs.androidxCryptoSharedPreferences)
     //Circle image view
     implementation(libs.circleimageview)
     // Kotlin

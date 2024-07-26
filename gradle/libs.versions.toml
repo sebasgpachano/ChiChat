@@ -1,18 +1,18 @@
 [versions]
-agp = "8.4.1"
+agp = "8.5.1"
 circleimageview = "3.1.0"
 biometric = "1.1.0"
-kotlin = "1.9.23"
+kotlin = "2.0.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-activity = "1.9.0"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+activity = "1.9.1"
 
 #plugin
 pluginNavigationSafeArgs = "2.7.7"
 pluginDaggerHilt = "2.48"
 pluginKotlin = "1.9.23"
-pluginCrashlytics = "2.9.9"
+pluginCrashlytics = "3.0.2"
 pluginGoogleService = "4.4.2"
 pluginSonarQube = "5.0.0.4638"
 
@@ -23,13 +23,13 @@ appCompat = "1.7.0"
 constraitLayout = "2.1.4"
 swipeRefreshLayout = "1.1.0"
 material = "1.12.0"
-playServicesMaps = "18.2.0"
+playServicesMaps = "19.0.0"
 
 #Navigation
 androidxNavigation = "2.7.7"
 
 #Lifecycle
-lifecycle = "2.8.1"
+lifecycle = "2.8.4"
 
 #Hilt
 hilt = "2.48.1"
@@ -41,10 +41,6 @@ securityCryptoKtx = "1.0.0"
 #OkHttp
 okhttp = "4.12.0"
 gson = "2.10.1"
-
-
-#Crypto SharedPreferences
-cryptoSharedPreferences = "1.0.0"
 
 #Room
 roomRuntime = "2.6.1"
@@ -101,9 +97,6 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 #Iterceptor
 interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
-
-#Crypto SharedPreferences
-androidxCryptoSharedPreferences = { group = "androidx.security", name = "security-crypto", version.ref = "cryptoSharedPreferences" }
 
 #Room
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
