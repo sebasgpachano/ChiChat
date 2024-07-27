@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,7 +21,6 @@ import com.team2.chitchat.databinding.FragmentProfileBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
-import com.team2.chitchat.ui.extensions.gone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -112,7 +110,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         lifecycleScope.launch {
             viewModel.profilePictureStateFlow.collect { bitmap ->
                 bitmap?.let {
-                    binding?.imageVProfileFragment?.setImageBitmap(bitmap)
+                    binding?.imageVProfileFragment?.setImageBitmap(getCircularBitmap(bitmap))
                 }
             }
         }
@@ -149,7 +147,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                             val intent = Intent(requireContext(), ChatService::class.java)
                             requireContext().stopService(intent)
                             viewModel.deleteDb()
-
                         }
                     }
                 )
