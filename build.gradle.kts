@@ -7,6 +7,6 @@ plugins {
     alias(libs.plugins.pluginDaggerHilt) apply false
     alias(libs.plugins.pluginCrashlytics) apply false
     alias(libs.plugins.pluginGoogleServices) apply false
+    alias(libs.plugins.pluginKsp) apply false
     alias(libs.plugins.sonarQube) apply false
-    id("com.google.devtools.ksp") version "1.9.10-1.0.13" apply false
 }

@@ -2,11 +2,25 @@
 <issues format="6" by="lint 8.5.1" type="baseline" client="gradle" dependencies="false"
     name="AGP (8.5.1)" variant="all" version="8.5.1">
 
-    <issue id="KaptUsageInsteadOfKsp"
-        message="This library supports using KSP instead of kapt, which greatly improves performance. Learn more: https://developer.android.com/studio/build/migrate-to-ksp"
-        errorLine1="    kapt(libs.androidx.room.compiler)"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="build.gradle.kts" line="106" column="5" />
+    <issue id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlin.android than 1.9.23 is available: 2.0.0"
+        errorLine1="kotlin = &quot;1.9.23&quot;" errorLine2="         ~~~~~~~~">
+        <location file="$HOME/AndroidStudioProyect/ChiChat/gradle/libs.versions.toml" line="5"
+            column="10" />
+    </issue>
+
+    <issue id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlin.android than 1.9.23 is available: 2.0.0"
+        errorLine1="kotlin = &quot;1.9.23&quot;" errorLine2="         ~~~~~~~~">
+        <location file="$HOME/AndroidStudioProyect/ChiChat/gradle/libs.versions.toml" line="5"
+            column="10" />
+    </issue>
+
+    <issue id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlin.android than 1.9.23 is available: 2.0.0"
+        errorLine1="kotlin = &quot;1.9.23&quot;" errorLine2="         ~~~~~~~~">
+        <location file="$HOME/AndroidStudioProyect/ChiChat/gradle/libs.versions.toml" line="5"
+            column="10" />
     </issue>
 
     <issue id="IconLocation"
@@ -50,7 +64,7 @@
     </issue>
 
     <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/icon1_search.png` in densityless folder">
+        message="Found bitmap drawable `res/drawable/icon_search.png` in densityless folder">
         <location file="src/main/res/drawable/icon_search.png" />
     </issue>
 

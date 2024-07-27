@@ -7,8 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.pluginCrashlytics)
     alias(libs.plugins.pluginGoogleServices)
+    alias(libs.plugins.pluginKsp)
     alias(libs.plugins.sonarQube)
-    id("com.google.devtools.ksp") version "1.9.10-1.0.13"
 }
 
 android {

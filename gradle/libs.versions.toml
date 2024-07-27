@@ -15,6 +15,7 @@ pluginKotlin = "1.9.23"
 pluginCrashlytics = "3.0.2"
 pluginGoogleService = "4.4.2"
 pluginSonarQube = "5.0.0.4638"
+pluginKsp = "1.9.10-1.0.13"
 
 #Android
 coreKtx = "1.13.1"
@@ -133,4 +134,5 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 pluginDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "pluginDaggerHilt" }
 pluginCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "pluginCrashlytics" }
 pluginGoogleServices = { id = "com.google.gms.google-services", version.ref = "pluginGoogleService" }
+pluginKsp = { id = "com.google.devtools.ksp", version.ref = "pluginKsp" }
 sonarQube = { id = "org.sonarqube", version.ref = "pluginSonarQube" }
