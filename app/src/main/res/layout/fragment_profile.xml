@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/photoProfileDescription"
-        android:src="@drawable/baseline_person_24" />
+        android:src="@mipmap/avatar_default" />
 
     <TextView
         android:id="@+id/textVUserNickNameProfileFragment"

@@ -56,12 +56,12 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
 
     private fun getAvatars(): List<Avatar> {
         return listOf(
-            Avatar(R.drawable.avatar_lobster),
-            Avatar(R.drawable.avatar_cat),
-            Avatar(R.drawable.avatar_monkey),
-            Avatar(R.drawable.avatar_crab),
-            Avatar(R.drawable.avatar_girl),
-            Avatar(R.drawable.avatar_boy),
+            Avatar(R.mipmap.avatar_lobster_foreground),
+            Avatar(R.mipmap.avatar_cat_foreground),
+            Avatar(R.mipmap.avatar_monkey_foreground),
+            Avatar(R.mipmap.avatar_crab_foreground),
+            Avatar(R.mipmap.avatar_girl_foreground),
+            Avatar(R.mipmap.avatar_boy_foreground),
         )
     }
 
