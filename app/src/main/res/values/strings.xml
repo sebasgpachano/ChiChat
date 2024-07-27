@@ -98,4 +98,8 @@
     <string name="title_biometric_activated">Accesso Biometrico</string>
     <string name="mesage_biometric_activated">¿Deseas activar acceso biométrico?</string>
     <string name="imageFingerprintDescription">Icono de huella dactilar para acceder con biometria.</string>
+
+    <!-- Firebase login event-->
+    <string name="biometric_event">biometric</string>
+    <string name="password_event">password</string>
 </resources>
