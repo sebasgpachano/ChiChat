@@ -2,11 +2,6 @@
 <issues format="6" by="lint 8.5.1" type="baseline" client="gradle" dependencies="false"
     name="AGP (8.5.1)" variant="all" version="8.5.1">
 
-    <issue id="ObsoleteSdkInt"
-        message="This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `mipmap-anydpi`.">
-        <location file="src/main/res/mipmap-anydpi-v26" />
-    </issue>
-
     <issue id="KaptUsageInsteadOfKsp"
         message="This library supports using KSP instead of kapt, which greatly improves performance. Learn more: https://developer.android.com/studio/build/migrate-to-ksp"
         errorLine1="    kapt(libs.androidx.room.compiler)"
@@ -15,7 +10,7 @@
     </issue>
 
     <issue id="UnusedResources" message="The resource `R.mipmap.ic_launcher` appears to be unused">
-        <location file="src/main/res/mipmap-hdpi/ic_launcher.webp" />
+        <location file="src/main/res/mipmap-mdpi/ic_launcher.webp" />
     </issue>
 
     <issue id="UnusedResources"
@@ -34,12 +29,17 @@
 
     <issue id="UnusedResources"
         message="The resource `R.mipmap.ic_launcher_round` appears to be unused">
-        <location file="src/main/res/mipmap-mdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp" />
+    </issue>
+
+    <issue id="UnusedResources"
+        message="The resource `R.mipmap.icon_app_mono_round` appears to be unused">
+        <location file="src/main/res/mipmap-hdpi/icon_app_mono_round.webp" />
     </issue>
 
     <issue id="UnusedResources"
         message="The resource `R.mipmap.icon_app_round` appears to be unused">
-        <location file="src/main/res/mipmap-mdpi/icon_app_round.webp" />
+        <location file="src/main/res/mipmap-xhdpi/icon_app_round.webp" />
     </issue>
 
     <issue id="UnusedResources"
@@ -67,13 +67,6 @@
         errorLine1="    &lt;style name=&quot;customDialog&quot;>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~">
         <location file="src/main/res/values/style.xml" line="135" column="12" />
-    </issue>
-
-    <issue id="MonochromeLauncherIcon"
-        message="The application adaptive icon is missing a monochrome tag"
-        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location file="src/main/res/mipmap-anydpi-v26/icon_app.xml" line="2" column="1" />
     </issue>
 
     <issue id="IconLocation"
