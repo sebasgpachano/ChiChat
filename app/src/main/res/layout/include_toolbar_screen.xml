@@ -53,7 +53,7 @@
         android:contentDescription="@string/toolbar_description_profile_button"
         android:padding="2dp"
         android:scaleType="centerInside"
-        android:src="@drawable/baseline_person_24"
+        android:src="@mipmap/avatar_default"
         app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
         app:layout_constraintEnd_toStartOf="@+id/ibToolbarNotification"
         app:layout_constraintTop_toTopOf="@id/tbToolbar" />
