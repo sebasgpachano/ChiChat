@@ -152,83 +152,6 @@
     </issue>
 
     <issue id="UnusedResources"
-        message="The resource `R.string.list_contacts_update_list` appears to be unused"
-        errorLine1="    &lt;string name=&quot;list_contacts_update_list&quot;>Actualizar la lista de contactos&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="15" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.list_contacts_btn_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;list_contacts_btn_search&quot;>Boton para filtrar contactos&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="16" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.list_contacts_btn_quit_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;list_contacts_btn_quit_search&quot;>Boton para cancelar la busqueda de contactos&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="17" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.chat_list_date_yesterday` appears to be unused"
-        errorLine1="    &lt;string name=&quot;chat_list_date_yesterday&quot;>Ayer&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="22" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.chat_list_btn_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;chat_list_btn_search&quot;>Boton para filtrar conversaciones&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="26" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.chat_list_btn_quit_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;chat_list_btn_quit_search&quot;>Boton para cancelar la busqueda de conversaciones&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="27" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.change_password` appears to be unused"
-        errorLine1="    &lt;string name=&quot;change_password&quot;>Cambiar contraseña&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="74" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.editProfileDescription` appears to be unused"
-        errorLine1="    &lt;string name=&quot;editProfileDescription&quot;>icono de camara&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="75" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.message_logout` appears to be unused"
-        errorLine1="    &lt;string name=&quot;message_logout&quot;>Su sesión ha caducado debe de autenticar su cuenta de nuevo.&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="81" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.profile_shared_preferences` appears to be unused"
-        errorLine1="    &lt;string name=&quot;profile_shared_preferences&quot;>app_prefs&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="107" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.profile_picture` appears to be unused"
-        errorLine1="    &lt;string name=&quot;profile_picture&quot;>profile_picture&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="108" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
         message="The resource `R.style.poppinsW400Regular` appears to be unused"
         errorLine1="    &lt;style name=&quot;poppinsW400Regular&quot;>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
@@ -310,6 +233,12 @@
     <issue id="IconLocation"
         message="Found bitmap drawable `res/drawable/icon_send.png` in densityless folder">
         <location file="src/main/res/drawable/icon_send.png" />
+    </issue>
+
+    <issue id="RtlSymmetry"
+        message="When you define `paddingEnd` you should probably also define `paddingStart` for right-to-left symmetry"
+        errorLine1="    android:paddingEnd=&quot;10dp&quot;>" errorLine2="    ~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/layout/item_avatar.xml" line="6" column="5" />
     </issue>
 
 </issues>
