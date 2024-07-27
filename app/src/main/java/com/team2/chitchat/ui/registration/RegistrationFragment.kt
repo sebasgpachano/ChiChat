@@ -2,13 +2,13 @@ package com.team2.chitchat.ui.registration
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.repository.remote.backend.ChatService
@@ -17,17 +17,18 @@ import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.extensions.toastLong
 import com.team2.chitchat.ui.main.DbViewModel
-import com.team2.chitchat.ui.registration.adapter.AvatarPagerAdapter
-import com.team2.chitchat.ui.registration.adapter.SpaceItemDecoration
+import com.team2.chitchat.ui.registration.adapter.Avatar
+import com.team2.chitchat.ui.registration.adapter.AvatarAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener {
+class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.OnClickListener,
+    AvatarAdapter.OnItemClickListener {
 
     private val registrationViewModel: RegistrationViewModel by viewModels()
     private val dbViewModel: DbViewModel by viewModels()
-    private var selectedAvatarResId: Int = -1
+    private lateinit var avatarAdapter: AvatarAdapter
 
     override fun inflateBinding() {
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
@@ -39,36 +40,29 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         savedInstanceState: Bundle?
     ) {
         setupListeners()
-        setUpViewPager()
+        setupRecyclerView()
     }
 
     private fun setupListeners() {
         binding?.btRegister?.setOnClickListener(this)
     }
 
-    private fun setUpViewPager() {
-        val avatarList = listOf(
-            R.drawable.avatar_lobster,
-            R.drawable.avatar_cat,
-            R.drawable.avatar_monkey,
-            R.drawable.avatar_crab,
-            R.drawable.avatar_girl,
-            R.drawable.avatar_boy
-        )
-        val adapter = AvatarPagerAdapter(avatarList) { avatarResId ->
-            selectedAvatarResId = avatarResId
-            binding?.ivSelectedAvatar?.setImageResource(selectedAvatarResId)
-        }
-        binding?.vpAvatar?.adapter = adapter
-
-        val spaceInPixels = dpToPx()
-        val itemDecoration = SpaceItemDecoration(spaceInPixels)
-        binding?.vpAvatar?.addItemDecoration(itemDecoration)
+    private fun setupRecyclerView() {
+        binding?.rvAvatar?.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        avatarAdapter = AvatarAdapter(getAvatars(), this)
+        binding?.rvAvatar?.adapter = avatarAdapter
     }
 
-    private fun dpToPx(): Int {
-        val metrics = resources.displayMetrics
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10.toFloat(), metrics).toInt()
+    private fun getAvatars(): List<Avatar> {
+        return listOf(
+            Avatar(R.drawable.avatar_lobster),
+            Avatar(R.drawable.avatar_cat),
+            Avatar(R.drawable.avatar_monkey),
+            Avatar(R.drawable.avatar_crab),
+            Avatar(R.drawable.avatar_girl),
+            Avatar(R.drawable.avatar_boy),
+        )
     }
 
     override fun configureToolbarAndConfigScreenSections() {
@@ -177,5 +171,9 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
                 editText?.setErrorBorder(true, requireContext(), textView)
             }
         }
+    }
+
+    override fun onItemClick(avatar: Avatar) {
+        binding?.ivSelectedAvatar?.setImageResource(avatar.imageResId)
     }
 }

@@ -2,10 +2,12 @@ package com.team2.chitchat.ui.chat
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -47,6 +49,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         configRecyclerView()
         setUpKeyboardListener()
         chatViewModel.getChat(args.idChat)
+        newLine()
     }
 
     private fun configRecyclerView() {
@@ -61,6 +64,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         binding?.ibBack?.setOnClickListener(this)
         binding?.ibSend?.setOnClickListener(this)
         chatAdapter.setListener(this)
+
+
     }
 
     override fun configureToolbarAndConfigScreenSections() {
@@ -108,10 +113,16 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
             }
 
             R.id.ibSend -> {
-                if (binding?.etSend?.text.toString().isNotEmpty()) {
-                    chatViewModel.postNewMessage(binding?.etSend?.text.toString(), args.idChat)
+                val rawMessage = binding?.etSend?.text.toString()
+
+                val trimmedMessage = rawMessage.lines()
+                    .filter { it.isNotBlank() }
+                    .joinToString("\n")
+
+                if (trimmedMessage.isNotEmpty()) {
+                    chatViewModel.postNewMessage(trimmedMessage, args.idChat)
+                    binding?.etSend?.text?.clear()
                 }
-                binding?.etSend?.text?.clear()
             }
         }
     }
@@ -138,4 +149,18 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
 
     override fun onItemClick(messageId: String) = Unit
 
+    private fun newLine() {
+        binding?.etSend?.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                val editText = binding?.etSend
+                editText?.let {
+                    val start = it.selectionStart
+                    val end = it.selectionEnd
+                    it.text?.replace(start, end, "\n")
+                }
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+    }
 }
