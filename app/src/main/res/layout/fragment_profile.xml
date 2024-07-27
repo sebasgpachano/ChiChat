@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="@id/textVUserNickNameProfileFragment"
         app:layout_constraintTop_toBottomOf="@+id/textVUserNickNameProfileFragment"/>
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchBiometric"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -47,8 +47,8 @@
         app:layout_constraintTop_toBottomOf="@id/imageVProfileFragment"
         app:layout_constraintStart_toStartOf="@id/actionILogoutProfileFragment"
         app:layout_constraintEnd_toEndOf="@id/actionILogoutProfileFragment"
-        android:thumbTint="@color/switch_color"
-        android:trackTint="@color/switch_color"/>
+        app:thumbTint="@color/switch_color"
+        app:trackTint="@color/switch_color" />
 
     <com.team2.chitchat.ui.views.ActionItemViewGroup
         android:id="@+id/actionILogoutProfileFragment"
