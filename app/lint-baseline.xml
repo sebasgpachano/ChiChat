@@ -9,70 +9,6 @@
         <location file="build.gradle.kts" line="106" column="5" />
     </issue>
 
-    <issue id="UnusedResources" message="The resource `R.mipmap.ic_launcher` appears to be unused">
-        <location file="src/main/res/mipmap-xhdpi/ic_launcher.webp" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.drawable.ic_launcher_background` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location file="src/main/res/drawable/ic_launcher_background.xml" line="2" column="1" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.drawable.ic_launcher_foreground` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location file="src/main/res/drawable/ic_launcher_foreground.xml" line="1" column="1" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.mipmap.ic_launcher_round` appears to be unused"
-        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location file="src/main/res/mipmap-anydpi/ic_launcher_round.xml" line="2" column="1" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.mipmap.icon_app_mono_round` appears to be unused">
-        <location file="src/main/res/mipmap-mdpi/icon_app_mono_round.webp" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.mipmap.icon_app_round` appears to be unused"
-        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location file="src/main/res/mipmap-anydpi/icon_app_round.xml" line="2" column="1" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.drawable.padlock_16x21` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location file="src/main/res/drawable/padlock_16x21.xml" line="1" column="1" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.drawable.profile_button` appears to be unused"
-        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location file="src/main/res/drawable/profile_button.xml" line="2" column="1" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.style.poppinsW500Regular20h24w500` appears to be unused"
-        errorLine1="    &lt;style name=&quot;poppinsW500Regular20h24w500&quot; parent=&quot;poppinsW500Regular&quot;>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/style.xml" line="24" column="12" />
-    </issue>
-
-    <issue id="UnusedResources" message="The resource `R.style.customDialog` appears to be unused"
-        errorLine1="    &lt;style name=&quot;customDialog&quot;>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/style.xml" line="135" column="12" />
-    </issue>
-
     <issue id="IconLocation"
         message="Found bitmap drawable `res/drawable/avatar_boy.png` in densityless folder">
         <location file="src/main/res/drawable/avatar_boy.png" />
@@ -121,12 +57,6 @@
     <issue id="IconLocation"
         message="Found bitmap drawable `res/drawable/icon_send.png` in densityless folder">
         <location file="src/main/res/drawable/icon_send.png" />
-    </issue>
-
-    <issue id="RtlSymmetry"
-        message="When you define `paddingEnd` you should probably also define `paddingStart` for right-to-left symmetry"
-        errorLine1="    android:paddingEnd=&quot;10dp&quot;>" errorLine2="    ~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/layout/item_avatar.xml" line="6" column="5" />
     </issue>
 
 </issues>
