@@ -215,7 +215,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun logLoginEvent() {
-        val loginMethod = if (viewModel.accessBiometricStateFlow.value) "biometric" else "password"
+        val loginMethod =
+            if (viewModel.accessBiometricStateFlow.value) getString(R.string.biometric_event) else getString(
+                R.string.password_event
+            )
         firebaseAnalyticsManager.logLoginEvent(loginMethod)
     }
 
