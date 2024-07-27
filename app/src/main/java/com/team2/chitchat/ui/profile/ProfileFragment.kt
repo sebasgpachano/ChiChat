@@ -1,11 +1,17 @@
 package com.team2.chitchat.ui.profile
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.biometric.BiometricManager
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,9 +24,34 @@ import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+
+/**
+ * A simple [Fragment] subclass.
+ * create an instance of this fragment.
+ */
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private val viewModel: ProfileViewModel by viewModels()
+
+    //Activity Result
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { resultLauncher ->
+            if (resultLauncher.resultCode == Activity.RESULT_OK) {
+                Log.d(TAG, "%> resultLauncher Biometric: ${resultLauncher.data}")
+            } else {
+                viewModel.saveAccessBiometric(false)
+                showErrorMessage(
+                    message = getString(R.string.not_registered_biometric_access),
+                    object : MessageDialogFragment.MessageDialogListener {
+                        override fun positiveButtonOnclick(view: View) {
+                            Log.d(TAG, "l%> positiveButtonOnclick: ")
+
+                        }
+
+                    }
+                )
+            }
+        }
 
     override fun inflateBinding() {
         binding = FragmentProfileBinding.inflate(layoutInflater)
@@ -88,6 +119,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             viewModel.accessBiometricStateFlow.collect { isOk ->
                 Log.d(TAG, "observeViewModel: $isOk")
                 binding?.switchBiometric?.isChecked = isOk
+                if (isOk) {
+                    declareTypeAuthentication()
+                }
             }
         }
     }
@@ -122,6 +156,51 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 setOnCheckedChangeListener { _, isChecked ->
                     viewModel.saveAccessBiometric(isChecked)
                 }
+            }
+        }
+    }
+
+    private fun declareTypeAuthentication() {
+        val biometricManager = BiometricManager.from(requireContext())
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                Log.d(TAG, "App can authenticate using biometrics.")
+                viewModel.saveAccessBiometric(true)
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Log.e(TAG, "No biometric features available on this device.")
+                binding?.switchBiometric?.isEnabled = false
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Log.e(TAG, "Biometric features are currently unavailable.")
+                binding?.switchBiometric?.isEnabled = false
+                showErrorMessage(
+                    message = getString(R.string.biometric_unavailable),
+                    object : MessageDialogFragment.MessageDialogListener {
+                        override fun positiveButtonOnclick(view: View) = Unit
+                    }
+                )
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                val enrollIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                        putExtra(
+                            Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                            BiometricManager.Authenticators.BIOMETRIC_STRONG
+                        )
+                    }
+                } else {
+                    Intent(Settings.ACTION_SECURITY_SETTINGS)
+                }
+                resultLauncher.launch(enrollIntent)
+            }
+
+            else -> {
+                binding?.switchBiometric?.isEnabled = false
+                Log.e(TAG, "Unhandled biometric status.")
             }
         }
     }
