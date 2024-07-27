@@ -10,6 +10,7 @@ import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
 import com.team2.chitchat.data.usecase.remote.PostNewChatUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class ContactsListViewModel @Inject constructor(
     private val dataUserSession: DataUserSession,
     private val getContactsUseCase: GetContactsUseCase,
-    private val postNewChatUseCase: PostNewChatUseCase
+    private val postNewChatUseCase: PostNewChatUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel() {
     private val contactsMutableSharedFlow: MutableSharedFlow<ArrayList<UserDB>> =
         MutableSharedFlow()
@@ -29,7 +31,7 @@ class ContactsListViewModel @Inject constructor(
     val contactsSharedFlow: SharedFlow<ArrayList<UserDB>> = contactsMutableSharedFlow
 
     fun getContactsList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             getContactsUseCase().collect {
                 when (it) {
@@ -51,7 +53,7 @@ class ContactsListViewModel @Inject constructor(
     }
 
     fun postNewChat(target: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             val newChat = NewChatRequest(dataUserSession.userId, target)
             postNewChatUseCase(newChat).collect {

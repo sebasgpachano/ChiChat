@@ -1,14 +1,11 @@
 package com.team2.chitchat.ui.base
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.BitmapShader
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Shader
 import android.os.Bundle
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +27,6 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     override fun onResume() {
         super.onResume()
         configureToolbarAndConfigScreenSections()
-        updateProfileImage()
     }
 
     override fun onCreateView(
@@ -159,30 +155,14 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         )
     }
 
-    private fun updateProfileImage() {
-        val bitmap = loadProfilePictureFromSharedPreferences()
+    fun updateProfileImage(bitmap: Bitmap?) {
         bitmap?.let {
             val circularBitmap = getCircularBitmap(it)
             baseActivity.setProfileImage(circularBitmap)
         }
     }
 
-    private fun loadProfilePictureFromSharedPreferences(): Bitmap? {
-        val sharedPreferences =
-            requireContext().getSharedPreferences(
-                "my_preferences",
-                Context.MODE_PRIVATE
-            )
-        val imageString = sharedPreferences.getString(getString(R.string.profile_picture), null)
-        return if (imageString != null) {
-            val byteArray = Base64.decode(imageString, Base64.DEFAULT)
-            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-        } else {
-            null
-        }
-    }
-
-    private fun getCircularBitmap(bitmap: Bitmap): Bitmap {
+    fun getCircularBitmap(bitmap: Bitmap): Bitmap {
         val size = minOf(bitmap.width, bitmap.height)
         val x = (bitmap.width - size) / 2
         val y = (bitmap.height - size) / 2

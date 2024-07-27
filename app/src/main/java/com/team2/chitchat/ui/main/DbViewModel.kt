@@ -16,6 +16,7 @@ import com.team2.chitchat.data.usecase.remote.GetMessagesUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -31,16 +32,16 @@ class DbViewModel @Inject constructor(
     private val getChatsUseCase: GetChatsUseCase,
     private val setChatsDatabaseUseCase: SetChatsDatabaseUseCase,
     private val getMessagesUseCase: GetMessagesUseCase,
-    private val setMessagesDatabaseUseCase: SetMessagesDatabaseUseCase
+    private val setMessagesDatabaseUseCase: SetMessagesDatabaseUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel() {
     private val initDbMutableSharedFlow = MutableSharedFlow<Boolean>()
     val initDbSharedFlow: SharedFlow<Boolean> = initDbMutableSharedFlow
 
     fun startDataBase() {
-        val idUser = dataUserSession.userId
-        Log.d(TAG, "%> Starting db for user: $idUser...")
-
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
+            val idUser = dataUserSession.userId
+            Log.d(TAG, "%> Starting db for user: $idUser...")
             loadingMutableSharedFlow.emit(true)
             val usersAdd = startContact()
             val chatsAdd = startChats()
@@ -53,7 +54,7 @@ class DbViewModel @Inject constructor(
     }
 
     private suspend fun getContacts(): ArrayList<UserDB> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var listUser = ArrayList<UserDB>()
             getContactsUseCase().collect {
                 listUser = when (it) {
@@ -71,7 +72,7 @@ class DbViewModel @Inject constructor(
 
     private suspend fun startContact(): Boolean {
         Log.d(TAG, "%> Starting contacts...")
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var response = false
             setUsersDatabaseUseCase(getContacts()).collect {
                 response = when (it) {
@@ -84,7 +85,7 @@ class DbViewModel @Inject constructor(
     }
 
     private suspend fun getChats(): ArrayList<ChatDB> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var listChat = ArrayList<ChatDB>()
             getChatsUseCase().collect {
                 listChat = when (it) {
@@ -102,7 +103,7 @@ class DbViewModel @Inject constructor(
 
     private suspend fun startChats(): Boolean {
         Log.d(TAG, "%> Starting chats...")
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var response = false
             setChatsDatabaseUseCase(getChats()).collect {
                 response = when (it) {
@@ -115,7 +116,7 @@ class DbViewModel @Inject constructor(
     }
 
     private suspend fun getMessages(chats: ArrayList<ChatDB>): ArrayList<MessageDB> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var listAllMessage = ArrayList<MessageDB>()
             getMessagesUseCase().collect {
                 listAllMessage = when (it) {
@@ -138,7 +139,7 @@ class DbViewModel @Inject constructor(
 
     private suspend fun startMessages(): Boolean {
         Log.d(TAG, "%> Starting messages...")
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             var response = false
             val messages = getMessages(getChats())
             setMessagesDatabaseUseCase(messages).collect {

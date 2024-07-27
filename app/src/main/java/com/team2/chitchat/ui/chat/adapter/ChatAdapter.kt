@@ -26,7 +26,7 @@ class ChatAdapter @Inject constructor(
     fun setListener(listener: ChatAdapterListener) {
         chatAdapterListener = listener
     }
-    interface ChatAdapterListener {
+    fun interface ChatAdapterListener {
         fun onItemClick(messageId: String)
     }
 

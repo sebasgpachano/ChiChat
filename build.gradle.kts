@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.pluginDaggerHilt) apply false
     alias(libs.plugins.pluginCrashlytics) apply false
     alias(libs.plugins.pluginGoogleServices) apply false
+    alias(libs.plugins.sonarQube) apply false
 }

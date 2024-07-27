@@ -2,6 +2,7 @@ package com.team2.chitchat.hilt
 
 import android.app.Application
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.analytics
@@ -32,6 +33,7 @@ class SimpleApplication : Application() {
     lateinit var encryptedSharedPreferencesManager: EncryptedSharedPreferencesManager
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         initSession()
         configFirebase()
     }
@@ -55,7 +57,7 @@ class SimpleApplication : Application() {
                 } else {
                     ""
                 }
-                encryptedSharedPreferencesManager.putString(
+                encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
                     ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_UUID,
                     uuid
                 )
@@ -67,12 +69,12 @@ class SimpleApplication : Application() {
             if (task.isSuccessful) {
                 val messagingToken = task.result
                 Log.d(TAG, "firebase> token: $messagingToken")
-                encryptedSharedPreferencesManager.putString(
+                encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
                     ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_MESSAGING_TOKEN,
                     messagingToken
                 )
             } else {
-                Log.w(TAG, "firebase> fallo en obtener el token")
+                Log.w(TAG, "firebase> fail take token")
             }
         }
         Firebase.analytics

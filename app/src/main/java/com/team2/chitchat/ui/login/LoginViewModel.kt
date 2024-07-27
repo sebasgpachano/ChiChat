@@ -12,6 +12,7 @@ import com.team2.chitchat.data.usecase.remote.PostLoginUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +26,7 @@ class LoginViewModel @Inject constructor(
     private val getRefreshTokenUseCase: GetRefreshTokenUseCase,
     private val isBiometricStateUseCase: IsBiometricStateUseCase,
     private val putBiometricStateUseCase: PutBiometricStateUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): BaseViewModel() {
     // Response of Login
     private val loginMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -43,7 +45,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun doLogin(loginUserRequest: LoginUserRequest) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             postLoginUseCase(loginUserRequest).collect {baseResponse ->
                 when(baseResponse) {
@@ -66,7 +68,7 @@ class LoginViewModel @Inject constructor(
 
     // RefreshToken
     fun loaRefreshToken() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             getRefreshTokenUseCase().collect { baseResponse->
                 when(baseResponse) {
                     is BaseResponse.Error -> {
@@ -82,7 +84,7 @@ class LoginViewModel @Inject constructor(
     }
     //AccessBiometric
     fun loadAccessBiometric() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             isBiometricStateUseCase().collect { baseResponse->
                 when(baseResponse) {
                     is BaseResponse.Error -> {
@@ -97,7 +99,7 @@ class LoginViewModel @Inject constructor(
             }
     }
     fun saveAccessBiometric(accessBiometric: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             putBiometricStateUseCase(accessBiometric)
         }
     }

@@ -12,19 +12,13 @@
     <string name="list_contacts_title_toolbar">Contactos</string>
     <string name="list_contacts_subtitle">Awesome to Chat With</string>
     <string name="list_contacts_profile_img">Foto de perfil</string>
-    <string name="list_contacts_update_list">Actualizar la lista de contactos</string>
-    <string name="list_contacts_btn_search">Boton para filtrar contactos</string>
-    <string name="list_contacts_btn_quit_search">Boton para cancelar la busqueda de contactos</string>
     <string name="list_contacts_et_hint_search_user">Buscar contacto…</string>
 
     <!-- Chat list fragment -->
     <string name="chat_list_title_toolbar">ChitChat</string>
-    <string name="chat_list_date_yesterday">Ayer</string>
     <string name="chat_list_subtitle">Conversaciones</string>
     <string name="chat_list_user_state">Estado del usuario</string>
     <string name="chat_list_add_chat">Añadir persona para hablar</string>
-    <string name="chat_list_btn_search">Boton para filtrar conversaciones</string>
-    <string name="chat_list_btn_quit_search">Boton para cancelar la busqueda de conversaciones</string>
     <string name="chat_list_et_hint_search_user">Buscar conversación…</string>
     <string name="chat_list_delete_chat">¿Eliminar chat?</string>
     <string name="chat_list_delete_chat_question">Al no ser el creador de la conversación no puedes borrarla de la base de datos, ¿quieres eliminarla de tus lista de conversaciones?</string>
@@ -71,14 +65,11 @@
     <!-- Profile fragment -->
     <string name="accept">Aceptar</string>
     <string name="close_session">Cerrar sesión</string>
-    <string name="change_password">Cambiar contraseña</string>
-    <string name="editProfileDescription">icono de camara</string>
     <string name="photoProfileDescription">Photo de perfil en pantalla de Perfil</string>
     <string name="icon_action_description">icono de una accion o funcionalidad añadida</string>
     <string name="icon_arrow_right_description">Icono dirección derecha o hacia adelante</string>
     <string name="cancel">Cancelar</string>
     <string name="question_close_session">¿Estás seguro de que quieres cerrar sesión?</string>
-    <string name="message_logout">Su sesión ha caducado debe de autenticar su cuenta de nuevo.</string>
     <string name="profile">Perfil</string>
 
     <!-- Error Messages -->
@@ -104,9 +95,11 @@
     <string name="biometric_unavailable">Acceso Biometrico no disponible.</string>
 
     <!-- Shared preferences-->
-    <string name="profile_shared_preferences">app_prefs</string>
-    <string name="profile_picture">profile_picture</string>
     <string name="title_biometric_activated">Accesso Biometrico</string>
     <string name="mesage_biometric_activated">¿Deseas activar acceso biométrico?</string>
     <string name="imageFingerprintDescription">Icono de huella dactilar para acceder con biometria.</string>
+
+    <!-- Firebase login event-->
+    <string name="biometric_event">biometric</string>
+    <string name="password_event">password</string>
 </resources>

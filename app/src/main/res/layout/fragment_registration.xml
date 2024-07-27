@@ -103,6 +103,7 @@
             android:layout_marginEnd="8dp"
             android:hint="@string/enter_nick"
             android:inputType="text"
+            android:imeOptions="actionDone"
             android:autofillHints="name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvNick" />
@@ -124,13 +125,13 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
             android:contentDescription="@string/avatar"
-            android:src="@drawable/avatar_lobster"
+            android:src="@drawable/baseline_person_24"
             app:layout_constraintStart_toEndOf="@id/tvSelectedAvatar"
             app:layout_constraintTop_toBottomOf="@id/etNick" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vpAvatar"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAvatar"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
@@ -143,10 +144,12 @@
             style="@style/buttonStyle"
             android:layout_width="0dp"
             android:layout_marginTop="12dp"
+            android:layout_marginBottom="5dp"
             android:text="@string/register"
             app:layout_constraintEnd_toEndOf="@id/etNick"
             app:layout_constraintStart_toStartOf="@id/etNick"
-            app:layout_constraintTop_toBottomOf="@id/vpAvatar" />
+            app:layout_constraintTop_toBottomOf="@id/rvAvatar"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/tvUserError"
