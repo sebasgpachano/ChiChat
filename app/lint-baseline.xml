@@ -14,59 +14,6 @@
         <location file="build.gradle.kts" line="106" column="5" />
     </issue>
 
-    <issue id="UnusedResources"
-        message="The resource `R.drawable.baseline_arrow_back_24` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location file="src/main/res/drawable/baseline_arrow_back_24.xml" line="1" column="1" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.drawable.baseline_update_24` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location file="src/main/res/drawable/baseline_update_24.xml" line="1" column="1" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.drawable.bottom_border` appears to be unused"
-        errorLine1="&lt;layer-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location file="src/main/res/drawable/bottom_border.xml" line="2" column="1" />
-    </issue>
-
-    <issue id="UnusedResources" message="The resource `R.color.orangeC7220D` appears to be unused"
-        errorLine1="    &lt;color name=&quot;orangeC7220D&quot;>#C7220D&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/colors.xml" line="8" column="12" />
-    </issue>
-
-    <issue id="UnusedResources" message="The resource `R.color.yellowWarning` appears to be unused"
-        errorLine1="    &lt;color name=&quot;yellowWarning&quot;>#FBE522&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/colors.xml" line="13" column="12" />
-    </issue>
-
-    <issue id="UnusedResources" message="The resource `R.color.grayLight` appears to be unused"
-        errorLine1="    &lt;color name=&quot;grayLight&quot;>#BCBCBC&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/colors.xml" line="19" column="12" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.dimen.toolbar_margin_title_zero_buttons` appears to be unused"
-        errorLine1="    &lt;dimen name=&quot;toolbar_margin_title_zero_buttons&quot;>8dp&lt;/dimen>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/dimens.xml" line="4" column="12" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.dimen.toolbar_margin_title_one_buttons` appears to be unused"
-        errorLine1="    &lt;dimen name=&quot;toolbar_margin_title_one_buttons&quot;>38dp&lt;/dimen>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/dimens.xml" line="5" column="12" />
-    </issue>
-
     <issue id="UnusedResources" message="The resource `R.mipmap.ic_launcher` appears to be unused">
         <location file="src/main/res/mipmap-hdpi/ic_launcher.webp" />
     </issue>
@@ -87,12 +34,12 @@
 
     <issue id="UnusedResources"
         message="The resource `R.mipmap.ic_launcher_round` appears to be unused">
-        <location file="src/main/res/mipmap-hdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-mdpi/ic_launcher_round.webp" />
     </issue>
 
     <issue id="UnusedResources"
         message="The resource `R.mipmap.icon_app_round` appears to be unused">
-        <location file="src/main/res/mipmap-hdpi/icon_app_round.webp" />
+        <location file="src/main/res/mipmap-mdpi/icon_app_round.webp" />
     </issue>
 
     <issue id="UnusedResources"
@@ -110,30 +57,16 @@
     </issue>
 
     <issue id="UnusedResources"
-        message="The resource `R.style.poppinsW400Regular` appears to be unused"
-        errorLine1="    &lt;style name=&quot;poppinsW400Regular&quot;>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/style.xml" line="5" column="12" />
-    </issue>
-
-    <issue id="UnusedResources"
         message="The resource `R.style.poppinsW500Regular20h24w500` appears to be unused"
         errorLine1="    &lt;style name=&quot;poppinsW500Regular20h24w500&quot; parent=&quot;poppinsW500Regular&quot;>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/style.xml" line="28" column="12" />
+        <location file="src/main/res/values/style.xml" line="24" column="12" />
     </issue>
 
     <issue id="UnusedResources" message="The resource `R.style.customDialog` appears to be unused"
         errorLine1="    &lt;style name=&quot;customDialog&quot;>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/style.xml" line="139" column="12" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.drawable.warning_24px` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location file="src/main/res/drawable/warning_24px.xml" line="1" column="1" />
+        <location file="src/main/res/values/style.xml" line="135" column="12" />
     </issue>
 
     <issue id="MonochromeLauncherIcon"
