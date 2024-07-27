@@ -50,7 +50,7 @@
     </issue>
 
     <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/icon_search.png` in densityless folder">
+        message="Found bitmap drawable `res/drawable/icon1_search.png` in densityless folder">
         <location file="src/main/res/drawable/icon_search.png" />
     </issue>
 
