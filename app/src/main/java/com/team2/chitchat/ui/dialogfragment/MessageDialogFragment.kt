@@ -80,7 +80,7 @@ class MessageDialogFragment : DialogFragment() {
         if (iconID != null) {
             binding.imageVMessageDF.apply {
                 visibility = View.VISIBLE
-                setImageDrawable(AppCompatResources.getDrawable(context, iconID!!))
+                setImageDrawable(AppCompatResources.getDrawable(context, iconID!!).apply { maxHeight = 24 })
             }
 
         } else {
