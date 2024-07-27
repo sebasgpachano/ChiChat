@@ -33,7 +33,7 @@ class ChitChatFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        encryptedSharedPreferencesManager.putString(
+        encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
             ENCRYPTED_SHARED_PREFERENCES_KEY_FIREBASE_MESSAGING_TOKEN,
             token
         )

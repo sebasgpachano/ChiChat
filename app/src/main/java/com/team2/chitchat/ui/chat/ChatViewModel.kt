@@ -18,6 +18,7 @@ import com.team2.chitchat.data.usecase.remote.PostNewMessageUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +36,8 @@ class ChatViewModel @Inject constructor(
     private val getChatMapper: GetChatMapper,
     private val updateMessageViewUseCase: UpdateMessageViewUseCase,
     private val updateChatViewUseCase: UpdateChatViewUseCase,
-    private val getUsersDbUseCase: GetUsersDbUseCase
+    private val getUsersDbUseCase: GetUsersDbUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) :
     BaseViewModel() {
     private val messagesMutableStateFlow: MutableStateFlow<List<GetMessagesModel>> =
@@ -48,7 +50,7 @@ class ChatViewModel @Inject constructor(
     val chatStateFlow: StateFlow<GetChatModel> = chatMutableStateFlow
 
     fun getMessagesForChat(chatId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             getMessagesForChatUseCase(chatId).collect {
                 when (it) {
@@ -77,7 +79,7 @@ class ChatViewModel @Inject constructor(
     }
 
     private fun updateMessageView(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             updateMessageViewUseCase(id, true).collect {
                 when (it) {
@@ -95,7 +97,7 @@ class ChatViewModel @Inject constructor(
     }
 
     fun getChat(chatId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             val chatFlow = getChatUseCase(chatId)
             val usersFlow = getUsersDbUseCase()
@@ -129,7 +131,7 @@ class ChatViewModel @Inject constructor(
     }
 
     private fun updateChatView(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             loadingMutableSharedFlow.emit(true)
             updateChatViewUseCase(id, true).collect {
                 when (it) {
@@ -155,7 +157,7 @@ class ChatViewModel @Inject constructor(
     }
 
     fun postNewMessage(message: String, chatId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             val newMessage = NewMessageRequest(chatId, dataUserSession.userId, message)
             postNewMessageUseCase(newMessage).collect {
                 when (it) {

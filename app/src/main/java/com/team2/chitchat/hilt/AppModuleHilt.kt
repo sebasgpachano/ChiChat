@@ -11,6 +11,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -22,6 +24,7 @@ object AppModuleHilt {
     fun provideBaseProjectApplication(application: Application): SimpleApplication {
         return application as SimpleApplication
     }
+
     @Provides
     @Singleton
     fun provideEncryptedSharedPreferences(@ApplicationContext context: Context): EncryptedSharedPreferences {
@@ -43,5 +46,10 @@ object AppModuleHilt {
     @Provides
     fun provideSharedPreferencesManager(sharedPreferences: SharedPreferences): SharedPreferencesManager {
         return SharedPreferencesManager(sharedPreferences)
+    }
+
+    @Provides
+    fun provideIoDispatcher(): CoroutineDispatcher {
+        return Dispatchers.IO
     }
 }

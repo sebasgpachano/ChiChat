@@ -10,7 +10,7 @@ class ContactsListAdapter(
     private val contactsListAdapterListener: ContactsListAdapterListener
 ) : ListAdapter<UserDB, ContactsListViewHolder>(ContactsListDiffCallback()) {
 
-    interface ContactsListAdapterListener {
+    fun interface ContactsListAdapterListener {
         fun onItemClick(idChat: String)
     }
 

@@ -13,6 +13,7 @@ import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -26,7 +27,7 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ChatService : Service() {
+class ChatService(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : Service() {
     @Inject
     lateinit var dataProvider: DataProvider
 
@@ -59,7 +60,7 @@ class ChatService : Service() {
         }
     }
 
-    private suspend fun getUsersDB(): ArrayList<UserDB> = withContext(Dispatchers.IO) {
+    private suspend fun getUsersDB(): ArrayList<UserDB> = withContext(dispatcher) {
         val listUsers = ArrayList<UserDB>()
         try {
             listUsers.addAll(dataProvider.getContactsListDB())
@@ -69,7 +70,7 @@ class ChatService : Service() {
         return@withContext listUsers
     }
 
-    private suspend fun getUsers(): ArrayList<UserDB> = withContext(Dispatchers.IO) {
+    private suspend fun getUsers(): ArrayList<UserDB> = withContext(dispatcher) {
         val listUsers = ArrayList<UserDB>()
         try {
             val usersDB = getUsersDB()
@@ -98,7 +99,7 @@ class ChatService : Service() {
         return@withContext listUsers
     }
 
-    private suspend fun addUsers(): Boolean = withContext(Dispatchers.IO) {
+    private suspend fun addUsers(): Boolean = withContext(dispatcher) {
         try {
             Log.d(TAG, "%> Insert users...")
             val users = getUsers()
@@ -123,7 +124,7 @@ class ChatService : Service() {
         }
     }
 
-    private suspend fun getChats(): ArrayList<ChatDB> = withContext(Dispatchers.IO) {
+    private suspend fun getChats(): ArrayList<ChatDB> = withContext(dispatcher) {
         val listChat = ArrayList<ChatDB>()
         try {
             dataProvider.getChats().collect { response ->
@@ -143,7 +144,7 @@ class ChatService : Service() {
         return@withContext listChat
     }
 
-    private suspend fun addChats(): Boolean = withContext(Dispatchers.IO) {
+    private suspend fun addChats(): Boolean = withContext(dispatcher) {
         try {
             Log.d(TAG, "%> Insert chats...")
             val chats = getChats()
@@ -169,7 +170,7 @@ class ChatService : Service() {
     }
 
     private suspend fun getMessages(chats: ArrayList<ChatDB>): ArrayList<MessageDB> =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             val listAllMessages = ArrayList<MessageDB>()
             val listMessage = ArrayList<MessageDB>()
             try {
@@ -192,7 +193,7 @@ class ChatService : Service() {
             return@withContext listMessage
         }
 
-    private suspend fun addMessages(): Boolean = withContext(Dispatchers.IO) {
+    private suspend fun addMessages(): Boolean = withContext(dispatcher) {
         try {
             Log.d(TAG, "%> Insert messages...")
             val chats = getChats()
@@ -218,7 +219,7 @@ class ChatService : Service() {
         }
     }
 
-    private suspend fun getMessagesDB(): ArrayList<MessageDB> = withContext(Dispatchers.IO) {
+    private suspend fun getMessagesDB(): ArrayList<MessageDB> = withContext(dispatcher) {
         val listMessage = ArrayList<MessageDB>()
         try {
             dataProvider.getListMessageDb().collect { response ->
@@ -238,7 +239,7 @@ class ChatService : Service() {
         return@withContext listMessage
     }
 
-    private suspend fun notification() = withContext(Dispatchers.IO) {
+    private suspend fun notification() = withContext(dispatcher) {
         try {
             Log.d(TAG, "%> notifications...")
             val messages = getMessagesDB()
