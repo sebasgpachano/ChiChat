@@ -10,7 +10,7 @@
     </issue>
 
     <issue id="UnusedResources" message="The resource `R.mipmap.ic_launcher` appears to be unused">
-        <location file="src/main/res/mipmap-mdpi/ic_launcher.webp" />
+        <location file="src/main/res/mipmap-xhdpi/ic_launcher.webp" />
     </issue>
 
     <issue id="UnusedResources"
@@ -28,18 +28,22 @@
     </issue>
 
     <issue id="UnusedResources"
-        message="The resource `R.mipmap.ic_launcher_round` appears to be unused">
-        <location file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp" />
+        message="The resource `R.mipmap.ic_launcher_round` appears to be unused"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location file="src/main/res/mipmap-anydpi/ic_launcher_round.xml" line="2" column="1" />
     </issue>
 
     <issue id="UnusedResources"
         message="The resource `R.mipmap.icon_app_mono_round` appears to be unused">
-        <location file="src/main/res/mipmap-hdpi/icon_app_mono_round.webp" />
+        <location file="src/main/res/mipmap-mdpi/icon_app_mono_round.webp" />
     </issue>
 
     <issue id="UnusedResources"
-        message="The resource `R.mipmap.icon_app_round` appears to be unused">
-        <location file="src/main/res/mipmap-xhdpi/icon_app_round.webp" />
+        message="The resource `R.mipmap.icon_app_round` appears to be unused"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location file="src/main/res/mipmap-anydpi/icon_app_round.xml" line="2" column="1" />
     </issue>
 
     <issue id="UnusedResources"
