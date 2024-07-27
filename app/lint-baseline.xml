@@ -152,83 +152,6 @@
     </issue>
 
     <issue id="UnusedResources"
-        message="The resource `R.string.list_contacts_update_list` appears to be unused"
-        errorLine1="    &lt;string name=&quot;list_contacts_update_list&quot;>Actualizar la lista de contactos&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="15" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.list_contacts_btn_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;list_contacts_btn_search&quot;>Boton para filtrar contactos&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="16" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.list_contacts_btn_quit_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;list_contacts_btn_quit_search&quot;>Boton para cancelar la busqueda de contactos&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="17" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.chat_list_date_yesterday` appears to be unused"
-        errorLine1="    &lt;string name=&quot;chat_list_date_yesterday&quot;>Ayer&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="22" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.chat_list_btn_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;chat_list_btn_search&quot;>Boton para filtrar conversaciones&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="26" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.chat_list_btn_quit_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;chat_list_btn_quit_search&quot;>Boton para cancelar la busqueda de conversaciones&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="27" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.change_password` appears to be unused"
-        errorLine1="    &lt;string name=&quot;change_password&quot;>Cambiar contraseña&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="74" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.editProfileDescription` appears to be unused"
-        errorLine1="    &lt;string name=&quot;editProfileDescription&quot;>icono de camara&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="75" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.message_logout` appears to be unused"
-        errorLine1="    &lt;string name=&quot;message_logout&quot;>Su sesión ha caducado debe de autenticar su cuenta de nuevo.&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="81" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.profile_shared_preferences` appears to be unused"
-        errorLine1="    &lt;string name=&quot;profile_shared_preferences&quot;>app_prefs&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="107" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
-        message="The resource `R.string.profile_picture` appears to be unused"
-        errorLine1="    &lt;string name=&quot;profile_picture&quot;>profile_picture&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location file="src/main/res/values/strings.xml" line="108" column="13" />
-    </issue>
-
-    <issue id="UnusedResources"
         message="The resource `R.style.poppinsW400Regular` appears to be unused"
         errorLine1="    &lt;style name=&quot;poppinsW400Regular&quot;>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
@@ -255,6 +178,26 @@
         <location file="src/main/res/drawable/warning_24px.xml" line="1" column="1" />
     </issue>
 
+    <issue id="IconXmlAndPng"
+        message="The following images appear both as density independent `.xml` files and as bitmap files: src\main\res\mipmap-anydpi\ic_launcher.xml, src\main\res\mipmap-hdpi\ic_launcher.webp">
+        <location file="src/main/res/mipmap-xxxhdpi/ic_launcher.webp" />
+        <location file="src/main/res/mipmap-xxhdpi/ic_launcher.webp" />
+        <location file="src/main/res/mipmap-xhdpi/ic_launcher.webp" />
+        <location file="src/main/res/mipmap-mdpi/ic_launcher.webp" />
+        <location file="src/main/res/mipmap-hdpi/ic_launcher.webp" />
+        <location file="src/main/res/mipmap-anydpi/ic_launcher.xml" />
+    </issue>
+
+    <issue id="IconXmlAndPng"
+        message="The following images appear both as density independent `.xml` files and as bitmap files: src\main\res\mipmap-anydpi\ic_launcher_round.xml, src\main\res\mipmap-hdpi\ic_launcher_round.webp">
+        <location file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-mdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-hdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-anydpi/ic_launcher_round.xml" />
+    </issue>
+
     <issue id="MonochromeLauncherIcon"
         message="The application adaptive icon is missing a monochrome tag"
         errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
@@ -262,39 +205,130 @@
         <location file="src/main/res/mipmap-anydpi-v26/icon_app.xml" line="2" column="1" />
     </issue>
 
-    <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/avatar_boy.png` in densityless folder">
-        <location file="src/main/res/drawable/avatar_boy.png" />
+    <issue id="IconDipSize"
+        message="The image `avatar_boy.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-hdpi/avatar_boy.png: 400x400 dp (600x600 px), drawable-mdpi/avatar_boy.png: 600x600 dp (600x600 px), drawable-xhdpi/avatar_boy.png: 300x300 dp (600x600 px), drawable-xxhdpi/avatar_boy.png: 200x200 dp (600x600 px), drawable-xxxhdpi/avatar_boy.png: 150x150 dp (600x600 px)">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_boy.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_boy.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_boy.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_boy.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_boy.png" />
     </issue>
 
-    <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/avatar_cat.png` in densityless folder">
-        <location file="src/main/res/drawable/avatar_cat.png" />
+    <issue id="IconDipSize"
+        message="The image `avatar_cat.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-hdpi/avatar_cat.png: 417x417 dp (626x626 px), drawable-mdpi/avatar_cat.png: 626x626 dp (626x626 px), drawable-xhdpi/avatar_cat.png: 313x313 dp (626x626 px), drawable-xxhdpi/avatar_cat.png: 209x209 dp (626x626 px), drawable-xxxhdpi/avatar_cat.png: 157x157 dp (626x626 px)">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_cat.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_cat.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_cat.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_cat.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_cat.png" />
     </issue>
 
-    <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/avatar_crab.png` in densityless folder">
-        <location file="src/main/res/drawable/avatar_crab.png" />
+    <issue id="IconDipSize"
+        message="The image `avatar_crab.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-hdpi/avatar_crab.png: 480x468 dp (720x702 px), drawable-mdpi/avatar_crab.png: 720x702 dp (720x702 px), drawable-xhdpi/avatar_crab.png: 360x351 dp (720x702 px), drawable-xxhdpi/avatar_crab.png: 240x234 dp (720x702 px), drawable-xxxhdpi/avatar_crab.png: 180x176 dp (720x702 px)">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_crab.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_crab.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_crab.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_crab.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_crab.png" />
     </issue>
 
-    <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/avatar_girl.png` in densityless folder">
-        <location file="src/main/res/drawable/avatar_girl.png" />
+    <issue id="IconDipSize"
+        message="The image `avatar_girl.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-hdpi/avatar_girl.png: 160x160 dp (240x240 px), drawable-mdpi/avatar_girl.png: 240x240 dp (240x240 px), drawable-xhdpi/avatar_girl.png: 120x120 dp (240x240 px), drawable-xxhdpi/avatar_girl.png: 80x80 dp (240x240 px), drawable-xxxhdpi/avatar_girl.png: 60x60 dp (240x240 px)">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_girl.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_girl.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_girl.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_girl.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_girl.png" />
     </issue>
 
-    <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/avatar_lobster.png` in densityless folder">
-        <location file="src/main/res/drawable/avatar_lobster.png" />
+    <issue id="IconDipSize"
+        message="The image `avatar_lobster.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-hdpi/avatar_lobster.png: 296x408 dp (444x612 px), drawable-mdpi/avatar_lobster.png: 444x612 dp (444x612 px), drawable-xhdpi/avatar_lobster.png: 222x306 dp (444x612 px), drawable-xxhdpi/avatar_lobster.png: 148x204 dp (444x612 px), drawable-xxxhdpi/avatar_lobster.png: 111x153 dp (444x612 px)">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_lobster.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_lobster.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_lobster.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_lobster.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_lobster.png" />
     </issue>
 
-    <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/avatar_monkey.png` in densityless folder">
-        <location file="src/main/res/drawable/avatar_monkey.png" />
+    <issue id="IconDipSize"
+        message="The image `avatar_monkey.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-hdpi/avatar_monkey.png: 533x533 dp (800x800 px), drawable-mdpi/avatar_monkey.png: 800x800 dp (800x800 px), drawable-xhdpi/avatar_monkey.png: 400x400 dp (800x800 px), drawable-xxhdpi/avatar_monkey.png: 267x267 dp (800x800 px), drawable-xxxhdpi/avatar_monkey.png: 200x200 dp (800x800 px)">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_monkey.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_monkey.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_monkey.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_monkey.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_monkey.png" />
     </issue>
 
-    <issue id="IconLocation"
-        message="Found bitmap drawable `res/drawable/baseline_person_24.png` in densityless folder">
-        <location file="src/main/res/drawable/baseline_person_24.png" />
+    <issue id="IconDipSize"
+        message="The image `baseline_person_24.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-hdpi/baseline_person_24.png: 252x252 dp (378x378 px), drawable-mdpi/baseline_person_24.png: 378x378 dp (378x378 px), drawable-xhdpi/baseline_person_24.png: 189x189 dp (378x378 px), drawable-xxhdpi/baseline_person_24.png: 126x126 dp (378x378 px), drawable-xxxhdpi/baseline_person_24.png: 95x95 dp (378x378 px)">
+        <location file="src/main/res/drawable-xxxhdpi/baseline_person_24.png" />
+        <location file="src/main/res/drawable-xxhdpi/baseline_person_24.png" />
+        <location file="src/main/res/drawable-xhdpi/baseline_person_24.png" />
+        <location file="src/main/res/drawable-hdpi/baseline_person_24.png" />
+        <location file="src/main/res/drawable-mdpi/baseline_person_24.png" />
+    </issue>
+
+    <issue id="IconDuplicatesConfig"
+        message="The `avatar_boy.png` icon has identical contents in the following configuration folders: drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_boy.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_boy.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_boy.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_boy.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_boy.png" />
+    </issue>
+
+    <issue id="IconDuplicatesConfig"
+        message="The `avatar_cat.png` icon has identical contents in the following configuration folders: drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_cat.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_cat.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_cat.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_cat.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_cat.png" />
+    </issue>
+
+    <issue id="IconDuplicatesConfig"
+        message="The `avatar_crab.png` icon has identical contents in the following configuration folders: drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_crab.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_crab.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_crab.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_crab.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_crab.png" />
+    </issue>
+
+    <issue id="IconDuplicatesConfig"
+        message="The `avatar_girl.png` icon has identical contents in the following configuration folders: drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_girl.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_girl.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_girl.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_girl.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_girl.png" />
+    </issue>
+
+    <issue id="IconDuplicatesConfig"
+        message="The `avatar_lobster.png` icon has identical contents in the following configuration folders: drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_lobster.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_lobster.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_lobster.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_lobster.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_lobster.png" />
+    </issue>
+
+    <issue id="IconDuplicatesConfig"
+        message="The `avatar_monkey.png` icon has identical contents in the following configuration folders: drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi">
+        <location file="src/main/res/drawable-xxxhdpi/avatar_monkey.png" />
+        <location file="src/main/res/drawable-xxhdpi/avatar_monkey.png" />
+        <location file="src/main/res/drawable-xhdpi/avatar_monkey.png" />
+        <location file="src/main/res/drawable-mdpi/avatar_monkey.png" />
+        <location file="src/main/res/drawable-hdpi/avatar_monkey.png" />
+    </issue>
+
+    <issue id="IconDuplicatesConfig"
+        message="The `baseline_person_24.png` icon has identical contents in the following configuration folders: drawable-hdpi, drawable-mdpi, drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi">
+        <location file="src/main/res/drawable-xxxhdpi/baseline_person_24.png" />
+        <location file="src/main/res/drawable-xxhdpi/baseline_person_24.png" />
+        <location file="src/main/res/drawable-xhdpi/baseline_person_24.png" />
+        <location file="src/main/res/drawable-mdpi/baseline_person_24.png" />
+        <location file="src/main/res/drawable-hdpi/baseline_person_24.png" />
     </issue>
 
     <issue id="IconLocation"
@@ -310,6 +344,12 @@
     <issue id="IconLocation"
         message="Found bitmap drawable `res/drawable/icon_send.png` in densityless folder">
         <location file="src/main/res/drawable/icon_send.png" />
+    </issue>
+
+    <issue id="RtlSymmetry"
+        message="When you define `paddingEnd` you should probably also define `paddingStart` for right-to-left symmetry"
+        errorLine1="    android:paddingEnd=&quot;10dp&quot;>" errorLine2="    ~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/layout/item_avatar.xml" line="6" column="5" />
     </issue>
 
 </issues>
