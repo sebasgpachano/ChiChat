@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clToolbar"
     android:layout_width="match_parent"
+    android:padding="12dp"
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.Toolbar
@@ -20,7 +21,6 @@
         android:id="@+id/ibToolbarBack"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
         android:background="@null"
         android:contentDescription="@string/toolbar_description_back_button"
         android:padding="2dp"
@@ -35,7 +35,6 @@
         style="@style/toolbarHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:maxLines="1"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
@@ -48,7 +47,6 @@
         android:id="@+id/ibToolbarProfile"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
         android:background="@null"
         android:contentDescription="@string/toolbar_description_profile_button"
         android:padding="2dp"

@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.chatlist
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -20,6 +21,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import com.team2.chitchat.R
 import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.repository.preferences.EncryptedSharedPreferencesKeys.Companion.ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE
+import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.databinding.FragmentChatListBinding
 import com.team2.chitchat.ui.base.BaseFragment
@@ -54,25 +56,33 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
     ) {
         if (!dataUserSession.haveSession()) {
             findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
+        } else {
+            seeStatusService()
+            setImage()
+            configRecyclerView()
+            setupListeners()
+            setupSwipeToDelete()
+            setupSearch()
         }
-        setImage()
-        configRecyclerView()
-        setupListeners()
-        setupSwipeToDelete()
-        setupSearch()
+    }
+
+    private fun seeStatusService() {
+        if (!ChatService.isServiceRunning) {
+            val intent = Intent(requireContext(), ChatService::class.java)
+            requireContext().startService(intent)
+        }
     }
 
     private fun setImage() {
-        val bitmap: Bitmap
         val imageBase64 = encryptedSharedPreferences.getString(
             ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE,
             null
         )
-        if (imageBase64.isNullOrBlank()) {
-            bitmap = BitmapFactory.decodeResource(resources, R.mipmap.avatar_default)
+        val bitmap: Bitmap? = if (imageBase64.isNullOrBlank()) {
+            BitmapFactory.decodeResource(resources, R.mipmap.avatar_default_foreground)
         } else {
             val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
-            bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
         }
         updateProfileImage(bitmap)
     }

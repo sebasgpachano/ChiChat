@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.pluginCrashlytics)
     alias(libs.plugins.pluginGoogleServices)
+    alias(libs.plugins.pluginKsp)
     alias(libs.plugins.sonarQube)
 }
 
@@ -103,8 +104,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     //Kapt
-    kapt(libs.androidx.room.compiler)
     kapt(libs.daggerHiltCompiler)
+    //Ksp
+    ksp(libs.androidx.room.compiler)
 }
 
 kapt {
