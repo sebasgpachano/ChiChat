@@ -63,16 +63,15 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
     }
 
     private fun setImage() {
-        val bitmap: Bitmap
         val imageBase64 = encryptedSharedPreferences.getString(
             ENCRYPTED_SHARED_PREFERENCES_KEY_PROFILE_IMAGE,
             null
         )
-        if (imageBase64.isNullOrBlank()) {
-            bitmap = BitmapFactory.decodeResource(resources, R.mipmap.avatar_default)
+        val bitmap: Bitmap? = if (imageBase64.isNullOrBlank()) {
+            BitmapFactory.decodeResource(resources, R.mipmap.avatar_default_round)
         } else {
             val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
-            bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
         }
         updateProfileImage(bitmap)
     }
