@@ -31,6 +31,9 @@
     <string name="error_connection">Sorry, we are experiencing connection issues</string>
     <string name="error_connection_message">Please try again later.</string>
 
+    <!-- Notification -->
+    <string name="notification_new_message">New message</string>
+
     <!-- Login -->
     <string name="textUser">User</string>
     <string name="hintUser">Enter your username</string>

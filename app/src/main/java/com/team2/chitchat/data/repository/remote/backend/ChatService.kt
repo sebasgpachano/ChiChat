@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import com.team2.chitchat.R
 import com.team2.chitchat.data.notifications.NotificationHelper
 import com.team2.chitchat.data.repository.DataProvider
 import com.team2.chitchat.data.repository.local.chat.ChatDB
@@ -18,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.Duration
@@ -37,6 +39,10 @@ class ChatService(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) 
     private val job = Job()
     private val serviceScope = CoroutineScope(Dispatchers.IO + job)
 
+    companion object {
+        var isServiceRunning = false
+    }
+
     init {
         Log.d(TAG, "%> Service running...")
     }
@@ -45,12 +51,13 @@ class ChatService(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) 
 
     override fun onCreate() {
         super.onCreate()
+        isServiceRunning = true
         initLoadData()
     }
 
     private fun initLoadData() {
         serviceScope.launch {
-            while (true) {
+            while (isActive) {
                 addUsers()
                 addChats()
                 addMessages()
@@ -243,7 +250,6 @@ class ChatService(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) 
         try {
             Log.d(TAG, "%> notifications...")
             val messages = getMessagesDB()
-            Log.d(TAG, "%> tengo los mensajes...")
             val deviceTime = ZonedDateTime.now()
             val offsetInHours = deviceTime.offset.totalSeconds / 3600.0.toLong()
             val formatter = DateTimeFormatter.ISO_DATE_TIME
@@ -260,13 +266,9 @@ class ChatService(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) 
                     && message.sourceId != preferencesDataSource.getUserID()
                     && !message.notified
                 ) {
-                    Log.d(
-                        TAG,
-                        "notis> Estoy en notis del mensaje: ${message.id} y noti es ${message.notified}"
-                    )
                     NotificationHelper.createSimpleNotification(
                         this@ChatService,
-                        "Nuevo mensaje",
+                        getString(R.string.notification_new_message),
                         message.message,
                         null
                     )
@@ -282,6 +284,7 @@ class ChatService(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) 
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
+        isServiceRunning = false
         Log.d(TAG, "%> Service stop...")
     }
 }
