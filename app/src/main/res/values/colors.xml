@@ -5,18 +5,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FF0000</color>
     <!--Color Palette-->
-    <color name="orangeC7220D">#C7220D</color>
     <color name="blackB3000000">#B3000000</color>
     <color name="gray808080">#808080</color>
     <color name="azul31b1cd">#31b1cd</color>
     <color name="grayBackGround">#D9D9D9</color>
-    <color name="yellowWarning">#FBE522</color>
 
     <!-- Color app -->
     <color name="color_app">@color/azul31b1cd</color>
     <color name="grayD9D9D9">#D9D9D9</color>
     <color name="colorHint">#7C7C7C</color>
-    <color name="grayLight">#BCBCBC</color>
     <color name="black_opacity_20">#20000000</color>
     <color name="greenEnabled">#12E100</color>
     <color name="redError">#F31B00</color>
