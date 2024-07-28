@@ -1,12 +1,8 @@
 package com.team2.chitchat.ui.contactslist
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -32,11 +28,7 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
         binding = FragmentContactsListBinding.inflate(layoutInflater)
     }
 
-    override fun createViewAfterInflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) {
+    override fun createViewAfterInflateBinding() {
         configRecyclerView()
         configSwipeRefreshLayout()
         setupSearch()
@@ -120,7 +112,7 @@ class ContactsListFragment : BaseFragment<FragmentContactsListBinding>(),
         binding?.srContacts?.isRefreshing = false
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
+    override fun viewCreatedAfterSetupObserverViewModel() {
         contactsListViewModel.getContactsList()
     }
 

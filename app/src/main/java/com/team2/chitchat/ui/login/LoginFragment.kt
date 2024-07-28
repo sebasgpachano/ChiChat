@@ -3,12 +3,9 @@ package com.team2.chitchat.ui.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
@@ -77,11 +74,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         binding = FragmentLoginBinding.inflate(layoutInflater)
     }
 
-    override fun createViewAfterInflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) {
+    override fun createViewAfterInflateBinding() {
         initListener()
 
     }
@@ -222,7 +215,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         firebaseAnalyticsManager.logLoginEvent(loginMethod)
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
+    override fun viewCreatedAfterSetupObserverViewModel() =
         Unit
 
     private fun initListener() {
@@ -262,7 +255,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                                     })
                                 }
 
-                                override fun negativeButtonOnclick(view: View) {
+                                override fun negativeButtonOnclick() {
                                     viewModel.doLogin(login)
                                 }
                             })

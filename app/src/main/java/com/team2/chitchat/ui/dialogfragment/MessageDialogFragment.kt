@@ -27,7 +27,7 @@ class MessageDialogFragment : DialogFragment() {
 
     interface MessageDialogListener {
         fun positiveButtonOnclick(view: View)
-        fun negativeButtonOnclick(view: View) = Unit
+        fun negativeButtonOnclick() = Unit
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -109,9 +109,9 @@ class MessageDialogFragment : DialogFragment() {
             dismiss()
         }
         negativeButton?.let {
-            binding.buttonNegativeErrorDF.setOnClickListener { view ->
+            binding.buttonNegativeErrorDF.setOnClickListener {
                 dismiss()
-                listener?.negativeButtonOnclick(view)
+                listener?.negativeButtonOnclick()
             }
         }
 
