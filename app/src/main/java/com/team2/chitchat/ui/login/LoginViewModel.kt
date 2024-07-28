@@ -83,7 +83,7 @@ class LoginViewModel @Inject constructor(
         }
     }
     //AccessBiometric
-    fun loadAccessBiometric() {
+    private fun loadAccessBiometric() {
         viewModelScope.launch(dispatcher) {
             isBiometricStateUseCase().collect { baseResponse->
                 when(baseResponse) {

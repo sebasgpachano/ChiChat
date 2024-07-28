@@ -36,7 +36,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         inflateBinding()
-        createViewAfterInflateBinding(inflater, container, savedInstanceState)
+        createViewAfterInflateBinding()
         return binding?.root
     }
 
@@ -44,7 +44,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewModel()
         observeViewModel()
-        viewCreatedAfterSetupObserverViewModel(view, savedInstanceState)
+        viewCreatedAfterSetupObserverViewModel()
     }
 
     override fun onDestroyView() {
@@ -100,11 +100,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
     abstract fun inflateBinding()
-    abstract fun createViewAfterInflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    )
+    abstract fun createViewAfterInflateBinding()
 
     fun showDialogError(errorCode: String, listener: (view: View) -> Unit) {
         val message = when (errorCode) {
@@ -191,5 +187,5 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     abstract fun observeViewModel()
 
-    abstract fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?)
+    abstract fun viewCreatedAfterSetupObserverViewModel()
 }

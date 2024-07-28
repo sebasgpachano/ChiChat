@@ -56,7 +56,7 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
         setContentView(binding.root)
         findViewByIdToolbar()
         observeViewModel()
-        createAfterInflateBindingSetupObserverViewModel(savedInstanceState)
+        createAfterInflateBindingSetupObserverViewModel()
         setListenersClickToolbarButtons()
     }
 
@@ -275,6 +275,6 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
     protected open fun callViewModelSaveData() = Unit
     abstract fun inflateBinding()
     abstract fun observeViewModel()
-    abstract fun createAfterInflateBindingSetupObserverViewModel(savedInstanceState: Bundle?)
+    abstract fun createAfterInflateBindingSetupObserverViewModel()
     abstract fun configureToolbarAndConfigScreenSections()
 }

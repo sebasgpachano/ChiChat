@@ -17,7 +17,7 @@ sealed class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 tvMessageReceived.text = message.message
                 tvTimeMessageReceived.text = message.date
                 root.setOnClickListener {
-                    chatAdapterListener.onItemClick(message.id)
+                    chatAdapterListener.onItemClick()
                 }
             }
         }
@@ -32,7 +32,7 @@ sealed class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 tvMessageSent.text = message.message
                 tvTimeMessageSent.text = message.date
                 root.setOnClickListener {
-                    chatAdapterListener.onItemClick(message.id)
+                    chatAdapterListener.onItemClick()
                 }
             }
         }

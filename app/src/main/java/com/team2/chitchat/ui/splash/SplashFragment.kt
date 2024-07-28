@@ -1,9 +1,5 @@
 package com.team2.chitchat.ui.splash
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
@@ -17,11 +13,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
         binding = FragmentSplashBinding.inflate(layoutInflater)
     }
 
-    override fun createViewAfterInflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) {
+    override fun createViewAfterInflateBinding() {
         viewLifecycleOwner.lifecycleScope.launch {
             delay(3000)
             findNavController().navigate(R.id.action_splashFragment_to_mainNavigation)
@@ -34,7 +26,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     override fun observeViewModel() = Unit
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
+    override fun viewCreatedAfterSetupObserverViewModel() =
         Unit
 
 }

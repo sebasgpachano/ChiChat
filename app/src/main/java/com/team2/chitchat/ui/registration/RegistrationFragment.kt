@@ -1,10 +1,7 @@
 package com.team2.chitchat.ui.registration
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -34,11 +31,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         binding = FragmentRegistrationBinding.inflate(layoutInflater)
     }
 
-    override fun createViewAfterInflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) {
+    override fun createViewAfterInflateBinding() {
         setupListeners()
         setupRecyclerView()
     }
@@ -102,7 +95,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
         }
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) =
+    override fun viewCreatedAfterSetupObserverViewModel() =
         Unit
 
     override fun onClick(view: View?) {
