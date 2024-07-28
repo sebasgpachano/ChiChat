@@ -21,6 +21,26 @@ class MessageDialogFragment : DialogFragment() {
 
     companion object {
         const val MESSAGE_DIALOG_TAG = "MESSAGE_DIALOG_TAG"
+
+        fun newInstance(
+            iconID: Int? = null,
+            title: String? = null,
+            message: String,
+            positiveButton: String,
+            negativeButton: String? = null,
+            listener: MessageDialogListener? = null
+        ): MessageDialogFragment {
+            return MessageDialogFragment().apply {
+                refreshValues(
+                    iconID = iconID,
+                    title = title,
+                    message = message,
+                    positiveButton = positiveButton,
+                    negativeButton = negativeButton,
+                    listener = listener
+                )
+            }
+        }
     }
 
     private lateinit var binding: FragmentDialogErrorMessageBinding
@@ -33,7 +53,7 @@ class MessageDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it, R.style.backGroundDialog)
-            // Get the layout inflater.
+
             val inflater = requireActivity().layoutInflater
             binding = FragmentDialogErrorMessageBinding.inflate(inflater)
 
@@ -44,8 +64,6 @@ class MessageDialogFragment : DialogFragment() {
             initializeListener()
             dialog
         } ?: throw IllegalStateException("Activity cannot be null")
-
-
     }
 
     override fun onCreateView(
@@ -64,7 +82,7 @@ class MessageDialogFragment : DialogFragment() {
         message: String,
         positiveButton: String,
         negativeButton: String? = null,
-        listener: MessageDialogListener
+        listener: MessageDialogListener? = null
     ) {
         this.iconID = iconID
         this.title = title
@@ -77,45 +95,46 @@ class MessageDialogFragment : DialogFragment() {
     }
 
     private fun paintDialog() {
-
-        if (iconID != null) {
-            binding.imageVMessageDF.apply {
-                visibility = View.VISIBLE
-                setImageDrawable(
-                    AppCompatResources.getDrawable(context, iconID!!).apply { maxHeight = 24 })
+        binding.apply {
+            iconID?.let {
+                imageVMessageDF.apply {
+                    visibility = View.VISIBLE
+                    setImageDrawable(
+                        AppCompatResources.getDrawable(context, it).apply {
+                            maxHeight = 24
+                        }
+                    )
+                }
+            } ?: run {
+                imageVMessageDF.visibility = View.GONE
             }
 
-        } else {
-            binding.imageVMessageDF.visibility = View.GONE
+            textVTitleErrorDF.apply {
+                visibility = if (title.isNullOrEmpty()) View.GONE else View.VISIBLE
+                text = title ?: ""
+            }
+
+            textVMessageErrorDF.text = message
+
+            buttonNegativeErrorDF.apply {
+                visibility = if (negativeButton.isNullOrEmpty()) View.GONE else View.VISIBLE
+                text = negativeButton ?: ""
+            }
+
+            buttonPositiveErrorDF.text = positiveButton
         }
-
-        binding.textVMessageErrorDF.text = message
-
-        binding.textVTitleErrorDF.apply {
-            visibility = if (title.isNullOrEmpty()) View.GONE else View.VISIBLE
-            text = title ?: ""
-        }
-
-        title?.let { binding.textVTitleErrorDF.text = it }
-
-        binding.buttonNegativeErrorDF.apply {
-            visibility = if (negativeButton.isNullOrEmpty()) View.GONE else View.VISIBLE
-            text = negativeButton ?: ""
-        }
-        binding.buttonPositiveErrorDF.text = positiveButton
     }
 
     private fun initializeListener() {
-        binding.buttonPositiveErrorDF.setOnClickListener {
-            listener?.positiveButtonOnclick(it)
-            dismiss()
-        }
-        negativeButton?.let {
-            binding.buttonNegativeErrorDF.setOnClickListener {
+        binding.apply {
+            buttonPositiveErrorDF.setOnClickListener {
+                listener?.positiveButtonOnclick(it) // Safe call
                 dismiss()
-                listener?.negativeButtonOnclick()
+            }
+            buttonNegativeErrorDF.setOnClickListener {
+                listener?.negativeButtonOnclick() // Safe call
+                dismiss()
             }
         }
-
     }
 }
