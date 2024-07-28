@@ -38,6 +38,7 @@ class MessageDialogFragment : DialogFragment() {
             binding = FragmentDialogErrorMessageBinding.inflate(inflater)
 
             builder.setView(binding.root)
+            isCancelable = false
             val dialog = builder.create()
             paintDialog()
             initializeListener()
@@ -80,7 +81,8 @@ class MessageDialogFragment : DialogFragment() {
         if (iconID != null) {
             binding.imageVMessageDF.apply {
                 visibility = View.VISIBLE
-                setImageDrawable(AppCompatResources.getDrawable(context, iconID!!).apply { maxHeight = 24 })
+                setImageDrawable(
+                    AppCompatResources.getDrawable(context, iconID!!).apply { maxHeight = 24 })
             }
 
         } else {
