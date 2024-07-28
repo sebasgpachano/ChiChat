@@ -247,13 +247,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                         && !dataUserSession.haveSession()
                     ) {
                         showMessageDialog(
-                            iconID = R.drawable.delete_chat_icon,
+                            iconID = R.drawable.baseline_fingerprint_62,
                             title = getString(R.string.title_biometric_activated),
                             message = getString(R.string.mesage_biometric_activated),
                             listener = object : MessageDialogFragment.MessageDialogListener {
                                 override fun positiveButtonOnclick(view: View) {
-                                    viewModel.saveAccessBiometric(true)
-                                    viewModel.doLogin(login)
+                                    declareTypeAuthentication(object : AuthenticationCallback() {
+                                        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                                            super.onAuthenticationSucceeded(result)
+                                            Log.d(TAG, "%> onAuthenticationSucceeded: ${result.cryptoObject?.cipher}")
+                                            viewModel.saveAccessBiometric(true)
+                                            viewModel.doLogin(login)
+                                        }
+                                    })
                                 }
 
                                 override fun negativeButtonOnclick(view: View) {
