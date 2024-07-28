@@ -56,6 +56,8 @@
     <string name="register">Register</string>
     <string name="registration_title">Registration</string>
     <string name="user_error">User already exists</string>
+    <string name="user_length_error">User must not exceed 25 characters</string>
+    <string name="nick_length_error">Nick must not exceed 25 characters</string>
     <string name="user_not_exist_error">The user does not exist</string>
     <string name="password_error">Passwords do not match</string>
     <string name="password_invalid">Invalid password</string>
