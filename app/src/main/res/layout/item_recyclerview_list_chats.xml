@@ -20,10 +20,10 @@
         android:id="@+id/ivState"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:src="@drawable/circle_state"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
         android:contentDescription="@string/chat_list_user_state"
+        android:src="@drawable/circle_state"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,15 +47,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginBottom="12dp"
-        android:textAlignment="viewStart"
         android:fontFamily="@font/poppins_regular"
         android:lineSpacingExtra="2sp"
+        android:maxLines="1"
+        android:textAlignment="viewStart"
         android:textColor="@color/gray808080"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvNotification"
         app:layout_constraintStart_toEndOf="@id/ivProfile"
         app:layout_constraintTop_toBottomOf="@id/tvName"
-        app:layout_constraintEnd_toStartOf="@id/tvNotification"
         tools:text="Hola, como estasaaaaaaaaaaaaa aaaaaaa?" />
 
     <TextView
