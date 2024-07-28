@@ -56,13 +56,14 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
     ) {
         if (!dataUserSession.haveSession()) {
             findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
+        } else {
+            seeStatusService()
+            setImage()
+            configRecyclerView()
+            setupListeners()
+            setupSwipeToDelete()
+            setupSearch()
         }
-        seeStatusService()
-        setImage()
-        configRecyclerView()
-        setupListeners()
-        setupSwipeToDelete()
-        setupSearch()
     }
 
     private fun seeStatusService() {
