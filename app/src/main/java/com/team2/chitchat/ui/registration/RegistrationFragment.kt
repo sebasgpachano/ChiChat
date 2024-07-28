@@ -110,20 +110,44 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(), View.O
             R.id.btRegister -> {
                 clearErrors()
                 if (canDoLogin()) {
-                    if (binding?.etPassword?.text.toString() == binding?.etRepeatPass?.text.toString()) {
-                        registrationViewModel.postUser(
-                            binding?.etUser?.text.toString(),
-                            binding?.etPassword?.text.toString(),
-                            binding?.etNick?.text.toString()
-                        )
-                        registrationViewModel.saveProfilePicture(binding?.ivSelectedAvatar)
-                    } else {
-                        binding?.tvRepeatPasswordError?.text = getString(R.string.password_error)
-                        binding?.etRepeatPass?.setErrorBorder(
-                            true,
-                            requireContext(),
-                            binding?.tvRepeatPasswordError
-                        )
+                    val user = binding?.etUser?.text.toString()
+                    val nick = binding?.etNick?.text.toString()
+                    val password = binding?.etPassword?.text.toString()
+                    val repeatPassword = binding?.etRepeatPass?.text.toString()
+
+                    when {
+                        user.length > 25 -> {
+                            binding?.tvUserError?.text = getString(R.string.user_length_error)
+                            binding?.etUser?.setErrorBorder(
+                                true,
+                                requireContext(),
+                                binding?.tvUserError
+                            )
+                        }
+
+                        nick.length > 25 -> {
+                            binding?.tvNickError?.text = getString(R.string.nick_length_error)
+                            binding?.etNick?.setErrorBorder(
+                                true,
+                                requireContext(),
+                                binding?.tvNickError
+                            )
+                        }
+
+                        password != repeatPassword -> {
+                            binding?.tvRepeatPasswordError?.text =
+                                getString(R.string.password_error)
+                            binding?.etRepeatPass?.setErrorBorder(
+                                true,
+                                requireContext(),
+                                binding?.tvRepeatPasswordError
+                            )
+                        }
+
+                        else -> {
+                            registrationViewModel.postUser(user, password, nick)
+                            registrationViewModel.saveProfilePicture(binding?.ivSelectedAvatar)
+                        }
                     }
                 } else {
                     emptyEditText()
