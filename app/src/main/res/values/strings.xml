@@ -10,7 +10,7 @@
 
     <!-- Contacts list fragment -->
     <string name="list_contacts_title_toolbar">Contactos</string>
-    <string name="list_contacts_subtitle">Awesome to Chat With</string>
+    <string name="list_contacts_subtitle">Encantado de hablar con</string>
     <string name="list_contacts_profile_img">Foto de perfil</string>
     <string name="list_contacts_et_hint_search_user">Buscar contacto…</string>
 
