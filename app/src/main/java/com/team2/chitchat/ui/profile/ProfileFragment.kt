@@ -69,8 +69,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         fragmentLayoutWithToolbar()
         showToolbar(
             showBack = true,
-            showProfile = false,
-            showNotification = true,
             title = getString(R.string.profile)
         )
     }
