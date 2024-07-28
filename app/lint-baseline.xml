@@ -23,11 +23,6 @@
             column="10" />
     </issue>
 
-    <issue id="UnusedResources"
-        message="The resource `R.mipmap.avatar_default_round` appears to be unused">
-        <location file="src/main/res/mipmap-mdpi/avatar_default_round.webp" />
-    </issue>
-
     <issue id="IconLocation"
         message="Found bitmap drawable `res/drawable/chitchat_logo.png` in densityless folder">
         <location file="src/main/res/drawable/chitchat_logo.png" />
