@@ -79,7 +79,7 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
             null
         )
         val bitmap: Bitmap? = if (imageBase64.isNullOrBlank()) {
-            BitmapFactory.decodeResource(resources, R.mipmap.avatar_default_round)
+            BitmapFactory.decodeResource(resources, R.mipmap.avatar_default_foreground)
         } else {
             val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
             BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
