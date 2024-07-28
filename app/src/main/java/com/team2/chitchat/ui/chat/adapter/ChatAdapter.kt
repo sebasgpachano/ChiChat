@@ -27,7 +27,7 @@ class ChatAdapter @Inject constructor(
         chatAdapterListener = listener
     }
     fun interface ChatAdapterListener {
-        fun onItemClick(messageId: String)
+        fun onItemClick()
     }
 
     override fun getItemViewType(position: Int): Int {

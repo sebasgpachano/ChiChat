@@ -147,7 +147,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         binding = null
     }
 
-    override fun onItemClick(messageId: String) = Unit
+    override fun onItemClick() = Unit
 
     private fun newLine() {
         binding?.etSend?.setOnEditorActionListener { _, actionId, event ->
