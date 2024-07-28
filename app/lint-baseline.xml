@@ -2,27 +2,6 @@
 <issues format="6" by="lint 8.5.1" type="baseline" client="gradle" dependencies="false"
     name="AGP (8.5.1)" variant="all" version="8.5.1">
 
-    <issue id="GradleDependency"
-        message="A newer version of org.jetbrains.kotlin.android than 1.9.23 is available: 2.0.0"
-        errorLine1="kotlin = &quot;1.9.23&quot;" errorLine2="         ~~~~~~~~">
-        <location file="$HOME/AndroidStudioProyect/ChiChat/gradle/libs.versions.toml" line="5"
-            column="10" />
-    </issue>
-
-    <issue id="GradleDependency"
-        message="A newer version of org.jetbrains.kotlin.android than 1.9.23 is available: 2.0.0"
-        errorLine1="kotlin = &quot;1.9.23&quot;" errorLine2="         ~~~~~~~~">
-        <location file="$HOME/AndroidStudioProyect/ChiChat/gradle/libs.versions.toml" line="5"
-            column="10" />
-    </issue>
-
-    <issue id="GradleDependency"
-        message="A newer version of org.jetbrains.kotlin.android than 1.9.23 is available: 2.0.0"
-        errorLine1="kotlin = &quot;1.9.23&quot;" errorLine2="         ~~~~~~~~">
-        <location file="$HOME/AndroidStudioProyect/ChiChat/gradle/libs.versions.toml" line="5"
-            column="10" />
-    </issue>
-
     <issue id="IconLocation"
         message="Found bitmap drawable `res/drawable/chitchat_logo.png` in densityless folder">
         <location file="src/main/res/drawable/chitchat_logo.png" />

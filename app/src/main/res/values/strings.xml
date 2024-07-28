@@ -59,7 +59,6 @@
     <string name="register">Registrarse</string>
     <string name="registration_title">Registro</string>
     <string name="user_error">El usuario ya existe</string>
-    <string name="user_error">Usuario ya existe</string>
     <string name="user_length_error">El usuario no debe exceder 25 caracteres</string>
     <string name="nick_length_error">El nick no debe exceder 25 caracteres</string>
     <string name="user_not_exist_error">El usuario no existe</string>

@@ -2,7 +2,6 @@
 agp = "8.5.1"
 circleimageview = "3.1.0"
 biometric = "1.1.0"
-kotlin = "1.9.23"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -11,11 +10,11 @@ activity = "1.9.1"
 #plugin
 pluginNavigationSafeArgs = "2.7.7"
 pluginDaggerHilt = "2.48"
-pluginKotlin = "1.9.23"
+pluginKotlin = "2.0.0"
 pluginCrashlytics = "3.0.2"
 pluginGoogleService = "4.4.2"
 pluginSonarQube = "5.0.0.4638"
-pluginKsp = "1.9.10-1.0.13"
+pluginKsp = "2.0.0-1.0.23"
 
 #Android
 coreKtx = "1.13.1"
@@ -130,7 +129,7 @@ firebase = ["firebase-analytics", "firebase-bom", "firebase-crashlytics", "fireb
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "pluginKotlin" }
 pluginNavigationSafeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "pluginNavigationSafeArgs" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "pluginKotlin" }
 pluginDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "pluginDaggerHilt" }
 pluginCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "pluginCrashlytics" }
 pluginGoogleServices = { id = "com.google.gms.google-services", version.ref = "pluginGoogleService" }
