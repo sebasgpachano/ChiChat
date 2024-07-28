@@ -47,13 +47,13 @@
 
     <!-- Registration fragment -->
     <string name="user">User</string>
-    <string name="enter_user">Enter username</string>
+    <string name="enter_user">Enter your username</string>
     <string name="password">Password</string>
-    <string name="enter_password">Enter password</string>
+    <string name="enter_password">Enter your password</string>
     <string name="repeat_password">Repeat Password</string>
-    <string name="repeat_pass">Repeat the password</string>
+    <string name="repeat_pass">Repeat your password</string>
     <string name="nick">Nick</string>
-    <string name="enter_nick">Enter the nick</string>
+    <string name="enter_nick">Enter your nick</string>
     <string name="selected_avatar">Selected avatar:</string>
     <string name="avatar">avatar</string>
     <string name="register">Register</string>
