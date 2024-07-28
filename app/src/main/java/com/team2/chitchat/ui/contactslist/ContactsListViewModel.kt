@@ -44,7 +44,6 @@ class ContactsListViewModel @Inject constructor(
                         loadingMutableSharedFlow.emit(false)
                         val filteredSortedList = it.data
                             .filterNot { user -> user.id == dataUserSession.userId }
-                            .sortedBy { user -> user.nick }
                         contactsMutableSharedFlow.emit(ArrayList(filteredSortedList))
                     }
                 }

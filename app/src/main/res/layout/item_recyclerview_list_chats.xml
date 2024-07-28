@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toStartOf="@id/tvNotification"
         app:layout_constraintStart_toEndOf="@id/ivProfile"
         app:layout_constraintTop_toBottomOf="@id/tvName"
-        tools:text="Hola, como estasaaaaaaaaaaaaa aaaaaaa?" />
+        tools:text="Hola, como estasaaaaaaaaaaaa aaaaaaa?" />
 
     <TextView
         android:id="@+id/tvDate"
