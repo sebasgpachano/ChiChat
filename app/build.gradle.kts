@@ -32,7 +32,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
@@ -41,13 +41,14 @@ android {
                 "proguard-rules.pro",
                 "proguard-disable-log.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
 
             configure<CrashlyticsExtension> {
                 mappingFileUploadEnabled = true
             }
         }
 
-        getByName("debug") {
+        debug {
             isDebuggable = true
             isMinifyEnabled = false
             proguardFiles(
