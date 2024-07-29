@@ -38,6 +38,7 @@ class DataProvider @Inject constructor(
 
     //LoginUser
     override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> {
+        preferencesDataSource.saveAuthToken("")
         return remoteDataSource.postLoginUser(loginUserRequest)
     }
 
