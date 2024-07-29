@@ -99,7 +99,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.loginStateFlow.collect { isOk ->
-                startDataBase(isOk)
+                if (isOk) {
+                    showMessageDialog(
+                        iconID = R.drawable.baseline_fingerprint_62,
+                        title = getString(R.string.title_biometric_activated),
+                        message = getString(R.string.mesage_biometric_activated),
+                        listener = object : MessageDialogFragment.MessageDialogListener {
+                            override fun positiveButtonOnclick(view: View) {
+                                viewModel.saveAccessBiometric(true)
+                                startDataBase(isOk)
+                            }
+
+                            override fun negativeButtonOnclick() {
+                                startDataBase(isOk)
+                            }
+                        })
+                }
+
             }
         }
 
@@ -112,12 +128,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.accessBiometricStateFlow.collect { isOk ->
 
-                if (isOk) {
-                    binding?.apply {
-                        imageVFingerprintLoginF.visibility = View.VISIBLE
-                    }
-                }
-
                 if (isOk && !dataUserSession.haveSession()) {
                     declareTypeAuthentication(BiometricPrompt.CryptoObject(biometricCryptoManager.encryptedCipher()),object : AuthenticationCallback() {
                         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
@@ -129,7 +139,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                             }
                         }
                     })
-
+                    binding?.apply {
+                        imageVFingerprintLoginF.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -243,32 +255,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 val login = LoginUserRequest(userInput, passwordInput)
 
                 if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
-                    if (!viewModel.accessBiometricStateFlow.value
-                        && !dataUserSession.haveSession()
-                    ) {
-                        showMessageDialog(
-                            iconID = R.drawable.baseline_fingerprint_62,
-                            title = getString(R.string.title_biometric_activated),
-                            message = getString(R.string.mesage_biometric_activated),
-                            listener = object : MessageDialogFragment.MessageDialogListener {
-                                override fun positiveButtonOnclick(view: View) {
-                                    declareTypeAuthentication(BiometricPrompt.CryptoObject(biometricCryptoManager.encryptedCipher()),object : AuthenticationCallback() {
-                                        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                                            super.onAuthenticationSucceeded(result)
-                                            Log.d(TAG, "%> onAuthenticationSucceeded: ${result.cryptoObject?.cipher}")
-                                            viewModel.saveAccessBiometric(true)
-                                            viewModel.doLogin(login)
-                                        }
-                                    })
-                                }
-
-                                override fun negativeButtonOnclick() {
-                                    viewModel.doLogin(login)
-                                }
-                            })
-                    } else {
-                        viewModel.doLogin(login)
-                    }
+                    viewModel.doLogin(login)
                 } else {
                     emptyEditText(
                         listOf(
