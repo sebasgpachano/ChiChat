@@ -6,6 +6,7 @@ import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
+import com.team2.chitchat.data.repository.crypto.BiometricCryptoManager
 import com.team2.chitchat.data.repository.local.LocalDataSource
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
@@ -27,7 +28,8 @@ import javax.inject.Singleton
 class DataProvider @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
-    private val preferencesDataSource: PreferencesDataSource
+    private val preferencesDataSource: PreferencesDataSource,
+    private val biometricCryptoManager: BiometricCryptoManager
 ) : DataSource {
     //RegisterUSer
     override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> {
@@ -41,7 +43,7 @@ class DataProvider @Inject constructor(
 
     // Refresh Token Access with Biometric
     override fun postRefreshToken(): Flow<BaseResponse<Boolean>> {
-        return remoteDataSource.postRefreshToken()
+        return remoteDataSource.postRefreshToken(biometricCryptoManager)
     }
 
     //ContactsList

@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.BASE_URL
 import com.team2.chitchat.data.constants.GeneralConstants.Companion.RETROFIT_TIMEOUT_IN_SECOND
+import com.team2.chitchat.data.repository.crypto.BiometricCryptoManager
 import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.ui.extensions.TAG
 import okhttp3.CertificatePinner
@@ -21,7 +22,8 @@ import javax.net.ssl.HostnameVerifier
 
 @Singleton
 class RetrofitClient @Inject constructor(
-    private val preferencesDataSource: PreferencesDataSource
+    private val preferencesDataSource: PreferencesDataSource,
+    private val biometricCryptoManager: BiometricCryptoManager
 ) {
     companion object {
         const val HEADER_KEY_TOKEN = "Authorization"
@@ -66,7 +68,7 @@ class RetrofitClient @Inject constructor(
             })
             .interceptors().add(Interceptor { chain ->
                 val original = chain.request()
-                val token = preferencesDataSource.getAuthToken()
+                val token = getToken()
                 Log.d(TAG, "%> token: $token")
                 val request = when {
                     needAddBearer(chain.request()) -> {
@@ -111,6 +113,17 @@ class RetrofitClient @Inject constructor(
                 Log.d(TAG, "%> No needAddBearer contemplated")
                 false
             }
+        }
+    }
+    private fun getToken(): String {
+        return if (preferencesDataSource.getAccessBiometric() && preferencesDataSource.getIvParam().isNotBlank()) {
+            val token = biometricCryptoManager.decrypt()
+            Log.d(TAG, "%> Biometric is TRUE $token")
+            token
+        } else {
+            val token = preferencesDataSource.getAuthToken()
+            Log.d(TAG, "%> Biometric is FALSE ")
+            token
         }
     }
 }

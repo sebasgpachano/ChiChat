@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">ChitChat</string>
     <!-- Toolbar -->
     <string name="toolbar_description_back_button">Button to go back</string>
     <string name="toolbar_description_profile_button">Button to access profile</string>
