@@ -60,7 +60,6 @@ class ProfileViewModel @Inject constructor(
 
     //decryptToken
     private val decryptTokenMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val decryptTokenStateFlow: StateFlow<Boolean> = decryptTokenMutableStateFlow
 
     init {
         loadUserModel()
