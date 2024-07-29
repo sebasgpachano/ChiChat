@@ -1,11 +1,8 @@
 package com.team2.chitchat.ui.chat
 
-import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
@@ -40,11 +37,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         binding = FragmentChatBinding.inflate(layoutInflater)
     }
 
-    override fun createViewAfterInflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) {
+    override fun createViewAfterInflateBinding() {
         setUpListeners()
         configRecyclerView()
         setUpKeyboardListener()
@@ -92,7 +85,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         }
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
+    override fun viewCreatedAfterSetupObserverViewModel() {
         chatViewModel.getMessagesForChat(args.idChat)
     }
 
@@ -147,7 +140,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         binding = null
     }
 
-    override fun onItemClick(messageId: String) = Unit
+    override fun onItemClick() = Unit
 
     private fun newLine() {
         binding?.etSend?.setOnEditorActionListener { _, actionId, event ->

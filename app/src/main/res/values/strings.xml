@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">ChitChat</string>
     <!-- Toolbar -->
     <string name="toolbar_description_back_button">Boton para ir hacia atras</string>
     <string name="toolbar_description_profile_button">Boton para acceder a perfil</string>
@@ -59,6 +58,8 @@
     <string name="register">Registrarse</string>
     <string name="registration_title">Registro</string>
     <string name="user_error">El usuario ya existe</string>
+    <string name="user_length_error">El usuario no debe exceder 25 caracteres</string>
+    <string name="nick_length_error">El nick no debe exceder 25 caracteres</string>
     <string name="user_not_exist_error">El usuario no existe</string>
     <string name="password_error">Las contraseñas no coinciden</string>
     <string name="password_invalid">Contraseña incorrecta</string>
@@ -95,6 +96,7 @@
     <string name="cancel_biometric_dialog">Usar contraseña</string>
     <string name="not_registered_biometric_access">Para poder utilizar accesso con Biometria debes añadir una en ajustes del dispositivo.</string>
     <string name="biometric_unavailable">Acceso Biometrico no disponible.</string>
+    <string name="message_biometric_restarting">Tienes que autenticarte nuevamente para habilitar esta opción.</string>
 
     <!-- Shared preferences-->
     <string name="title_biometric_activated">Accesso Biometrico</string>

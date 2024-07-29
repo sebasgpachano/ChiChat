@@ -3,14 +3,11 @@ package com.team2.chitchat.ui.chatlist
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -51,9 +48,7 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
         binding = FragmentChatListBinding.inflate(layoutInflater)
     }
 
-    override fun createViewAfterInflateBinding(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ) {
+    override fun createViewAfterInflateBinding() {
         if (!dataUserSession.haveSession()) {
             findNavController().navigate(R.id.action_chatListFragment_to_loginNavigation)
         } else {
@@ -189,7 +184,7 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
                                         isDialogShowing = false
                                     }
 
-                                    override fun negativeButtonOnclick(view: View) {
+                                    override fun negativeButtonOnclick() {
                                         isDialogShowing = false
                                         refreshFragment()
                                     }
@@ -230,7 +225,7 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
         }
     }
 
-    override fun viewCreatedAfterSetupObserverViewModel(view: View, savedInstanceState: Bundle?) {
+    override fun viewCreatedAfterSetupObserverViewModel() {
         chatListViewModel.getChats()
     }
 
