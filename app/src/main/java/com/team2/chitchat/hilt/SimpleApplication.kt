@@ -40,7 +40,7 @@ class SimpleApplication : Application() {
 
     private fun initSession() {
         if (preferencesDataSource.getAuthToken().isNotBlank()
-            && preferencesDataSource.getAuthToken().isNotEmpty()
+            && preferencesDataSource.getUserID().isNotBlank()
             && !preferencesDataSource.getAccessBiometric()
         ) {
             dataUserSession.userId = preferencesDataSource.getUserID()
