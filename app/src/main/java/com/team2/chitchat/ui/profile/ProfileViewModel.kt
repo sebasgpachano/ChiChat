@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
+import com.team2.chitchat.data.usecase.DecryptTokenUseCase
 import com.team2.chitchat.data.usecase.local.DeleteChatTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteMessageTableUseCase
 import com.team2.chitchat.data.usecase.local.DeleteUserTableUseCase
@@ -38,6 +39,7 @@ class ProfileViewModel @Inject constructor(
     private val isBiometricStateUseCase: IsBiometricStateUseCase,
     private val putBiometricStateUseCase: PutBiometricStateUseCase,
     private val clearPreferencesUseCase: ClearPreferencesUseCase,
+    private val decryptTokenUseCase: DecryptTokenUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel() {
     private val deleteDbMutableSharedFlow = MutableSharedFlow<Boolean>()
@@ -55,6 +57,9 @@ class ProfileViewModel @Inject constructor(
     //AccessBiometric PREFERENCES
     private val accessBiometricMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val accessBiometricStateFlow: StateFlow<Boolean> = accessBiometricMutableStateFlow
+
+    //decryptToken
+    private val decryptTokenMutableStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
         loadUserModel()
@@ -196,8 +201,23 @@ class ProfileViewModel @Inject constructor(
     fun saveAccessBiometric(accessBiometric: Boolean) {
         viewModelScope.launch(dispatcher) {
             putBiometricStateUseCase(accessBiometric)
-            loadAccessBiometric()
         }
 
+    }
+
+    fun decryptToken(){
+        viewModelScope.launch(dispatcher) {
+            decryptTokenUseCase().collect { baseResponse->
+                when(baseResponse){
+                    is BaseResponse.Error -> {
+                        Log.d(this@ProfileViewModel.TAG, "l> Error: ${baseResponse.error.message}")
+                        errorMutableSharedFlow.emit(baseResponse.error)
+                        }
+                    is BaseResponse.Success -> {
+                        decryptTokenMutableStateFlow.value = baseResponse.data
+                    }
+                }
+            }
+        }
     }
 }

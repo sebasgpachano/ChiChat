@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
 import com.team2.chitchat.data.analytics.FirebaseAnalyticsManager
+import com.team2.chitchat.data.repository.crypto.BiometricCryptoManager
 import com.team2.chitchat.data.repository.remote.backend.ChatService
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.session.DataUserSession
@@ -40,6 +41,9 @@ import javax.inject.Inject
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private val viewModel: LoginViewModel by viewModels()
     private val dbViewModel: DbViewModel by viewModels()
+
+    @Inject
+    lateinit var biometricCryptoManager: BiometricCryptoManager
 
     @Inject
     lateinit var dataUserSession: DataUserSession
@@ -95,7 +99,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.loginStateFlow.collect { isOk ->
-                startDataBase(isOk)
+                if (isOk) {
+                    showMessageDialog(
+                        iconID = R.drawable.baseline_fingerprint_62,
+                        title = getString(R.string.title_biometric_activated),
+                        message = getString(R.string.mesage_biometric_activated),
+                        listener = object : MessageDialogFragment.MessageDialogListener {
+                            override fun positiveButtonOnclick(view: View) {
+                                viewModel.saveAccessBiometric(true)
+                                startDataBase(isOk)
+                            }
+
+                            override fun negativeButtonOnclick() {
+                                startDataBase(isOk)
+                            }
+                        })
+                }
+
             }
         }
 
@@ -108,21 +128,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.accessBiometricStateFlow.collect { isOk ->
 
-                if (isOk) {
-                    binding?.apply {
-                        imageVFingerprintLoginF.visibility = View.VISIBLE
-                    }
-                }
-
                 if (isOk && !dataUserSession.haveSession()) {
-                    declareTypeAuthentication(object : AuthenticationCallback() {
+                    declareTypeAuthentication(BiometricPrompt.CryptoObject(biometricCryptoManager.encryptedCipher()),object : AuthenticationCallback() {
                         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                             super.onAuthenticationSucceeded(result)
                             Log.d(TAG, "onAuthenticationSucceeded: ${result.cryptoObject?.cipher}")
-                            viewModel.loaRefreshToken()
+                            result.cryptoObject?.let {
+                                viewModel.loaRefreshToken()
+
+                            }
                         }
                     })
-
+                    binding?.apply {
+                        imageVFingerprintLoginF.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -236,32 +255,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 val login = LoginUserRequest(userInput, passwordInput)
 
                 if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
-                    if (!viewModel.accessBiometricStateFlow.value
-                        && !dataUserSession.haveSession()
-                    ) {
-                        showMessageDialog(
-                            iconID = R.drawable.baseline_fingerprint_62,
-                            title = getString(R.string.title_biometric_activated),
-                            message = getString(R.string.mesage_biometric_activated),
-                            listener = object : MessageDialogFragment.MessageDialogListener {
-                                override fun positiveButtonOnclick(view: View) {
-                                    declareTypeAuthentication(object : AuthenticationCallback() {
-                                        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                                            super.onAuthenticationSucceeded(result)
-                                            Log.d(TAG, "%> onAuthenticationSucceeded: ${result.cryptoObject?.cipher}")
-                                            viewModel.saveAccessBiometric(true)
-                                            viewModel.doLogin(login)
-                                        }
-                                    })
-                                }
-
-                                override fun negativeButtonOnclick() {
-                                    viewModel.doLogin(login)
-                                }
-                            })
-                    } else {
-                        viewModel.doLogin(login)
-                    }
+                    viewModel.doLogin(login)
                 } else {
                     emptyEditText(
                         listOf(
@@ -273,11 +267,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             }
             imageVFingerprintLoginF.apply {
                 setOnClickListener {
-                    declareTypeAuthentication(object : AuthenticationCallback() {
+                    declareTypeAuthentication(BiometricPrompt.CryptoObject(biometricCryptoManager.encryptedCipher()),object : AuthenticationCallback() {
                         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                             super.onAuthenticationSucceeded(result)
                             Log.d(TAG, "onAuthenticationSucceeded: ${result.cryptoObject?.cipher}")
-                            viewModel.loaRefreshToken()
+                            result.cryptoObject?.let {
+                                viewModel.loaRefreshToken()
+                            }
                         }
                     })
                 }
@@ -304,12 +300,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun declareTypeAuthentication(biometricCallback: AuthenticationCallback) {
+    private fun declareTypeAuthentication(cryptoObject: BiometricPrompt.CryptoObject, biometricCallback: AuthenticationCallback) {
         val biometricManager = BiometricManager.from(requireContext())
         when (biometricManager.canAuthenticate(BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 Log.d(TAG, "App can authenticate using biometrics.")
-                showBiometricDialog(biometricCallback)
+                showBiometricDialog(cryptoObject, biometricCallback)
             }
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
@@ -346,7 +342,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun showBiometricDialog(biometricCallback: AuthenticationCallback) {
+    private fun showBiometricDialog(cryptoObject: BiometricPrompt.CryptoObject, biometricCallback: AuthenticationCallback) {
         executor = ContextCompat.getMainExecutor(requireContext())
         biometricPrompt = BiometricPrompt(this, executor, biometricCallback)
         promptInfo = BiometricPrompt.PromptInfo.Builder()
@@ -354,7 +350,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             .setSubtitle(resources.getString(R.string.subtitle_biometric_dialog))
             .setNegativeButtonText(resources.getString(R.string.cancel_biometric_dialog))
             .build()
-        biometricPrompt.authenticate(promptInfo)
+        biometricPrompt.authenticate(promptInfo,cryptoObject)
     }
 
 }

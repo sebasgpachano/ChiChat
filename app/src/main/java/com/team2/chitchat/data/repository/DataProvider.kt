@@ -6,6 +6,7 @@ import com.team2.chitchat.data.domain.model.error.ErrorModel
 import com.team2.chitchat.data.domain.model.messages.PostNewMessageModel
 import com.team2.chitchat.data.domain.model.users.GetUserModel
 import com.team2.chitchat.data.domain.model.users.PostRegisterModel
+import com.team2.chitchat.data.repository.crypto.BiometricCryptoManager
 import com.team2.chitchat.data.repository.local.LocalDataSource
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
@@ -27,7 +28,8 @@ import javax.inject.Singleton
 class DataProvider @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
-    private val preferencesDataSource: PreferencesDataSource
+    private val preferencesDataSource: PreferencesDataSource,
+    private val biometricCryptoManager: BiometricCryptoManager
 ) : DataSource {
     //RegisterUSer
     override fun postRegisterUser(registerUserRequest: RegisterUserRequest): Flow<BaseResponse<PostRegisterModel>> {
@@ -36,12 +38,13 @@ class DataProvider @Inject constructor(
 
     //LoginUser
     override fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> {
+        preferencesDataSource.saveAuthToken("")
         return remoteDataSource.postLoginUser(loginUserRequest)
     }
 
     // Refresh Token Access with Biometric
     override fun postRefreshToken(): Flow<BaseResponse<Boolean>> {
-        return remoteDataSource.postRefreshToken()
+        return remoteDataSource.postRefreshToken(biometricCryptoManager)
     }
 
     //ContactsList
@@ -197,5 +200,16 @@ class DataProvider @Inject constructor(
 
     override fun clearPreferences() {
         return preferencesDataSource.clearPreferences()
+    }
+
+    //Biometric
+    override fun decryptToken(): Flow<BaseResponse<Boolean>> = flow{
+        try {
+            val access = biometricCryptoManager.decrypt()
+            preferencesDataSource.saveAuthToken(access)
+            emit(BaseResponse.Success(true))
+        }catch (e: Exception){
+            emit(BaseResponse.Error(ErrorModel(message = e.message ?: "")))
+        }
     }
 }

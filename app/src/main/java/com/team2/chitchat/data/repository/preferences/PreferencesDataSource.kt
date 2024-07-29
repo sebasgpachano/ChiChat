@@ -29,6 +29,17 @@ class PreferencesDataSource @Inject constructor(
         )
     }
 
+    fun getIvParam(): String {
+        return encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences("IvParam")
+    }
+
+    fun saveIvParam(token: String) {
+        encryptedSharedPreferencesManager.saveStringEncryptedSharedPreferences(
+            "IvParam",
+            token
+        )
+    }
+
     fun getUserID(): String {
         return encryptedSharedPreferencesManager.getStringEncryptedSharedPreferences(
             EncryptedSharedPreferencesKeys.ENCRYPTED_SHARED_PREFERENCES_USER_ID

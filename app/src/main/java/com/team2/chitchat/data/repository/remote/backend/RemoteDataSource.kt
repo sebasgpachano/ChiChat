@@ -12,6 +12,7 @@ import com.team2.chitchat.data.mapper.messages.PostNewMessageMapper
 import com.team2.chitchat.data.mapper.users.GetContactsListMapper
 import com.team2.chitchat.data.mapper.users.GetUserMapper
 import com.team2.chitchat.data.mapper.users.PostRegisterMapper
+import com.team2.chitchat.data.repository.crypto.BiometricCryptoManager
 import com.team2.chitchat.data.repository.local.chat.ChatDB
 import com.team2.chitchat.data.repository.local.message.MessageDB
 import com.team2.chitchat.data.repository.local.user.UserDB
@@ -66,6 +67,7 @@ class RemoteDataSource @Inject constructor(
                         userId = response.user?.id ?: ""
                     }
                     preferencesDataSource.apply {
+                        saveProfilePicture(null)
                         saveAuthToken(response.token ?: "")
                         saveUserID(response.user?.id ?: "")
                     }
@@ -78,18 +80,20 @@ class RemoteDataSource @Inject constructor(
         }
 
     //Access with Biometric
-    fun postRefreshToken(): Flow<BaseResponse<Boolean>> =
+    fun postRefreshToken(biometricCryptoManager: BiometricCryptoManager): Flow<BaseResponse<Boolean>> =
         flow {
             val apiResult = callApiService.callPostRefreshToken()
             if (apiResult is BaseResponse.Success) {
                 apiResult.data.let { response ->
-                    dataUserSession.apply {
-                        tokenIb = response.token ?: ""
-                        userId = response.user?.id ?: ""
-                    }
-                    preferencesDataSource.apply {
-                        saveAuthToken(response.token ?: "")
-                        saveUserID(response.user?.id ?: "")
+                    response.token?.let { mToken->
+                        dataUserSession.apply {
+                            tokenIb = mToken
+                            userId = response.user?.id ?: ""
+                        }
+                        biometricCryptoManager.encrypt(mToken)
+                        preferencesDataSource.apply {
+                            saveUserID(response.user?.id ?: "")
+                        }
                     }
                     emit(BaseResponse.Success(true))
                 }

@@ -181,6 +181,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         return circularBitmap
     }
 
+    fun restartActivity() {
+        val activity = requireActivity()
+        activity.finish()
+        startActivity(activity.intent)
+    }
+
     abstract fun configureToolbarAndConfigScreenSections()
 
     protected open fun setupViewModel() = Unit
