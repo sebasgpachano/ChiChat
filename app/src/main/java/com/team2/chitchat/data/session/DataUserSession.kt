@@ -12,4 +12,9 @@ class DataUserSession @Inject constructor() : Serializable {
     fun haveSession(): Boolean {
         return userId.isNotEmpty() && tokenIb.isNotEmpty()
     }
+    fun clearSession() {
+        userId = ""
+        tokenIb = ""
+    }
+
 }

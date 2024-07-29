@@ -67,6 +67,7 @@ class RemoteDataSource @Inject constructor(
                         userId = response.user?.id ?: ""
                     }
                     preferencesDataSource.apply {
+                        saveProfilePicture(null)
                         saveAuthToken(response.token ?: "")
                         saveUserID(response.user?.id ?: "")
                     }

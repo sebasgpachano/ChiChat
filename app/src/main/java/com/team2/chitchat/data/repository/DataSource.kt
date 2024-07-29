@@ -80,4 +80,5 @@ interface DataSource {
     fun saveProfilePicture(imageView: CircleImageView?)
     fun loadProfilePicture(): Bitmap?
     fun clearPreferences()
+    fun decryptToken(): Flow<BaseResponse<Boolean>>
 }

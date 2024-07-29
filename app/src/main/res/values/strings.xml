@@ -96,6 +96,7 @@
     <string name="cancel_biometric_dialog">Usar contraseña</string>
     <string name="not_registered_biometric_access">Para poder utilizar accesso con Biometria debes añadir una en ajustes del dispositivo.</string>
     <string name="biometric_unavailable">Acceso Biometrico no disponible.</string>
+    <string name="message_biometric_restarting">Tienes que autenticarte nuevamente para habilitar esta opción.</string>
 
     <!-- Shared preferences-->
     <string name="title_biometric_activated">Accesso Biometrico</string>

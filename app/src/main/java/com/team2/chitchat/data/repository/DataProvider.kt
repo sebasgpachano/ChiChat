@@ -200,4 +200,15 @@ class DataProvider @Inject constructor(
     override fun clearPreferences() {
         return preferencesDataSource.clearPreferences()
     }
+
+    //Biometric
+    override fun decryptToken(): Flow<BaseResponse<Boolean>> = flow{
+        try {
+            val access = biometricCryptoManager.decrypt()
+            preferencesDataSource.saveAuthToken(access)
+            emit(BaseResponse.Success(true))
+        }catch (e: Exception){
+            emit(BaseResponse.Error(ErrorModel(message = e.message ?: "")))
+        }
+    }
 }

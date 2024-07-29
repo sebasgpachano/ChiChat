@@ -13,17 +13,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.team2.chitchat.R
 import com.team2.chitchat.data.repository.remote.backend.ChatService
+import com.team2.chitchat.data.session.DataUserSession
 import com.team2.chitchat.databinding.FragmentProfileBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private val viewModel: ProfileViewModel by viewModels()
-
+    @Inject
+    lateinit var dataUserSession: DataUserSession
     //Activity Result
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { resultLauncher ->
@@ -104,9 +107,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             viewModel.accessBiometricStateFlow.collect { isOk ->
                 Log.d(TAG, "observeViewModel: $isOk")
                 binding?.switchBiometric?.isChecked = isOk
-                if (isOk) {
-                    declareTypeAuthentication()
-                }
             }
         }
     }
@@ -138,19 +138,45 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             }
 
             switchBiometric.apply {
-                setOnCheckedChangeListener { _, isChecked ->
-                    viewModel.saveAccessBiometric(isChecked)
+                setOnCheckedChangeListener { view, isChecked ->
+                    if (view.isPressed) {
+                        declareTypeAuthentication(isChecked)
+                    }
                 }
             }
         }
     }
 
-    private fun declareTypeAuthentication() {
+    private fun declareTypeAuthentication(isChecked: Boolean) {
         val biometricManager = BiometricManager.from(requireContext())
         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
                 Log.d(TAG, "App can authenticate using biometrics.")
-                viewModel.saveAccessBiometric(true)
+                showMessageDialog(
+                    iconID = R.drawable.baseline_fingerprint_62,
+                    title = getString(R.string.title_biometric_activated),
+                    message = getString(R.string.message_biometric_restarting),
+                    listener = object : MessageDialogFragment.MessageDialogListener {
+                        override fun positiveButtonOnclick(view: View) {
+                            if (isChecked) {
+                                val intent = Intent(requireContext(), ChatService::class.java)
+                                requireContext().stopService(intent)
+                                dataUserSession.clearSession()
+                                viewModel.saveAccessBiometric(true)
+                                restartActivity()
+                            } else {
+                                viewModel.decryptToken()
+                                val intent = Intent(requireContext(), ChatService::class.java)
+                                requireContext().stopService(intent)
+                                viewModel.saveAccessBiometric(false)
+                                restartActivity()
+                            }
+                        }
+
+                        override fun negativeButtonOnclick() {
+                            binding?.switchBiometric?.isChecked = !isChecked
+                        }
+                    })
             }
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
