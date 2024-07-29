@@ -66,7 +66,7 @@ class BiometricCryptoManager @Inject constructor(
         cipher.init(Cipher.ENCRYPT_MODE, secretKey)
         return cipher
     }
-    fun decryptCipher(): Cipher {
+    private fun decryptCipher(): Cipher {
         val iv = preferencesDataSource.getIvParam()
         val ivParameterSpec = IvParameterSpec(Base64.decode(iv, Base64.DEFAULT))
         val cipher = getCipher()
