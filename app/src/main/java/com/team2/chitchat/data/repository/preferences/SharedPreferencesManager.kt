@@ -39,4 +39,8 @@ class SharedPreferencesManager @Inject constructor(
         val boolean = sharedPreferences.getBoolean(key, defaultValue)
         return boolean
     }
+
+    fun clearAllPreferences() {
+        edit { it.clear() }
+    }
 }

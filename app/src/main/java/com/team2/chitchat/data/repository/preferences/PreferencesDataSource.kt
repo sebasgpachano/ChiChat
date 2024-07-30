@@ -67,7 +67,8 @@ class PreferencesDataSource @Inject constructor(
     }
 
     fun clearPreferences() {
-        return encryptedSharedPreferencesManager.clearAllPreferences()
+        encryptedSharedPreferencesManager.clearAllPreferences()
+        sharedPreferencesManager.clearAllPreferences()
     }
 
 }
