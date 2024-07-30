@@ -1,9 +1,12 @@
 package com.team2.chitchat.data.repository.crypto
 
+import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
 import android.util.Log
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import com.team2.chitchat.data.repository.preferences.PreferencesDataSource
 import com.team2.chitchat.ui.extensions.TAG
 import java.nio.charset.Charset
@@ -104,6 +107,35 @@ class BiometricCryptoManager @Inject constructor(
                 preferencesDataSource.getAuthToken()
             }
 
+        }
+    }
+
+    fun declareTypeAuthentication(context: Context): Boolean {
+        val biometricManager = BiometricManager.from(context)
+        return when (biometricManager.canAuthenticate(BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                Log.d(TAG, "App can authenticate using biometrics.")
+                true
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Log.e(TAG, "No biometric features available on this device.")
+                false
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Log.e(TAG, "Biometric features are currently unavailable.")
+                false
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                false
+            }
+
+            else -> {
+                Log.e(TAG, "Unhandled biometric status.")
+                false
+            }
         }
     }
 }
