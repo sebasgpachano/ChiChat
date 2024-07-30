@@ -51,7 +51,6 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity(), View.OnClick
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firebaseAnalyticsManager.logEventEnterScreen(javaClass.simpleName)
         inflateBinding()
         setContentView(binding.root)
         findViewByIdToolbar()
