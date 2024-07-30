@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.extensions
 
+import android.app.Activity
 import android.content.Context
 import android.os.Handler
 import android.view.View
@@ -79,4 +80,15 @@ val Any.TAG: String
 fun Context.showKeyboard(view: View) {
     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+}
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Activity.hideKeyboard() {
+    val view = currentFocus ?: View(this)
+    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }

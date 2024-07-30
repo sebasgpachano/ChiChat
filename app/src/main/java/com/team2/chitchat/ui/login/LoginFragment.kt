@@ -22,6 +22,7 @@ import com.team2.chitchat.databinding.FragmentLoginBinding
 import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
+import com.team2.chitchat.ui.extensions.hideKeyboard
 import com.team2.chitchat.ui.extensions.setErrorBorder
 import com.team2.chitchat.ui.extensions.showKeyboard
 import com.team2.chitchat.ui.main.DbViewModel
@@ -62,8 +63,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun onResume() {
         super.onResume()
         binding?.apply {
-            editTUserLoginFragment.requestFocus()
-            context?.showKeyboard(editTUserLoginFragment)
+            if (!viewModel.accessBiometricStateFlow.value) {
+                editTUserLoginFragment.requestFocus()
+                context?.showKeyboard(editTUserLoginFragment)
+            }
         }
     }
 
@@ -74,15 +77,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override fun observeViewModel() {
         lifecycleScope.launch {
-            viewModel.loginStateFlow.collect { isOk ->
-                    handledLogin(isOk)
+            viewModel.loginStateFlow.collect {isLogged ->
+                handledLogin(isLogged)
             }
         }
 
         lifecycleScope.launch {
-            viewModel.getRefreshTokenStateFlow.collect { isOk ->
-                if (isOk) startDataBase()
-            }
+            viewModel.getRefreshTokenStateFlow.collect {}
         }
 
         lifecycleScope.launch {
@@ -94,7 +95,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                             super.onAuthenticationSucceeded(result)
                             Log.d(TAG, "onAuthenticationSucceeded: ${result.cryptoObject?.cipher}")
                             result.cryptoObject?.let {
-                                viewModel.loaRefreshToken()
+                                viewModel.loaRefreshToken {
+                                    startDataBase()
+                                }
 
                             }
                         }
@@ -107,12 +110,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
 
         lifecycleScope.launch {
-            dbViewModel.initDbSharedFlow.collect { isOk ->
-                if (isOk) {
-                    val intent = Intent(requireContext(), ChatService::class.java)
-                    requireContext().startService(intent)
-                    findNavController().popBackStack()
-                }
+            dbViewModel.initDbSharedFlow.collect {isOk->
+                gotoHome(isOk)
             }
         }
 
@@ -179,6 +178,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     }
 
+    private fun gotoHome(isLogged: Boolean) {
+        if (isLogged) {
+            val intent = Intent(requireContext(), ChatService::class.java)
+            requireContext().startService(intent)
+            findNavController().popBackStack()
+        }
+    }
+
     private fun handledLogin(isOk: Boolean) {
         if (isOk) {
             if (isBiometricEnabled) {
@@ -229,13 +236,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
             }
             buttonLogin.setOnClickListener {
-
                 viewModel.resetError()
                 val userInput = editTUserLoginFragment.text.toString()
                 val passwordInput = editTPasswordLoginFragment.text.toString()
                 val login = LoginUserRequest(userInput, passwordInput)
 
                 if (userInput.isNotBlank() && passwordInput.isNotBlank()) {
+                    activity?.hideKeyboard()
                     viewModel.doLogin(login)
                 } else {
                     emptyEditText(
@@ -253,7 +260,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                             super.onAuthenticationSucceeded(result)
                             Log.d(TAG, "onAuthenticationSucceeded: ${result.cryptoObject?.cipher}")
                             result.cryptoObject?.let {
-                                viewModel.loaRefreshToken()
+                                viewModel.loaRefreshToken {
+                                    startDataBase()
+                                }
                             }
                         }
                     })
@@ -262,6 +271,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             editTPasswordLoginFragment.setOnEditorActionListener { _, actionId, _ ->
 
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    context?.hideKeyboard(editTPasswordLoginFragment)
+                    activity?.hideKeyboard()
                     buttonLogin.performClick()
                     return@setOnEditorActionListener true
                 }
