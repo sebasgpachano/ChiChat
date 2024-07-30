@@ -109,7 +109,7 @@
         <item name="android:paddingVertical">3dp</item>
         <item name="android:paddingHorizontal">21dp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="backgroundTint">@color/azul31b1cd</item>
+        <item name="backgroundTint">@color/color_app</item>
         <item name="android:font">@style/poppinsRegular14</item>
     </style>
     <!-- Error TextView-->
