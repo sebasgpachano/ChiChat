@@ -1,3 +1,5 @@
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
+
 plugins {
     kotlin("kapt")
     alias(libs.plugins.android.application)
@@ -34,6 +36,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            configure<CrashlyticsExtension> {
+                mappingFileUploadEnabled = true
+            }
         }
 
         getByName("debug") {

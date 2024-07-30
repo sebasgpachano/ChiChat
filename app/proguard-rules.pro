@@ -40,3 +40,9 @@
  # kept. Suspend functions are wrapped in continuations where the type argument
  # is used.
  -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
+
+ -keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+ -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+
+ -keep class com.google.firebase.** { *; }
+ -dontwarn com.google.firebase.**
