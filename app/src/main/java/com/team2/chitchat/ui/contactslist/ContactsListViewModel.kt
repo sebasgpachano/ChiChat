@@ -1,5 +1,6 @@
 package com.team2.chitchat.ui.contactslist
 
+import android.icu.lang.UCharacter.toLowerCase
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.domain.model.chats.PostNewChatModel
 import com.team2.chitchat.data.repository.local.user.UserDB
@@ -44,6 +45,8 @@ class ContactsListViewModel @Inject constructor(
                         loadingMutableSharedFlow.emit(false)
                         val filteredSortedList = it.data
                             .filterNot { user -> user.id == dataUserSession.userId }
+                            .filterNot { user -> user.nick.isEmpty() }
+                            .sortedBy { user -> toLowerCase(user.nick) }
                         contactsMutableSharedFlow.emit(ArrayList(filteredSortedList))
                     }
                 }
