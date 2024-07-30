@@ -68,6 +68,7 @@ class BiometricCryptoManager @Inject constructor(
     }
     private fun decryptCipher(): Cipher {
         val iv = preferencesDataSource.getIvParam()
+        Log.d(TAG, "%> decryptCipher iv: $iv")
         val ivParameterSpec = IvParameterSpec(Base64.decode(iv, Base64.DEFAULT))
         val cipher = getCipher()
         val secretKey = getSecretKey()
@@ -85,10 +86,24 @@ class BiometricCryptoManager @Inject constructor(
     }
     fun decrypt(): String {
         decryptCipher().apply {
-            val decodedCipherText = doFinal(Base64.decode(preferencesDataSource.getAuthToken(), Base64.DEFAULT))
-            val decryptText = String(decodedCipherText, Charset.defaultCharset())
-            Log.d(TAG, "%> decodedCipherText: $decryptText -- ${preferencesDataSource.getAuthToken()}")
-            return decryptText
+            return try {
+                var token = preferencesDataSource.getAuthToken()
+                if(token.isNotBlank()) {
+                    Log.d(TAG, "%> decrypt accessBiometric: ${preferencesDataSource.getAccessBiometric()}")
+                    Log.d(TAG, "%> decrypt Token: $token")
+                    val tokenByteArray = Base64.decode(token, Base64.DEFAULT)
+                    Log.d(TAG, "%> decrypt tokenByteArray: $tokenByteArray")
+                    val decodedCipherText = doFinal(tokenByteArray)
+                    val decryptText = String(decodedCipherText, Charset.defaultCharset())
+                    Log.d(TAG, "%> decrypt decryptText: $decryptText -- ${preferencesDataSource.getAuthToken()}")
+                    token = decryptText
+                }
+                token
+            }catch (e: Exception) {
+                Log.d(TAG, "%> decrypt error: ${e.message}")
+                preferencesDataSource.getAuthToken()
+            }
+
         }
     }
 }
