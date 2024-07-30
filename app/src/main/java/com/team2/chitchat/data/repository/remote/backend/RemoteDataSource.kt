@@ -59,6 +59,7 @@ class RemoteDataSource @Inject constructor(
     //LoginUser
     fun postLoginUser(loginUserRequest: LoginUserRequest): Flow<BaseResponse<Boolean>> =
         flow {
+            preferencesDataSource.clearPreferences()
             val apiResult = callApiService.callPostLoginUser(loginUserRequest)
             if (apiResult is BaseResponse.Success) {
                 apiResult.data.let { response ->
@@ -67,7 +68,6 @@ class RemoteDataSource @Inject constructor(
                         userId = response.user?.id ?: ""
                     }
                     preferencesDataSource.apply {
-                        saveProfilePicture(null)
                         saveAuthToken(response.token ?: "")
                         saveUserID(response.user?.id ?: "")
                     }

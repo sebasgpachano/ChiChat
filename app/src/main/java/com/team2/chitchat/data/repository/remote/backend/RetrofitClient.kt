@@ -68,12 +68,10 @@ class RetrofitClient @Inject constructor(
             })
             .interceptors().add(Interceptor { chain ->
                 val original = chain.request()
-                val token = getToken()
-                Log.d(TAG, "%> token: $token")
                 val request = when {
-                    needAddBearer(chain.request()) -> {
+                    getToken().isNotEmpty() -> {
                         val build = original.newBuilder()
-                            .header(HEADER_KEY_TOKEN, token)
+                            .header(HEADER_KEY_TOKEN, getToken())
                             .method(original.method, original.body)
                             .build()
                         build
@@ -99,22 +97,6 @@ class RetrofitClient @Inject constructor(
             .build()
     }
 
-    private fun needAddBearer(request: Request): Boolean {
-        val buffer = okio.Buffer()
-        request.body?.writeTo(buffer)
-
-        return when {
-            preferencesDataSource.getAuthToken().isNotBlank() -> {
-                Log.d(TAG, "%> NeedAddBearer")
-                true
-            }
-
-            else -> {
-                Log.d(TAG, "%> No needAddBearer contemplated")
-                false
-            }
-        }
-    }
     private fun getToken(): String {
         return if (preferencesDataSource.getAccessBiometric() && preferencesDataSource.getIvParam().isNotBlank()) {
             val token = biometricCryptoManager.decrypt()
