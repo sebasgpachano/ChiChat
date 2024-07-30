@@ -88,7 +88,7 @@ class BiometricCryptoManager @Inject constructor(
         decryptCipher().apply {
             return try {
                 var token = preferencesDataSource.getAuthToken()
-                if(!token.isNullOrBlank()) {
+                if(token.isNotBlank()) {
                     Log.d(TAG, "%> decrypt accessBiometric: ${preferencesDataSource.getAccessBiometric()}")
                     Log.d(TAG, "%> decrypt Token: $token")
                     val tokenByteArray = Base64.decode(token, Base64.DEFAULT)
