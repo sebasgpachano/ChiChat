@@ -106,14 +106,15 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
             }
 
             R.id.ibSend -> {
-                val rawMessage = binding?.etSend?.text.toString()
+                val rawMessage = binding?.etSend?.text.toString().trim()
 
-                val trimmedMessage = rawMessage.lines()
-                    .filter { it.isNotBlank() }
+                val processedMessage = rawMessage.lines()
+                    .dropWhile { it.isBlank() }
+                    .dropLastWhile { it.isBlank() }
                     .joinToString("\n")
 
-                if (trimmedMessage.isNotEmpty()) {
-                    chatViewModel.postNewMessage(trimmedMessage, args.idChat)
+                if (processedMessage.isNotEmpty()) {
+                    chatViewModel.postNewMessage(processedMessage, args.idChat)
                     binding?.etSend?.text?.clear()
                 }
             }
