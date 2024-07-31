@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.repository.remote.request.users.RegisterUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.usecase.preferences.SaveProfilePictureUseCase
-import com.team2.chitchat.data.usecase.remote.PostRegisterUseCase
+import com.team2.chitchat.data.domain.usecase.preferences.SaveProfilePictureUseCase
+import com.team2.chitchat.data.domain.usecase.remote.PostRegisterUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
