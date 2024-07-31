@@ -1,8 +1,17 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.ChitChat" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="editTextStyle">@style/customEditText</item>
+        <item name="android:textViewStyle">@style/poppinsRegular16</item>
+        <!-- Colores para el tema claro -->
+
+
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkLight</item>
+        <item name="colorAccent">@color/colorAccentLight</item>
+        <item name="android:windowBackground">@color/backgroundColorLight</item>
+        <item name="android:textColor">@color/textColorLight</item>
     </style>
 
     <style name="Theme.ChitChat" parent="Base.Theme.ChitChat" />

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clToolbar"
+    android:layout_width="match_parent"
+    android:padding="12dp"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ImageButton
+        android:id="@+id/ibToolbarBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@string/toolbar_description_back_button"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_toolbar_back"
+        app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tbToolbar" />
+
+    <TextView
+        android:id="@+id/tvToolbarTitle"
+        style="@style/toolbarHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
+        app:layout_constraintEnd_toStartOf="@id/ibToolbarProfile"
+        app:layout_constraintStart_toEndOf="@id/ibToolbarBack"
+        app:layout_constraintTop_toTopOf="@id/tbToolbar"
+        tools:text="Cabecera" />
+
+    <ImageButton
+        android:id="@+id/ibToolbarProfile"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@string/toolbar_description_profile_button"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/avatar_default"
+        app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
+        app:layout_constraintEnd_toStartOf="@+id/ibToolbarNotification"
+        app:layout_constraintTop_toTopOf="@id/tbToolbar" />
+
+    <ImageButton
+        android:id="@+id/ibToolbarNotification"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="@null"
+        android:contentDescription="@string/toolbar_description_notification_button"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_toolbar_notification_off"
+        app:layout_constraintBottom_toBottomOf="@id/tbToolbar"
+        app:layout_constraintEnd_toEndOf="@id/tbToolbar"
+        app:layout_constraintTop_toTopOf="@id/tbToolbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

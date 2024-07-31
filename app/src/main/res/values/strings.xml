@@ -1,3 +1,108 @@
 <resources>
-    <string name="app_name">ChitChat</string>
+    <!-- Toolbar -->
+    <string name="toolbar_description_back_button">Boton para ir hacia atras</string>
+    <string name="toolbar_description_profile_button">Boton para acceder a perfil</string>
+    <string name="toolbar_description_notification_button">Boton para acceder a notificaciones</string>
+
+    <!-- Loading fragment -->
+    <string name="loading_text">Cargando…</string>
+
+    <!-- Contacts list fragment -->
+    <string name="list_contacts_title_toolbar">Contactos</string>
+    <string name="list_contacts_subtitle">Encantado de hablar con</string>
+    <string name="list_contacts_profile_img">Foto de perfil</string>
+    <string name="list_contacts_et_hint_search_user">Buscar contacto…</string>
+
+    <!-- Chat list fragment -->
+    <string name="chat_list_title_toolbar">ChitChat</string>
+    <string name="chat_list_subtitle">Conversaciones</string>
+    <string name="chat_list_user_state">Estado del usuario</string>
+    <string name="chat_list_add_chat">Añadir persona para hablar</string>
+    <string name="chat_list_et_hint_search_user">Buscar conversación…</string>
+    <string name="chat_list_delete_chat">¿Eliminar chat?</string>
+    <string name="chat_list_delete_chat_question">Al no ser el creador de la conversación no puedes borrarla de la base de datos, ¿quieres eliminarla de tus lista de conversaciones?</string>
+    <string name="chat_list_warning_notification_chat">No puedes eliminar el chat si tienes notificaciones por leer</string>
+    <string name="chat_list_empty">No se han encontrado conversaciones</string>
+
+    <!-- Error -->
+    <string name="error">Error</string>
+    <string name="error_session_expired">Su sesión ha expirado</string>
+    <string name="error_unknown_error">Unknown Error</string>
+    <string name="error_connection">Lo sentimos, estamos presentando problemas de conexión</string>
+    <string name="error_connection_message">Vuelve a intentarlo más tarde.</string>
+
+    <!-- Notification -->
+    <string name="notification_new_message">Nuevo mensaje</string>
+
+    <!-- Login -->
+    <string name="textUser">Usuario</string>
+    <string name="hintUser">Ingresa tu usuario</string>
+    <string name="textPassword">Contraseña</string>
+    <string name="hintPassword">Ingresa tu contraseña</string>
+    <string name="textAccessBiometric">Acceso con biometría</string>
+    <string name="textLogin">Login</string>
+    <string name="imageLogoDescription">Logo ChitChat</string>
+    <string name="textRegisterLoginF">Regístrate</string>
+    <string name="textRegisterQuestionLoginF">¿No tienes una cuenta?</string>
+
+    <!-- Registration fragment -->
+    <string name="user">Usuario</string>
+    <string name="enter_user">Ingresa tu usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="enter_password">Ingresa tu contraseña</string>
+    <string name="repeat_password">Repite tu contraseña</string>
+    <string name="repeat_pass">Repite tu contraseña</string>
+    <string name="nick">Nick</string>
+    <string name="enter_nick">Ingresa tu nick</string>
+    <string name="selected_avatar">Avatar seleccionado:</string>
+    <string name="avatar">avatar</string>
+    <string name="register">Registrate</string>
+    <string name="registration_title">Registro</string>
+    <string name="user_error">El usuario ya existe</string>
+    <string name="user_length_error">El usuario no debe exceder 25 caracteres</string>
+    <string name="nick_length_error">El nick no debe exceder 25 caracteres</string>
+    <string name="user_not_exist_error">El usuario no existe</string>
+    <string name="password_error">Las contraseñas no coinciden</string>
+    <string name="password_invalid">Contraseña incorrecta</string>
+    <string name="required_field">Campo vacío</string>
+
+    <!-- Profile fragment -->
+    <string name="accept">Aceptar</string>
+    <string name="close_session">Cerrar sesión</string>
+    <string name="photoProfileDescription">Photo de perfil en pantalla de Perfil</string>
+    <string name="icon_action_description">icono de una accion o funcionalidad añadida</string>
+    <string name="icon_arrow_right_description">Icono dirección derecha o hacia adelante</string>
+    <string name="cancel">Cancelar</string>
+    <string name="question_close_session">¿Estás seguro de que quieres cerrar sesión?</string>
+    <string name="profile">Perfil</string>
+
+    <!-- Error Messages -->
+    <string name="error_401">Permisos no autorizados, vuelve iniciar sesión.</string>
+    <string name="error_403">Error en la solicitud, vuelve a intentarlo más tarde.</string>
+    <string name="error_500">Tenemos problemas internos, contacta con servicio técnico.</string>
+    <string name="error_unknown">Algo inesperado ha ocurrido, vuelve a intentarlo.</string>
+
+    <!-- Fragment splash-->
+    <string name="splash_iv_logo">Logo de la aplicacion</string>
+
+    <!-- Chat fragment-->
+    <string name="send_message">Enviar mensaje</string>
+    <string name="empty_list">Empty list</string>
+    <string name="send_button">Botón enviar</string>
+    <string name="online">En línea</string>
+
+    <!--Dialog Biometric-->
+    <string name="title_biometric_dialog">Acceso Biometrico</string>
+    <string name="subtitle_biometric_dialog">Acceso biometrico accede a tus credenciales</string>
+    <string name="cancel_biometric_dialog">Usar contraseña</string>
+    <string name="message_biometric_restarting">Tienes que autenticarte nuevamente para habilitar esta opción.</string>
+
+    <!-- Shared preferences-->
+    <string name="title_biometric_activated">Accesso Biometrico</string>
+    <string name="mesage_biometric_activated">¿Deseas activar acceso biométrico?</string>
+    <string name="imageFingerprintDescription">Icono de huella dactilar para acceder con biometria.</string>
+
+    <!-- Firebase login event-->
+    <string name="biometric_event">biometric</string>
+    <string name="password_event">password</string>
 </resources>

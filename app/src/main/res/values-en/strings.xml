@@ -1,0 +1,108 @@
+<resources>
+    <!-- Toolbar -->
+    <string name="toolbar_description_back_button">Button to go back</string>
+    <string name="toolbar_description_profile_button">Button to access profile</string>
+    <string name="toolbar_description_notification_button">Button to access notifications</string>
+
+    <!-- Loading fragment -->
+    <string name="loading_text">Loading…</string>
+
+    <!-- Contacts list fragment -->
+    <string name="list_contacts_title_toolbar">Contacts</string>
+    <string name="list_contacts_subtitle">Happy to talk with</string>
+    <string name="list_contacts_profile_img">Profile picture</string>
+    <string name="list_contacts_et_hint_search_user">Search contact…</string>
+
+    <!-- Chat list fragment -->
+    <string name="chat_list_title_toolbar">ChitChat</string>
+    <string name="chat_list_subtitle">Conversations</string>
+    <string name="chat_list_user_state">User status</string>
+    <string name="chat_list_add_chat">Add person to chat</string>
+    <string name="chat_list_et_hint_search_user">Search conversation…</string>
+    <string name="chat_list_delete_chat">Delete chat?</string>
+    <string name="chat_list_delete_chat_question">Since you are not the creator of the conversation, you can\'t delete it from the database. Do you want to remove it from your conversation list?</string>
+    <string name="chat_list_warning_notification_chat">You cannot delete the chat if you have unread notifications</string>
+    <string name="chat_list_empty">No conversations found</string>
+
+    <!-- Error -->
+    <string name="error">Error</string>
+    <string name="error_session_expired">Your session has expired</string>
+    <string name="error_unknown_error">Unknown Error</string>
+    <string name="error_connection">Sorry, we are experiencing connection issues</string>
+    <string name="error_connection_message">Please try again later.</string>
+
+    <!-- Notification -->
+    <string name="notification_new_message">New message</string>
+
+    <!-- Login -->
+    <string name="textUser">User</string>
+    <string name="hintUser">Enter your user</string>
+    <string name="textPassword">Password</string>
+    <string name="hintPassword">Enter your password</string>
+    <string name="textAccessBiometric">Biometric access</string>
+    <string name="textLogin">Login</string>
+    <string name="imageLogoDescription">ChitChat Logo</string>
+    <string name="textRegisterLoginF">Register</string>
+    <string name="textRegisterQuestionLoginF">Don\'t have an account?</string>
+
+    <!-- Registration fragment -->
+    <string name="user">User</string>
+    <string name="enter_user">Enter your user</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="repeat_password">Repeat your password</string>
+    <string name="repeat_pass">Repeat your password</string>
+    <string name="nick">Nick</string>
+    <string name="enter_nick">Enter your nick</string>
+    <string name="selected_avatar">Selected avatar:</string>
+    <string name="avatar">Avatar</string>
+    <string name="register">Register</string>
+    <string name="registration_title">Registration</string>
+    <string name="user_error">User already exists</string>
+    <string name="user_length_error">User must not exceed 25 characters</string>
+    <string name="nick_length_error">Nick must not exceed 25 characters</string>
+    <string name="user_not_exist_error">User does not exist</string>
+    <string name="password_error">Passwords do not match</string>
+    <string name="password_invalid">Incorrect password</string>
+    <string name="required_field">Empty field</string>
+
+    <!-- Profile fragment -->
+    <string name="accept">Accept</string>
+    <string name="close_session">Logout</string>
+    <string name="photoProfileDescription">Profile photo on Profile screen</string>
+    <string name="icon_action_description">icon of an added action or functionality</string>
+    <string name="icon_arrow_right_description">Icon indicating right direction or forward</string>
+    <string name="cancel">Cancel</string>
+    <string name="question_close_session">Are you sure you want to logout?</string>
+    <string name="profile">Profile</string>
+
+    <!-- Error Messages -->
+    <string name="error_401">Unauthorized permissions, please log in again.</string>
+    <string name="error_403">Request error, please try again later.</string>
+    <string name="error_500">We have internal issues, please contact technical support.</string>
+    <string name="error_unknown">Something unexpected occurred, please try again.</string>
+
+    <!-- Fragment splash -->
+    <string name="splash_iv_logo">Application logo</string>
+
+    <!-- Chat fragment -->
+    <string name="send_message">Send message</string>
+    <string name="empty_list">Empty list</string>
+    <string name="send_button">Send button</string>
+    <string name="online">Online</string>
+
+    <!-- Dialog Biometric -->
+    <string name="title_biometric_dialog">Biometric Access</string>
+    <string name="subtitle_biometric_dialog">Biometric access uses your credentials</string>
+    <string name="cancel_biometric_dialog">Use password</string>
+    <string name="message_biometric_restarting">You need to authenticate again to enable this option.</string>
+
+    <!-- Shared preferences -->
+    <string name="title_biometric_activated">Biometric Access</string>
+    <string name="mesage_biometric_activated">Do you want to enable biometric access?</string>
+    <string name="imageFingerprintDescription">Fingerprint icon for biometric access.</string>
+
+    <!-- Firebase login event -->
+    <string name="biometric_event">biometric</string>
+    <string name="password_event">password</string>
+</resources>
