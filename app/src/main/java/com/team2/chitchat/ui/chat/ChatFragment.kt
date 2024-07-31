@@ -65,8 +65,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         binding?.ibBack?.setOnClickListener(this)
         binding?.ibSend?.setOnClickListener(this)
         chatAdapter.setListener(this)
-
-
     }
 
     override fun configureToolbarAndConfigScreenSections() {

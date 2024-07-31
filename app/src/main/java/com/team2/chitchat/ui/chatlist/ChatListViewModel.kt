@@ -6,11 +6,11 @@ import com.team2.chitchat.data.domain.model.chats.ListChatsModel
 import com.team2.chitchat.data.mapper.chats.ListChatsMapper
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.session.DataUserSession
-import com.team2.chitchat.data.usecase.local.GetChatsDbUseCase
-import com.team2.chitchat.data.usecase.local.GetMessagesDbUseCase
-import com.team2.chitchat.data.usecase.local.GetUsersDbUseCase
-import com.team2.chitchat.data.usecase.local.UpdateChatViewUseCase
-import com.team2.chitchat.data.usecase.remote.DeleteChatUseCase
+import com.team2.chitchat.data.domain.usecase.local.GetChatsDbUseCase
+import com.team2.chitchat.data.domain.usecase.local.GetMessagesDbUseCase
+import com.team2.chitchat.data.domain.usecase.local.GetUsersDbUseCase
+import com.team2.chitchat.data.domain.usecase.local.UpdateChatViewUseCase
+import com.team2.chitchat.data.domain.usecase.remote.DeleteChatUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel

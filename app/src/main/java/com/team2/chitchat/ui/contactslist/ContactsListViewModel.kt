@@ -7,8 +7,8 @@ import com.team2.chitchat.data.repository.local.user.UserDB
 import com.team2.chitchat.data.repository.remote.request.chats.NewChatRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
 import com.team2.chitchat.data.session.DataUserSession
-import com.team2.chitchat.data.usecase.remote.GetContactsUseCase
-import com.team2.chitchat.data.usecase.remote.PostNewChatUseCase
+import com.team2.chitchat.data.domain.usecase.remote.GetContactsUseCase
+import com.team2.chitchat.data.domain.usecase.remote.PostNewChatUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
