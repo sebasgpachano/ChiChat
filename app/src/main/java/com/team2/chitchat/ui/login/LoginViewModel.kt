@@ -5,10 +5,10 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.team2.chitchat.data.repository.remote.request.users.LoginUserRequest
 import com.team2.chitchat.data.repository.remote.response.BaseResponse
-import com.team2.chitchat.data.usecase.GetRefreshTokenUseCase
-import com.team2.chitchat.data.usecase.preferences.IsBiometricStateUseCase
-import com.team2.chitchat.data.usecase.preferences.PutBiometricStateUseCase
-import com.team2.chitchat.data.usecase.remote.PostLoginUseCase
+import com.team2.chitchat.data.domain.usecase.remote.GetRefreshTokenUseCase
+import com.team2.chitchat.data.domain.usecase.preferences.IsBiometricStateUseCase
+import com.team2.chitchat.data.domain.usecase.preferences.PutBiometricStateUseCase
+import com.team2.chitchat.data.domain.usecase.remote.PostLoginUseCase
 import com.team2.chitchat.ui.base.BaseViewModel
 import com.team2.chitchat.ui.extensions.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
