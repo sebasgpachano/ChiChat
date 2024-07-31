@@ -94,8 +94,6 @@
     <string name="title_biometric_dialog">Biometric Access</string>
     <string name="subtitle_biometric_dialog">Biometric access uses your credentials</string>
     <string name="cancel_biometric_dialog">Use password</string>
-    <string name="not_registered_biometric_access">To use biometric access, you must add one in device settings.</string>
-    <string name="biometric_unavailable">Biometric access not available.</string>
     <string name="message_biometric_restarting">You need to authenticate again to enable this option.</string>
 
     <!-- Shared preferences -->
