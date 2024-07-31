@@ -22,6 +22,7 @@
     <string name="chat_list_delete_chat">¿Eliminar chat?</string>
     <string name="chat_list_delete_chat_question">Al no ser el creador de la conversación no puedes borrarla de la base de datos, ¿quieres eliminarla de tus lista de conversaciones?</string>
     <string name="chat_list_warning_notification_chat">No puedes eliminar el chat si tienes notificaciones por leer</string>
+    <string name="chat_list_empty">No se han encontrado conversaciones</string>
 
     <!-- Error -->
     <string name="error">Error</string>
