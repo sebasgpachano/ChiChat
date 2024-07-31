@@ -46,3 +46,11 @@
 
  -keep class com.google.firebase.** { *; }
  -dontwarn com.google.firebase.**
+
+-assumenosideeffects class android.util.Log {
+     public static *** d(...);
+     public static *** e(...);
+     public static *** w(...);
+     public static *** i(...);
+     public static *** v(...);
+ }

@@ -17,6 +17,7 @@ import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chat.adapter.ChatAdapter
 import com.team2.chitchat.ui.extensions.TAG
 import com.team2.chitchat.ui.extensions.invisible
+import com.team2.chitchat.ui.extensions.showKeyboard
 import com.team2.chitchat.ui.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -45,6 +46,13 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
         newLine()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding?.apply {
+            etSend.requestFocus()
+            context?.showKeyboard(etSend)
+        }
+    }
     private fun configRecyclerView() {
         binding?.rvChat?.apply {
             setHasFixedSize(true)
