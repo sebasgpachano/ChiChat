@@ -25,6 +25,8 @@ import com.team2.chitchat.ui.base.BaseFragment
 import com.team2.chitchat.ui.chatlist.adapter.ChatsListAdapter
 import com.team2.chitchat.ui.dialogfragment.MessageDialogFragment
 import com.team2.chitchat.ui.extensions.TAG
+import com.team2.chitchat.ui.extensions.gone
+import com.team2.chitchat.ui.extensions.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -202,8 +204,14 @@ class ChatListFragment : BaseFragment<FragmentChatListBinding>(),
         }
         lifecycleScope.launch {
             chatListViewModel.chatsSharedFlow.collect { chatsList ->
+                if (chatsList.isEmpty()) {
+                    binding?.tvChatListEmpty?.visible()
+                } else {
+                    binding?.tvChatListEmpty?.gone()
+                }
                 allChats = chatsList
                 updateList(chatsList)
+
             }
         }
 
