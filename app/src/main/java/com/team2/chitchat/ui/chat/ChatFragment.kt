@@ -129,7 +129,11 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), View.OnClickListener,
             val screenHeight = rootView.rootView.height
             val keypadHeight = screenHeight - rect.bottom
             if (keypadHeight > 150) {
-                binding?.rvChat?.smoothScrollToPosition(chatAdapter.itemCount - 1)
+                if (chatAdapter.itemCount > 0) {
+                    binding?.rvChat?.smoothScrollToPosition(chatAdapter.itemCount - 1)
+                } else {
+                    binding?.rvChat?.scrollToPosition(chatAdapter.itemCount - 1)
+                }
             }
         }
         binding?.root?.viewTreeObserver?.addOnGlobalLayoutListener(keyboardListener)
