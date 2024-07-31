@@ -49,13 +49,13 @@
     <string name="enter_user">Ingresa tu usuario</string>
     <string name="password">Contraseña</string>
     <string name="enter_password">Ingresa tu contraseña</string>
-    <string name="repeat_password">Repetir Contraseña</string>
+    <string name="repeat_password">Repite tu contraseña</string>
     <string name="repeat_pass">Repite tu contraseña</string>
     <string name="nick">Nick</string>
     <string name="enter_nick">Ingresa tu nick</string>
     <string name="selected_avatar">Avatar seleccionado:</string>
     <string name="avatar">avatar</string>
-    <string name="register">Registrarse</string>
+    <string name="register">Registrate</string>
     <string name="registration_title">Registro</string>
     <string name="user_error">El usuario ya existe</string>
     <string name="user_length_error">El usuario no debe exceder 25 caracteres</string>
@@ -94,8 +94,6 @@
     <string name="title_biometric_dialog">Acceso Biometrico</string>
     <string name="subtitle_biometric_dialog">Acceso biometrico accede a tus credenciales</string>
     <string name="cancel_biometric_dialog">Usar contraseña</string>
-    <string name="not_registered_biometric_access">Para poder utilizar accesso con Biometria debes añadir una en ajustes del dispositivo.</string>
-    <string name="biometric_unavailable">Acceso Biometrico no disponible.</string>
     <string name="message_biometric_restarting">Tienes que autenticarte nuevamente para habilitar esta opción.</string>
 
     <!-- Shared preferences-->
