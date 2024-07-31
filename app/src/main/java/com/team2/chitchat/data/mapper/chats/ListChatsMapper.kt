@@ -68,11 +68,11 @@ class ListChatsMapper(
     }
 
     private fun fixedServerHour(messageTime: String?): String {
-        val deviceTime = ZonedDateTime.now()
-        val offsetInHours = deviceTime.offset.totalSeconds / 3600.0.toLong()
-        val formatter = DateTimeFormatter.ISO_DATE_TIME
+        val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
         val zonedDateTime = ZonedDateTime.parse(messageTime, formatter.withZone(ZoneOffset.UTC))
-        val updatedZonedDateTime = zonedDateTime.plusHours(2 + offsetInHours)
+        val deviceZoneId = ZoneId.systemDefault()
+        val deviceTime = zonedDateTime.withZoneSameInstant(deviceZoneId)
+        val updatedZonedDateTime = deviceTime.plusHours(2)
         return updatedZonedDateTime.format(formatter)
     }
 
