@@ -67,15 +67,18 @@ class LoginViewModel @Inject constructor(
     }
 
     // RefreshToken
-    fun loaRefreshToken() {
+    fun loaRefreshToken(startDataBase: () -> Unit) {
         viewModelScope.launch(dispatcher) {
+            loadingMutableSharedFlow.emit(true)
             getRefreshTokenUseCase().collect { baseResponse->
                 when(baseResponse) {
                     is BaseResponse.Error -> {
                         Log.d(this@LoginViewModel.TAG, "l> Error: ${baseResponse.error.message}")
+                        loadingMutableSharedFlow.emit(false)
                         errorMutableSharedFlow.emit(baseResponse.error)
                     }
                     is BaseResponse.Success -> {
+                        startDataBase()
                         getRefreshTokenMutableStateFlow.value = baseResponse.data
                     }
                 }

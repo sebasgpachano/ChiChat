@@ -41,6 +41,8 @@
  # is used.
  -keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
 
- -assumenosideeffects class android.util.Log {
-     public static *** d(...);
- }
+ -keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+ -keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+
+ -keep class com.google.firebase.** { *; }
+ -dontwarn com.google.firebase.**
