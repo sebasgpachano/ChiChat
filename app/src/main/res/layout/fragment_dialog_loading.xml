@@ -7,9 +7,10 @@
 
     <ImageView
         android:id="@+id/ivLoading"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/loading"
+        app:tint="@color/color_app"
         app:layout_constraintBottom_toTopOf="@id/tvLoading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/loading_text"
+        android:textStyle="italic|bold"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
