@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.5.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.5.1)" variant="all" version="8.5.1">
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/chitchat_logo.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/chitchat_logo.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/icon_search.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/icon_search.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/icon_send.png` in densityless folder">
+        <location
+            file="src/main/res/drawable/icon_send.png"/>
+    </issue>
+
+</issues>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--General-->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00FF0000</color>
+    <!--Color Palette-->
+    <color name="blackB3000000">#B3000000</color>
+    <color name="gray808080">#808080</color>
+    <color name="azul3f92b4">#3f92b4</color>
+    <color name="grayBackGround">#D9D9D9</color>
+
+    <!-- Color app -->
+    <color name="color_app">@color/azul3f92b4</color>
+    <color name="grayD9D9D9">#D9D9D9</color>
+    <color name="colorHint">#7C7C7C</color>
+    <color name="black_opacity_20">#20000000</color>
+    <color name="greenEnabled">#12E100</color>
+    <color name="redError">#F31B00</color>
+
+    <color name="colorPrimaryLight">#000000</color>
+    <color name="colorPrimaryDarkLight">#303F9F</color>
+    <color name="colorAccentLight">#FF4081</color>
+    <color name="backgroundColorLight">#FFFFFF</color>
+    <color name="textColorLight">#000000</color>
+
+    <!-- Colores para el tema oscuro -->
+    <color name="colorPrimaryDark">#BB86FC</color>
+    <color name="colorPrimaryDarkDark">#3700B3</color>
+    <color name="colorAccentDark">#03DAC6</color>
+    <color name="backgroundColorDark">#121212</color>
+    <color name="textColorDark">#FFFFFF</color>
+    <color name="gray_chat">#ECEAEA</color>
+</resources>
